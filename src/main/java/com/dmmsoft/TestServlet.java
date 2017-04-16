@@ -34,20 +34,31 @@ public class TestServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("testpage.jsp").forward(req, resp);
+    }
 
-       AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
-       MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
-       mainContainerLoader.loadFunds();
-       mainContainerLoader.loadCurrencies();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-       MainContainer mdc = mainContainerLoader.getMainContainer();
-       List<Investment> investments = mdc.getInvestments();
+        String name = req.getParameter("name");
+        //req.setAttribute("name", name);
 
-       ItemStatsResult s = new ItemStats().getResult(investments, TEST_INV_NAME);
-       // System.out.println(s.toString());
+        AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
+        MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
+        mainContainerLoader.loadFunds();
+        mainContainerLoader.loadCurrencies();
+
+        MainContainer mdc = mainContainerLoader.getMainContainer();
+        List<Investment> investments = mdc.getInvestments();
+
+        if(name==null){
+            name="AIP001";}
+
+        ItemStatsResult s = new ItemStats().getResult(investments, name);
+        // System.out.println(s.toString());
 
         resp.setContentType(MediaType.TEXT_HTML);
-       // resp.getWriter().print(s.toString());
+        // resp.getWriter().print(s.toString());
 
         req.setAttribute("investmentName", s.getName());
         req.setAttribute("firstQuotationDate",s.getFirstQuotation().getDate());
@@ -57,10 +68,12 @@ public class TestServlet extends HttpServlet {
         req.setAttribute("lastQuotationValue", s.getLastQuotation().getClose());
 
         req.setAttribute("maxDeltaPlusDate", s.getMaxDeltaPlus().getDate());
-        req.setAttribute("maxDeltaPlusValue", s.getMaxDeltaPlus().getDeltaClose());
+        req.setAttribute("maxDeltaPlusValue", s.getMaxDeltaPlus().getClose());
+        req.setAttribute("maxDeltaPlusDelta", s.getMaxDeltaPlus().getDeltaClose());
 
         req.setAttribute("maxDeltaMinusDate",s.getMaxDeltaMinus().getDate());
-        req.setAttribute("maxDeltaMinusValue",s.getMaxDeltaMinus().getDeltaClose());
+        req.setAttribute("maxDeltaMinusValue",s.getMaxDeltaMinus().getClose());
+        req.setAttribute("maxDeltaMinusDelta",s.getMaxDeltaMinus().getDeltaClose());
 
         req.setAttribute("maxValueQuotationDate", s.getMaxValueQuotation().getDate());
         req.setAttribute("maxValueQuotationValue", s.getMaxValueQuotation().getClose());
@@ -70,67 +83,9 @@ public class TestServlet extends HttpServlet {
         req.setAttribute("minValueQuotationValue", s.getMinValueQuotation().getClose());
         req.setAttribute("minValueQuotationDelta", s.getMinValueQuotation().getDeltaClose());
 
-      //  req.setAttribute("actualValue", s.getActualValue().getClose());
-
+        //  req.setAttribute("actualValue", s.getActualValue().getClose());
 
         req.getRequestDispatcher("testpage.jsp").forward(req, resp);
 
-
     }
-
-    /*
-
-    private void doTest(){
-
-      AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
-      MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
-
-      mainContainerLoader.loadFunds();
-        mainContainerLoader.loadCurrencies();
-
-    MainContainer mdc = mainContainerLoader.getMainContainer();
-    List<Investment> investments = mdc.getInvestments();
-
-    List<Quotation> filteredQuotations = new ArrayList<>();
-
-    // to test choose investment id:
-
-    Investment f = (Investment) investments.get(5);
-    List<Quotation> quots = f.getQuotations();
-    Quotation q = quots.get(0);
-
-        for (FilePath item : appCon.getFundFilePaths()) {
-        System.out.println(item.getFilePath());
-    }
-
-        for (FilePath item : appCon.getCurrencyFilePaths()) {
-        System.out.println(item.getFilePath());
-    }
-
-        System.out.println("1. number of Investments loaded: " + investments.size());
-        System.out.println("2. name of first Investment: " + f.getName());
-        System.out.println("3. number of Quotations of first Investment: " + quots.size());
-        System.out.println("4. name of Investment extracted form Quotation: " + q.getName());
-
-        investments.forEach((Investment investment) -> {
-        List<Quotation> quotationsPerInvestment = investment.getQuotations().stream()
-                .filter(x -> x.getName().equals("AGI001"))
-                .collect(Collectors.toList());
-        filteredQuotations.addAll(quotationsPerInvestment);
-        Collections.sort(filteredQuotations);
-    });
-
-        System.out.println(filteredQuotations);
-
-
-    // Example of Analyzer usage (ItemStats)
-
-    ItemStatsResult s = new ItemStats().getResult(investments, "AIP001");
-        System.out.println(s.toString());
-
-}
-
-*/
-
-
 }

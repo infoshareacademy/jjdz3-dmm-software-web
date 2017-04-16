@@ -9,7 +9,7 @@ Run Maven command from the project root:
 
 To quit wildfly: CTRL+C
 
-To clean maven wildfly last build:
+To clean maven last build:
   
     $ mvn clean
 
