@@ -1,16 +1,18 @@
-package com.dmmsoft; /**
+package com.dmmsoft;
+
+/**
  * Created by milo on 15.04.17.
  */
 
-
-import com.dmmsoft.app.Analyzer.W01Stats.ItemStats;
-import com.dmmsoft.app.Analyzer.W01Stats.ItemStatsResult;
-import com.dmmsoft.app.AppConfiguration.AppConfigurationProvider;
-import com.dmmsoft.app.DataLoader.MainContainerLoader;
-import com.dmmsoft.app.FileIO.Path.FilePath;
-import com.dmmsoft.app.POJO.Investment;
-import com.dmmsoft.app.POJO.MainContainer;
-import com.dmmsoft.app.POJO.Quotation;
+import com.dmmsoft.app.analyzer.analyses.stats.ItemStats;
+import com.dmmsoft.app.analyzer.analyses.stats.ItemStatsCriteria;
+import com.dmmsoft.app.analyzer.analyses.stats.ItemStatsResult;
+import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
+import com.dmmsoft.app.dataloader.MainContainerLoader;
+import com.dmmsoft.app.file.path.FilePath;
+import com.dmmsoft.app.model.Investment;
+import com.dmmsoft.app.model.MainContainer;
+import com.dmmsoft.app.model.Quotation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +56,8 @@ public class TestServlet extends HttpServlet {
         if(name==null){
             name="AIP001";}
 
-        ItemStatsResult s = new ItemStats().getResult(investments, name);
+        ItemStatsCriteria criteria = new ItemStatsCriteria(name);
+        ItemStatsResult s = new ItemStats().getResult(investments, criteria);
         // System.out.println(s.toString());
 
         resp.setContentType(MediaType.TEXT_HTML);
