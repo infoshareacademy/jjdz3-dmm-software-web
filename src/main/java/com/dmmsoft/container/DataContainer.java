@@ -18,6 +18,10 @@ public class DataContainer implements IDataContainerService {
 
     private List<Investment> investments;
 
+
+
+    private com.dmmsoft.app.model.MainContainer mainContainer;
+
     @PostConstruct
     public void onPostConstruct(){
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
@@ -34,5 +38,7 @@ public class DataContainer implements IDataContainerService {
     public List<Investment> getInvestments(){
         return investments;
     }
-
+    public MainContainer getMainContainer() {
+        return mainContainer;
+    }
 }

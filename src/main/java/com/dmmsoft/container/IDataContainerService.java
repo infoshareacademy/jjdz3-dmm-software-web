@@ -1,6 +1,7 @@
 package com.dmmsoft.container;
 
 import com.dmmsoft.app.model.Investment;
+import com.dmmsoft.app.model.MainContainer;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public interface IDataContainerService {
     public List<Investment> getInvestments();
 
+    public MainContainer getMainContainer();
 
 
 }
