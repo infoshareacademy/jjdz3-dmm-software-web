@@ -38,16 +38,19 @@ public class TestServletRevenue extends HttpServlet{
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws NoDataForCriteria, ServletException, IOException  {
-        req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException  {
+
+            req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
+
+
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws NoDataForCriteria, ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException {
 
         try {
-       // Double capital = Double.valueOf(10000.0D);
+
         DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
        // LocalDate BUY_DATE = LocalDate.parse("20090910", formatter);
        // LocalDate SELL_DATE = LocalDate.parse("20170402", formatter);
@@ -57,6 +60,19 @@ public class TestServletRevenue extends HttpServlet{
         String sCapital = req.getParameter("capital");
         String SBUY_DATE = req.getParameter("buyDate");
         String SSELL_DATE = req.getParameter("sellDate");
+
+            if (SBUY_DATE==null || SBUY_DATE.toString().isEmpty())
+                SBUY_DATE = "20090910";
+
+            if(SSELL_DATE==null || SSELL_DATE.toString().isEmpty())
+                SSELL_DATE = "20170402";
+
+            if(sCapital==null|| sCapital.toString().isEmpty())
+                sCapital = "120000";
+
+            if(InvestmentName==null|| InvestmentName.isEmpty())
+                InvestmentName="CHF";
+
 
         Double capital = Double.valueOf(sCapital);
         LocalDate BUY_DATE = LocalDate.parse(SBUY_DATE , formatter);
@@ -85,7 +101,9 @@ public class TestServletRevenue extends HttpServlet{
             req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
         }
         catch (NoDataForCriteria ex){
+
              System.out.print(ex.getMessage());
+
         }
 
     }

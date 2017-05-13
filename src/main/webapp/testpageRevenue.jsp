@@ -41,8 +41,8 @@
 <p>sell date: <b>${f_sellDate}</b></p>
 
 <p><b> output data: </b>  </p>
-p>Capital Revenue: <b>${r_capitalRevenue}</b></p>
-p>Capital Revenue Delta: <b>${r_capitalRevenueDelta}</b></p>
+<p>Capital Revenue: <b>${r_capitalRevenue}</b></p>
+<p>Capital Revenue Delta: <b>${r_capitalRevenueDelta}</b></p>
 
 <p> *** End of content *** </p>
 

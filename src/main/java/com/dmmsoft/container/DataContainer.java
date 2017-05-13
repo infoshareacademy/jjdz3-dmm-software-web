@@ -17,10 +17,8 @@ import java.util.List;
 public class DataContainer implements IDataContainerService {
 
     private List<Investment> investments;
-
-
-
     private com.dmmsoft.app.model.MainContainer mainContainer;
+
 
     @PostConstruct
     public void onPostConstruct(){
@@ -32,7 +30,7 @@ public class DataContainer implements IDataContainerService {
         // jar dependency
         com.dmmsoft.app.model.MainContainer mainContainer = mainContainerLoader.getMainContainer();
         this.investments = mainContainer.getInvestments();
-
+        this.mainContainer=mainContainer;
     }
 
     public List<Investment> getInvestments(){
