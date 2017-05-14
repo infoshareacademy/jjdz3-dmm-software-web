@@ -23,13 +23,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
-            $("#buyDatePicker").datepicker({dateFormat: "yy-mm-dd",
+            $(".datePicker").datepicker({
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
             }).val()
-            $("#sellDatePicker").datepicker({dateFormat: "yy-mm-dd",
-                changeMonth: true,
-                changeYear: true}).val()
         });
     </script>
 
@@ -45,14 +43,14 @@
 <p>If you see this page it means your basic local server configuration</br>is set properly and application is able to
     use imported JAR dependency</br>from DMM_Finance Project Sprint_1</p>
 
-<form method="post" action="revenue" >
+<form method="post" action="revenue">
     <p>
         Enter data (for example funds: "AIP001", "CHF" capital: "12000", buy date "2009-09-10", sell date "2017-04-02"):
     </p>
-    <p>investment name: <input type="text" name="investmenName" style="width:60px" id ="inputForm"/></p>
+    <p>investment name: <input type="text" name="investmenName" style="width:60px" id="inputForm"/></p>
     <p>capital <input type="text" name="capital" style="width:100px"/></p>
-    <p>buy date <input type="text" id="buyDatePicker" name="buyDate" readonly='true' style="width:85px"/></p>
-    <p>sell date <input type="text" id="sellDatePicker" name="sellDate" readonly='true' style="width:85px"/></p>
+    <p>buy date <input type="text" class="datePicker" name="buyDate" readonly='true' style="width:85px"/></p>
+    <p>sell date <input type="text" class="datePicker" name="sellDate" readonly='true' style="width:85px"/></p>
 
     <p>
         <button type="submit">Send!</button>
