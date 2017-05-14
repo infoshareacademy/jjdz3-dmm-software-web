@@ -51,7 +51,8 @@ public class TestServletRevenue extends HttpServlet{
 
         try {
 
-        DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
        // LocalDate BUY_DATE = LocalDate.parse("20090910", formatter);
        // LocalDate SELL_DATE = LocalDate.parse("20170402", formatter);
        // String InvestmentName = "CHF";
@@ -62,10 +63,10 @@ public class TestServletRevenue extends HttpServlet{
         String SSELL_DATE = req.getParameter("sellDate");
 
             if (SBUY_DATE==null || SBUY_DATE.toString().isEmpty())
-                SBUY_DATE = "20090910";
+                SBUY_DATE = "2009-09-10";
 
             if(SSELL_DATE==null || SSELL_DATE.toString().isEmpty())
-                SSELL_DATE = "20170402";
+                SSELL_DATE = "2017-04-02";
 
             if(sCapital==null|| sCapital.toString().isEmpty())
                 sCapital = "120000";
