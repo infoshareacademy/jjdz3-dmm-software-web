@@ -12,6 +12,8 @@ import com.dmmsoft.app.dataloader.MainContainerLoader;
 import com.dmmsoft.app.model.Investment;
 import com.dmmsoft.app.model.MainContainer;
 import com.dmmsoft.container.IDataContainerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -31,21 +33,21 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/revenue")
 public class TestServletRevenue extends HttpServlet {
-    @Inject
-    IDataContainerService container;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestServletRevenue.class);
     private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
             "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
             "    User criteria moderated by systen are listed in User input moderation report.";
 
     private static final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
 
+    @Inject
+    IDataContainerService container;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
-
 
     }
 
@@ -59,7 +61,7 @@ public class TestServletRevenue extends HttpServlet {
             String sCapital = req.getParameter("capital");
             String SBUY_DATE = req.getParameter("buyDate");
             String SSELL_DATE = req.getParameter("sellDate");
-            Boolean isFavouriteChecked = req.getParameter("isFavourite") !=null;
+            Boolean isFavouriteChecked = req.getParameter("isFavourite") != null;
 
             if (SBUY_DATE == null || SBUY_DATE.toString().isEmpty())
                 SBUY_DATE = "2009-09-10";
@@ -79,18 +81,18 @@ public class TestServletRevenue extends HttpServlet {
             LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
 
             InvestmentRevenueCriteria input = new InvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, InvestmentName, isFavouriteChecked);
-            InvestmentRevenueResult  ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
+            InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
 
             //InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
 
 
-            System.out.println("is favourite: "+input.getFavourite());
+            System.out.println("is favourite: " + input.getFavourite());
             resp.setContentType(MediaType.TEXT_HTML);
 
             req.setAttribute("investmentRevenueCriteria", input);
             req.setAttribute("investmentRevenueResult", ir);
-            req.setAttribute("investmentRevenue", Math.round(ir.getCapitalRevenueValue()*100.0)/100.0);
-            req.setAttribute("investmentRevenueDelta", Math.round(ir.getCapitalRevenueDeltaPrecentValue()*100.0)/100.0);
+            req.setAttribute("investmentRevenue", Math.round(ir.getCapitalRevenueValue() * 100.0) / 100.0);
+            req.setAttribute("investmentRevenueDelta", Math.round(ir.getCapitalRevenueDeltaPrecentValue() * 100.0) / 100.0);
 
             if (ir.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
@@ -98,11 +100,11 @@ public class TestServletRevenue extends HttpServlet {
 
             req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
 
-        }
-        catch (NoDataForCriteria ex) {
+        } catch (NoDataForCriteria ex) {
             req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
             req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
-            System.out.print(ex.getMessage());
+            LOGGER.warn(ex.getMessage());
+
         }
 
     }
