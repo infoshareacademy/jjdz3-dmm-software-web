@@ -30,10 +30,7 @@
             }).val()
         });
     </script>
-
-
 </html>
-
 
 </head>
 <body>
@@ -45,6 +42,7 @@
     <p>2. <input type="text" pattern="[0-9]*"  name="capital" style="width:170px" placeholder="inv.capital, e.g. 10000"/></p>
     <p>3. <input type="text" class="datePicker" name="buyDate" readonly='true' style="width:85px" placeholder="buy date"/></p>
     <p>4. <input type="text" class="datePicker" name="sellDate" readonly='true' style="width:85px" placeholder="sell date"/></p>
+    <p>   <input type="checkbox" name="isFavourite"/> add to favourites</p>
     <p>
         <button type="submit">Submit!</button>
     </p>
@@ -55,16 +53,16 @@
 <p>Invested capital: <b>${investmentRevenueCriteria.investedCapital}</b></p>
 <p>Buy date: <b>${investmentRevenueCriteria.buyDate}</b></p>
 <p>Sell date: <b>${investmentRevenueCriteria.sellDate}</b></p>
+<p>marked as favourite: <b>${investmentRevenueResult.finallyEvaluatedInput.favourite}</b></p>
 <p>${message}</p>
 </br>
 <p><b>Result: </b></p>
-<p>Capital Revenue: <b>${r_capitalRevenue}</b>[PLN]</p>
-<p>Capital Revenue Delta: <b>${r_capitalRevenueDelta}</b>[%]</p>
+<p>Capital Revenue: <b>${investmentRevenue}</b> [PLN]</p>
+<p>Capital Revenue Delta: <b>${investmentRevenueDelta}</b> [%]</p>
 
 <p><b>User input moderation report:</b></p>
-<p>buy date: <b>${f_buyDate}</b></p>
-<p>sell date: <b>${f_sellDate}</b></p>
-
+<p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
+<p>sell date: <b>${investmentRevenueResult.finallyEvaluatedInput.sellDate}</b></p>
 
 </body>
 </html>
