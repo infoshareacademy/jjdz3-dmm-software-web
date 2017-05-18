@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -76,7 +77,7 @@ public class TestServletRevenue extends HttpServlet {
                 InvestmentName = "CHF";
 
             // TODO BigDecimal
-            Double capital = Double.valueOf(sCapital);
+            BigDecimal capital = new BigDecimal(sCapital);
             LocalDate BUY_DATE = LocalDate.parse(SBUY_DATE, formatter);
             LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
 
@@ -91,8 +92,7 @@ public class TestServletRevenue extends HttpServlet {
 
             req.setAttribute("investmentRevenueCriteria", input);
             req.setAttribute("investmentRevenueResult", ir);
-            req.setAttribute("investmentRevenue", Math.round(ir.getCapitalRevenueValue() * 100.0) / 100.0);
-            req.setAttribute("investmentRevenueDelta", Math.round(ir.getCapitalRevenueDeltaPrecentValue() * 100.0) / 100.0);
+
 
             if (ir.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);

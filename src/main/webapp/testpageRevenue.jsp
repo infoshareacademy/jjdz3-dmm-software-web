@@ -57,8 +57,8 @@
 <p>${message}</p>
 </br>
 <p><b>Result: </b></p>
-<p>Capital Revenue: <b>${investmentRevenue}</b> [PLN]</p>
-<p>Capital Revenue Delta: <b>${investmentRevenueDelta}</b> [%]</p>
+<p>Capital Revenue: <b>${investmentRevenueResult.capitalRevenueValue}</b> [PLN]</p>
+<p>Capital Revenue Delta: <b>${investmentRevenueResult.capitalRevenueDeltaPrecentValue}</b> [%]</p>
 
 <p><b>User input moderation report:</b></p>
 <p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
