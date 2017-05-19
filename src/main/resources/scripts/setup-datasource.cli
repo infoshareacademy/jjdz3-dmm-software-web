@@ -1,0 +1,18 @@
+connect
+
+module add --name=mysql --resources=${settings.localRepository}/mysql/mysql-connector-java/${mysql.version}/mysql-connector-java-${mysql.version}.jar --dependencies=javax.api,javax.transaction.api
+
+/subsystem=datasources/jdbc-driver=mysql: \
+    add( \
+        driver-name="mysql", \
+        driver-module-name="mysql")
+
+/subsystem=datasources/data-source=WowAuctionsDS: \
+    add( \
+     jndi-name="${datasource.jndi}", \
+     driver-name=mysql, \
+     connection-url="${datasource.connection}", \
+     user-name="${datasource.user}", \
+     password="${datasource.password}")
+
+/subsystem=ee/service=default-bindings:write-attribute(name="datasource", value="${datasource.jndi}")

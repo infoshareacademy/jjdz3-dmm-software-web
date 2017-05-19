@@ -1,18 +1,28 @@
 DMMsoftware  Finance-app
 
 
-Build & run
+#### Build & run
 
-Run Maven command from the project root:
+1 Install Docker on your OS.
 
-    mvn wildfly:run
-     
+2 Run MySQL in Docker container:
 
-To quit wildfly: [CTRL]+[C] 
-    
+    $ sudo docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=dmm_finance_db -e MYSQL_USER=isa_user -e MYSQL_PASSWORD=admin mysql
 
-Configuration of application web container Wildfly plugin
+3 To build war and start application run Maven command from the project root:
 
-default port:8080
+    $ sudo mvn process-resources wildfly:run@startApp
 
-test page: http://localhost:8080/financial-app/index.html
+To quit wildfly:
+ 
+    $ CTRL+C
+
+To clean maven last build:
+  
+    $ sudo mvn clean
+
+test pages:
+
+plain html: http://localhost:8080/financial-app/index.html
+
+servlet/jsp: http://localhost:8080/financial-app/revenue
