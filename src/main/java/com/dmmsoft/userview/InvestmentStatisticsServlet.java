@@ -1,4 +1,4 @@
-package com.dmmsoft;
+package com.dmmsoft.userview;
 
 /**
  * Created by milo on 15.04.17.
@@ -23,8 +23,8 @@ import java.io.IOException;
 
 import java.util.List;
 
-@WebServlet(urlPatterns = "/test")
-public class TestServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/investmentstats")
+public class InvestmentStatisticsServlet extends HttpServlet {
 
     @Inject
     IDataContainerService container;

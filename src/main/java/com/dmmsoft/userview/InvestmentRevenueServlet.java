@@ -1,4 +1,4 @@
-package com.dmmsoft;
+package com.dmmsoft.userview;
 
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
@@ -7,11 +7,9 @@ import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IDataContainerService;
 import com.dmmsoft.dbtest.ITestStorageService;
 import com.dmmsoft.dbtest.TestEntity;
-import com.dmmsoft.dbtest.TestPersistenceEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,10 +26,10 @@ import java.time.format.DateTimeFormatter;
  * Created by milo on 12.05.17.
  */
 
-@WebServlet(urlPatterns = "/revenue")
-public class TestServletRevenue extends HttpServlet {
+@WebServlet("/userview/investmentrevenue")
+public class InvestmentRevenueServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestServletRevenue.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
     private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
             "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
             "    User criteria moderated by systen are listed in User input moderation report.";
@@ -47,7 +45,7 @@ public class TestServletRevenue extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
+        req.getRequestDispatcher("investmentrevenue.jsp").forward(req, resp);
 
     }
 
@@ -103,11 +101,11 @@ public class TestServletRevenue extends HttpServlet {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
             }
 
-            req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("investmentrevenue.jsp").forward(req, resp);
 
         } catch (NoDataForCriteria ex) {
             req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
-            req.getRequestDispatcher("testpageRevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("investmentrevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
 
         }

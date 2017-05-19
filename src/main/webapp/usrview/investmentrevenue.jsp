@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title><b> JSP TestPage Revenue </b></title>
@@ -64,5 +64,7 @@
 <p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
 <p>sell date: <b>${investmentRevenueResult.finallyEvaluatedInput.sellDate}</b></p>
 
+<jsp:include page="../partials/formheader.jsp"/>
+<jsp:include page="../partials/footer.jsp" />
 </body>
 </html>
