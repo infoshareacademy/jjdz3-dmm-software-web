@@ -1,4 +1,4 @@
-package com.dmmsoft.userview;
+package com.dmmsoft.analyzer;
 
 /**
  * Created by milo on 15.04.17.

@@ -36,7 +36,9 @@
 <body>
 <p style={font-size:120%}><b>JSP TestPage</b></p>
 
-<form method="post" action="revenue">
+<jsp:include page="../partials/formheader.jsp"/>
+
+<form method="post" action="../analyzer/investmentrevenue">
     <p><b> Analysis: Investment Revenue</b></p>
     <p>1. <input type="text" name="investmenName" style="width:170px" id="inputForm" placeholder="inv.name, e.g. USD"/></p>
     <p>2. <input type="text" pattern="[0-9]*"  name="capital" style="width:170px" placeholder="inv.capital, e.g. 10000"/></p>
@@ -64,7 +66,7 @@
 <p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
 <p>sell date: <b>${investmentRevenueResult.finallyEvaluatedInput.sellDate}</b></p>
 
-<jsp:include page="../partials/formheader.jsp"/>
+
 <jsp:include page="../partials/footer.jsp" />
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.dmmsoft.userview;
+package com.dmmsoft.analyzer;
 
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter;
  * Created by milo on 12.05.17.
  */
 
-@WebServlet("/userview/investmentrevenue")
+@WebServlet(urlPatterns = "/analyzer/investmentrevenue")
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
@@ -45,7 +45,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("investmentrevenue.jsp").forward(req, resp);
+        req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
 
     }
 
@@ -101,11 +101,11 @@ public class InvestmentRevenueServlet extends HttpServlet {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
             }
 
-            req.getRequestDispatcher("investmentrevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
 
         } catch (NoDataForCriteria ex) {
             req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
-            req.getRequestDispatcher("investmentrevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
 
         }

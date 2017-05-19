@@ -1,4 +1,4 @@
-package com.dmmsoft.userview;
+package com.dmmsoft;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ public class UserMenuServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        resp.sendRedirect("usrview/usermenu.jsp");
+        resp.sendRedirect("userview/usermenu.jsp");
 
 
     }
