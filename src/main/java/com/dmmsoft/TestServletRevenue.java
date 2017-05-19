@@ -4,17 +4,14 @@ import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
-import com.dmmsoft.app.analyzer.analyses.stats.ItemStats;
-import com.dmmsoft.app.analyzer.analyses.stats.ItemStatsCriteria;
-import com.dmmsoft.app.analyzer.analyses.stats.ItemStatsResult;
-import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
-import com.dmmsoft.app.dataloader.MainContainerLoader;
-import com.dmmsoft.app.model.Investment;
-import com.dmmsoft.app.model.MainContainer;
 import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.dbtest.ITestStorageService;
+import com.dmmsoft.dbtest.TestEntity;
+import com.dmmsoft.dbtest.TestPersistenceEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +23,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * Created by milo on 12.05.17.
@@ -42,8 +38,11 @@ public class TestServletRevenue extends HttpServlet {
 
     private static final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
 
+
     @Inject
     IDataContainerService container;
+    @Inject
+    ITestStorageService testcontainer;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,8 +55,14 @@ public class TestServletRevenue extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //db test
+            TestEntity et = new TestEntity();
+            et.setValue("test value");
+            testcontainer.addTestEntity(et);
 
+
+            // default form test values
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String InvestmentName = req.getParameter("investmenName");
             String sCapital = req.getParameter("capital");
             String SBUY_DATE = req.getParameter("buyDate");
