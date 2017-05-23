@@ -5,8 +5,6 @@ import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IDataContainerService;
-import com.dmmsoft.dbtest.ITestStorageService;
-import com.dmmsoft.dbtest.TestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +38,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
     @Inject
     IDataContainerService container;
     @Inject
-    ITestStorageService testcontainer;
+    IFavouriteService testcontainer;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,9 +52,9 @@ public class InvestmentRevenueServlet extends HttpServlet {
 
         try {
             //db test
-            TestEntity et = new TestEntity();
+            Favourite et = new Favourite();
             et.setValue("test value");
-            testcontainer.addTestEntity(et);
+            testcontainer.addFavourite(et);
 
 
             // default form test values
