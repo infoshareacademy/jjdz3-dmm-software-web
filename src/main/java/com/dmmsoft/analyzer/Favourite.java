@@ -1,16 +1,19 @@
-package com.dmmsoft.dbtest;
+package com.dmmsoft.analyzer;
+
+import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by milo on 19.05.17.
  */
 
 @Entity
-public class TestEntity {
+public class Favourite {
 
 
     @Id

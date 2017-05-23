@@ -1,11 +1,11 @@
-package com.dmmsoft.dbtest;
+package com.dmmsoft.analyzer;
 
 /**
  * Created by milo on 19.05.17.
  */
-public interface ITestStorageService {
+public interface IFavouriteService {
 
 
-    void addTestEntity(TestEntity te);
+    void addFavourite(Favourite te);
 
 }

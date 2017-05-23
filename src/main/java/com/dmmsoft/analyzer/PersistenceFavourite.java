@@ -1,6 +1,4 @@
-package com.dmmsoft.dbtest;
-
-import com.dmmsoft.app.analyzer.analyses.stats.ItemStatsCriteria;
+package com.dmmsoft.analyzer;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
@@ -12,14 +10,14 @@ import javax.transaction.Transactional;
  */
 
 @Default
-public class TestPersistenceEntity implements ITestStorageService {
+public class PersistenceFavourite implements IFavouriteService {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional
-   public void addTestEntity(TestEntity te){
+   public void addFavourite(Favourite te){
         em.persist(te);
     }
 

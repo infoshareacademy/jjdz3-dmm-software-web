@@ -1,4 +1,4 @@
-package com.dmmsoft.analyzer;
+package com.dmmsoft.analyzer.analysis;
 
 /**
  * Created by milo on 15.04.17.

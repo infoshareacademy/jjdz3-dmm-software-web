@@ -1,5 +1,7 @@
-package com.dmmsoft.analyzer;
+package com.dmmsoft.analyzer.analysis;
 
+import com.dmmsoft.analyzer.Favourite;
+import com.dmmsoft.analyzer.IFavouriteService;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
