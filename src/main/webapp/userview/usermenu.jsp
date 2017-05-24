@@ -7,7 +7,7 @@
 </head>
 <body>
 <p>Menu</p>
-<a href="../analyzer/investmentrevenue">Favourites</a>
+<a href="../analyzer/favourite">Favourites</a>
 <br>
 <p>Choose your investment analysis:</p>
 <a href="../analyzer/investmentrevenue">Revenue</a><br>
