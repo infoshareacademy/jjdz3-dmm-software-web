@@ -1,4 +1,6 @@
-package com.dmmsoft.dbtests;
+package com.dmmsoft.user;
+
+import com.dmmsoft.dbtests.LocalInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,12 +14,38 @@ import java.util.List;
 public class User {
 
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private long id;
     private String login;
+    private Boolean isAdmin;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+
+//@OneToMany(mappedBy = "user")
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE })
+    @JoinColumn(name = "UserId")
     private List<LocalInvestmentRevenueCriteria> favourites = new ArrayList<>();
+
+
+
+    public User() {
+    }
+
+    public User(long id) {
+        this.id=id;
+    }
+
+
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
 
 
     public long getId() {

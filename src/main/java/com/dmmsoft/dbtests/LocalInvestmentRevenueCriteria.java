@@ -1,10 +1,9 @@
 package com.dmmsoft.dbtests;
 
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
+import com.dmmsoft.user.User;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,8 +14,32 @@ import java.time.LocalDate;
 @Entity
 public class LocalInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
 
+    @Id
+    @GeneratedValue
+    private long id;
+
+
+
     @ManyToOne
-    User user;
+    private User user;
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public LocalInvestmentRevenueCriteria() {
     }

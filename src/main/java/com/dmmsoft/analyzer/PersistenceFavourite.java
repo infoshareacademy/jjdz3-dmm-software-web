@@ -1,11 +1,8 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
 import com.dmmsoft.dbtests.LocalInvestmentRevenueCriteria;
-import com.dmmsoft.dbtests.User;
 
 import javax.enterprise.inject.Default;
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -32,10 +29,12 @@ public class PersistenceFavourite implements IFavouriteService {
     public List<LocalInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
 
 // select m from LocalInvestmentRevenueCriteria m left join fetch m.user t where t.id=:id
+        //.setParameter("id", UserId)
+
+
 
        List<LocalInvestmentRevenueCriteria> criteria = em
                .createQuery("select m from LocalInvestmentRevenueCriteria m", LocalInvestmentRevenueCriteria.class)
-               //.setParameter("id", UserId)
                .getResultList();
 
        return criteria;
