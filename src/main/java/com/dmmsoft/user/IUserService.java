@@ -11,6 +11,7 @@ public interface IUserService {
 
   void  add(User user);
 
+  User get(long userId);
 
 
 

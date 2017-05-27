@@ -1,10 +1,12 @@
 package com.dmmsoft;
 
 import com.dmmsoft.analyzer.analysis.InvestmentRevenueServlet;
+import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +19,15 @@ import java.io.IOException;
  * Created by milo on 26.05.17.
  */
 
-@WebServlet(urlPatterns = "/loginservlet")
+@WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
 private static final Logger LOGGER = LoggerFactory.getLogger(LoginServlet.class);
-long USER_ID = 1;
 
+private Long USER_ID;
+
+@Inject
+private IUserService userStorage;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,10 +38,17 @@ long USER_ID = 1;
         //   - new user -redirect to add user
         //   - user - get user object form db
 
-        User user = new User();
-        user.setId(USER_ID);
-        user.setAdmin(false);
-        user.setLogin("user@userdomain.com");
+        // for Manual Tests:
+        // Temporary user change before user authentication implementation :
+
+        String id =req.getParameter("id");
+        if(id==null || id.isEmpty())
+        {
+            id = "1";
+        }
+        USER_ID = Long.parseLong(id);
+
+        User user = userStorage.get(USER_ID);
         HttpSession session = req.getSession();
         session.setAttribute("authenticatedUser",user);
 
@@ -45,9 +57,7 @@ long USER_ID = 1;
 
         if (user.getAdmin()==false)
         {
-            LOGGER.info("");
-            //resp.sendRedirect("usermenu");
-
+            LOGGER.info("User view redirection: isAdmin:"+user.getAdmin());
             req.getRequestDispatcher("usermenu").forward(req,resp);
         }
 

@@ -1,12 +1,10 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.InvestmentRevenueServlet;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
-import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IDataContainerService;
-import com.dmmsoft.dbtests.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

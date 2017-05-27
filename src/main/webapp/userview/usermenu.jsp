@@ -11,7 +11,7 @@
 <br>
 <p>Choose your investment analysis:</p>
 <a href="../analyzer/investmentrevenue">Revenue</a><br>
-<a href="../investmentstats">Statistics</a><br>
+<a href="../analyzer/investmentrevenue">Statistics</a><br>
 <a href="../analyzer/investmentrevenue">Quotation Fluctuations</a><br>
 <a href="../analyzer/investmentrevenue">Top10</a><br>
 <br>

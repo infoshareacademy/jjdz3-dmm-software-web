@@ -3,4 +3,4 @@ target/
 *.iml
 logs/
 
-src/main/java/com/dmmsoft/dbtests/
+src/main/java/com/dmmsoft/manualtest/

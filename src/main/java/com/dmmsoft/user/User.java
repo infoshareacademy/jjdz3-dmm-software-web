@@ -1,6 +1,6 @@
 package com.dmmsoft.user;
 
-import com.dmmsoft.dbtests.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.util.ArrayList;

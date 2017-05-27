@@ -1,7 +1,6 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
-import com.dmmsoft.dbtests.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
 
 import java.util.List;
 

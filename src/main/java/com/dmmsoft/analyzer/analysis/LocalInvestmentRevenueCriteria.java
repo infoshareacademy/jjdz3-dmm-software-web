@@ -1,4 +1,4 @@
-package com.dmmsoft.dbtests;
+package com.dmmsoft.analyzer.analysis;
 
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.user.User;
