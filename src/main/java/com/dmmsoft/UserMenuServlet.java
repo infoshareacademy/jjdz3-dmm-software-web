@@ -23,22 +23,18 @@ public class UserMenuServlet extends HttpServlet{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserMenuServlet.class);
     private Security security = new Security();
-
+    private final boolean isADMIN_VIEW=false;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       // security.checkRequest(req, resp);
-        new Security().checkRequest(req, resp);
 
-/*        if(req.getSession().getAttribute("authenticatedUser")==null){
-            req.getRequestDispatcher("../accessdenied.jsp").forward(req,resp);
-        }*/
-
+       new Security().checkRequest(req, resp, isADMIN_VIEW);
 
        User user = (User) req.getSession().getAttribute("authenticatedUser");
-       if(user.getAdmin()==true){
+      /* if(user.getAdmin()==true){
            req.getRequestDispatcher("manualtest").forward(req,resp);
        }
+      */
 
        LOGGER.info("user from session:"+user.getLogin());
 

@@ -28,7 +28,7 @@ import java.util.List;
 @WebServlet(urlPatterns = "/analyzer/favourite")
 public class FavouriteServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteServlet.class);
-
+    private final boolean isADMIN_VIEW=false;
 
     @Inject
     IDataContainerService container;
@@ -40,7 +40,7 @@ public class FavouriteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new Security().checkRequest(req,resp);
+        new Security().checkRequest(req,resp, isADMIN_VIEW);
 
         /*if(req.getSession().getAttribute("authenticatedUser")==null){
             req.getRequestDispatcher("../accessdenied.jsp").forward(req,resp);
