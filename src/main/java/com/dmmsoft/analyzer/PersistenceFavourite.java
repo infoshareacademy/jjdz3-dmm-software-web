@@ -28,14 +28,6 @@ public class PersistenceFavourite implements IFavouriteService {
     @Override
     public List<LocalInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
 
-       //TODO filter by user Id
-       //.createQuery("select m from LocalInvestmentRevenueCriteria m left join fetch m.user t where t.id=1", LocalInvestmentRevenueCriteria.class) // empty!
-       //.createQuery("select m from LocalInvestmentRevenueCriteria m where m.id=:Id"  //this works
-        // select * from LocalInvestmentRevenueCriteria t1 LEFT JOIN User t2 ON t1.UserId=t2.id where t2.id=1 //ok
-
-
-       // UserId=1;
-
        List<LocalInvestmentRevenueCriteria> criteria = em
                .createQuery("select m from LocalInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id", LocalInvestmentRevenueCriteria.class)
                .setParameter("Id", UserId)

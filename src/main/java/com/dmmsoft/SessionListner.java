@@ -1,5 +1,6 @@
 package com.dmmsoft;
 
+import com.dmmsoft.user.Security;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,13 @@ public class SessionListner implements HttpSessionListener, HttpSessionAttribute
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent httpSessionBindingEvent) {
-      User user = (User)httpSessionBindingEvent.getSession().getAttribute("authenticatedUser");
-        LOGGER.info("User added to session (login): "+user.getLogin());
+        if (httpSessionBindingEvent.getSession().getAttribute("authenticatedUser")!=null) {
+            User user = (User) httpSessionBindingEvent.getSession().getAttribute("authenticatedUser");
+            LOGGER.info("User added to session (login): " + user.getLogin());
+        }
+        else {
+            LOGGER.warn("Not authenticated user session opening attempt!"+HttpSessionBindingEvent.class.getName());
+        }
     }
 
     @Override
