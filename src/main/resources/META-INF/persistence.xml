@@ -2,8 +2,11 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/persistence"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
+
     <persistence-unit name="default">
         <jta-data-source>java:/datasources/isaDB</jta-data-source>
+        <jar-file>lib/financial-app-1.0-SNAPSHOT-jar-with-dependencies.jar</jar-file>
+        <class>com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria</class>
 
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

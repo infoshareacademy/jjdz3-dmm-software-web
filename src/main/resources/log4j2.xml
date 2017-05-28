@@ -16,10 +16,10 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.dmmsoft.TestServletRevenue" level="TRACE">
+        <Logger name="com.dmmsoft.analyzer.analysis.InvestmentRevenueServlet" level="TRACE">
             <AppenderRef ref="MainLogger"/>
         </Logger>
-        <Logger name="com.dmmsoft.TestServletRevenue" level="TRACE">
+        <Logger name="com.dmmsoft.analyzer.analysis.InvestmentRevenueServlet" level="TRACE">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="trace">

@@ -19,10 +19,19 @@ To quit wildfly:
 
 To clean maven last build:
   
-    $ sudo mvn clean
+    $ sudo mvn install clean
+
 
 test pages:
 
-plain html: http://localhost:8080/financial-app/index.html
+servlet/jsp: http://localhost:8080/financial-app/login
 
-servlet/jsp: http://localhost:8080/financial-app/revenue
+
+manual testing welcome page:
+
+http://localhost:8080/financial-app/manualtest
+
+
+
+
+
