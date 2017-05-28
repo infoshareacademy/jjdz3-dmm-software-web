@@ -40,6 +40,11 @@ public class FavouriteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        if(req.getSession().getAttribute("authenticatedUser")==null){
+            req.getRequestDispatcher("../manualtest").forward(req,resp);
+        }
+
+
         User user = (User) req.getSession().getAttribute("authenticatedUser");
 
         List<LocalInvestmentRevenueCriteria> list = favouriteService.getAllUserFavoutiteCriteria(user.getId());

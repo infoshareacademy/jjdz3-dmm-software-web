@@ -34,11 +34,11 @@ public class PersistenceFavourite implements IFavouriteService {
         // select * from LocalInvestmentRevenueCriteria t1 LEFT JOIN User t2 ON t1.UserId=t2.id where t2.id=1 //ok
 
 
-        UserId=2;
+       // UserId=1;
 
        List<LocalInvestmentRevenueCriteria> criteria = em
-               .createQuery("select m from LocalInvestmentRevenueCriteria m", LocalInvestmentRevenueCriteria.class)
-               //.setParameter("Id", UserId)
+               .createQuery("select m from LocalInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id", LocalInvestmentRevenueCriteria.class)
+               .setParameter("Id", UserId)
                .getResultList();
 
        return criteria;

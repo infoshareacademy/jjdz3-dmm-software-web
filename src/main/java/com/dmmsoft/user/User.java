@@ -25,7 +25,7 @@ public class User {
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE })
-    @JoinColumn(name = "UserId")
+    @JoinColumn(name = "user_id")
     private List<LocalInvestmentRevenueCriteria> favourites = new ArrayList<>();
 
 

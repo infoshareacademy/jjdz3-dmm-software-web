@@ -42,8 +42,7 @@ private IUserService userStorage;
         // Temporary user change before user authentication implementation :
 
         String id =req.getParameter("id");
-        if(id==null || id.isEmpty())
-        {
+        if(id==null || id.isEmpty()) {
             id = "1";
         }
         USER_ID = Long.parseLong(id);
@@ -55,8 +54,7 @@ private IUserService userStorage;
         LOGGER.info("UserAuthenticated: Id:"+user.getId()+" login:"+user.getLogin()
                 +"Role(isAdmin): " +user.getAdmin());
 
-        if (user.getAdmin()==false)
-        {
+        if (user.getAdmin()==false) {
             LOGGER.info("User view redirection: isAdmin:"+user.getAdmin());
             req.getRequestDispatcher("usermenu").forward(req,resp);
         }

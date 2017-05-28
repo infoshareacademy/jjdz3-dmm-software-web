@@ -28,6 +28,10 @@ public class UserMenuServlet extends HttpServlet{
 
 
        User user = (User) req.getSession().getAttribute("authenticatedUser");
+       if(user==null || user.getAdmin()==true){
+           req.getRequestDispatcher("manualtest").forward(req,resp);
+       }
+
        LOGGER.info("user from session:"+user.getLogin());
 
        resp.sendRedirect("userview/usermenu.jsp");
