@@ -18,12 +18,8 @@ public class User {
     @GeneratedValue
     private long id;
     private String login;
-    private String name;
+    private String pass;
     private Boolean isAdmin;
-
-
-//@OneToMany(mappedBy = "user")
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE })
     @JoinColumn(name = "user_id")
@@ -39,12 +35,12 @@ public class User {
     }
 
 
-    public String getName() {
-        return name;
+    public String getPass() {
+        return pass;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPass(String name) {
+        this.pass = name;
     }
 
     public Boolean getAdmin() {

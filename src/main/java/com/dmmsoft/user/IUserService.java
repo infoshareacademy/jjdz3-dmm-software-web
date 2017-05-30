@@ -2,6 +2,7 @@ package com.dmmsoft.user;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by milo on 26.05.17.
@@ -13,7 +14,7 @@ public interface IUserService {
 
   User get(long userId);
 
-  User get(String userEmail);
+  List<User> getUserByEmail(String userEmail);
 
 
 }

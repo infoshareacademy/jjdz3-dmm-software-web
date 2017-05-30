@@ -23,7 +23,7 @@ public class LoginServletTest extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginServletTest.class);
 
-    private Long USER_ID;
+    private final String TESTLOGIN="user1@user1.com";
 
     @Inject
     private IUserService userStorage;
@@ -31,49 +31,30 @@ public class LoginServletTest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        /* TODO G+ authentication
-         1 Implement user G+ Authentication
-         2 Adjust Application User Class to store G+ credentials
-
-         TODO login servlet flow:
-         1 try to fetch user object from db:
-           - new user -add user to db
-           - user in db - get user object form db
-         2 add user object to new session in this servlet
-         */
-
-        /*
+        /* MANUAL TESTING
         Note! Now user authentication is mocked:
 
         Temporary db user data are inserted to empty db by accesing servlet:
         http://localhost:8080/financial-app/manualtest
-        You can switch users by passing id as attribute to this servlet, eg:
 
-        http://localhost:8080/financial-app/login?id=8 (user with admin role)
-        http://localhost:8080/financial-app/login (user standard role - default id = 1)
+        http://localhost:8080/financial-app/login (user standard role - default user1@user1.com)
 
-        Always check db user table to be sure of current user id
+        Always check db user table to be sure of current user login
         */
 
-        String id = req.getParameter("id");
-        if (id == null || id.isEmpty()) {
-            id = "1";
-        }
-        USER_ID = Long.parseLong(id);
-
-        User user = userStorage.get(USER_ID);
+        User user = userStorage.getUserByEmail(TESTLOGIN).get(0);
         HttpSession session = req.getSession();
         session.setAttribute("authenticatedUser", user);
 
         LOGGER.info("UserAuthenticated: Id:" + user.getId() + " login:" + user.getLogin()
                 + "Role(isAdmin): " + user.getAdmin());
 
-        if (user.getAdmin() == false) {
+        if (!user.getAdmin()) {
             LOGGER.info("User view redirection: isAdmin:" + user.getAdmin());
             req.getRequestDispatcher("usermenu").forward(req, resp);
         } else {
             LOGGER.info("User view redirection: isAdmin:" + user.getAdmin());
-            req.getRequestDispatcher("../adminview/notimplementedadminview.jsp").forward(req, resp);
+            req.getRequestDispatcher("../adminview/adminmenu.jsp").forward(req, resp);
         }
 
     }

@@ -36,16 +36,14 @@ public class FavouriteServlet extends HttpServlet {
     @Inject
     IFavouriteService favouriteService;
 
+    @Inject
+    Security security;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        new Security().checkRequest(req,resp, isADMIN_VIEW);
+        security.checkRequest(req,resp, isADMIN_VIEW);
 
-        /*if(req.getSession().getAttribute("authenticatedUser")==null){
-            req.getRequestDispatcher("../accessdenied.jsp").forward(req,resp);
-        }
-*/
         User user = (User) req.getSession().getAttribute("authenticatedUser");
         List<LocalInvestmentRevenueCriteria> list = favouriteService.getAllUserFavoutiteCriteria(user.getId());
 

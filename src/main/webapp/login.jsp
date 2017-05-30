@@ -80,7 +80,7 @@
         var redirectUrl = 'login2';
 
         //using jquery to post data dynamically
-        var form = $('<form action="' + redirectUrl + '" method="post">' +
+        var form = $('<form action="' + redirectUrl + '" method="get">' +
             '<input type="text" name="id_token" value="' +
             googleUser.getAuthResponse().id_token + '" />' +
             '</form>');
