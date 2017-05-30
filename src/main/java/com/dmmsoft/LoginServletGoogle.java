@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by daniel on 29.05.17.
  */
-@WebServlet(urlPatterns = "login")
+@WebServlet(urlPatterns = "login2")
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost (HttpServletRequest req,
