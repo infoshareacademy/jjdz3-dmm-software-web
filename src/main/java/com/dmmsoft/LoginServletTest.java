@@ -1,6 +1,5 @@
 package com.dmmsoft;
 
-import com.dmmsoft.analyzer.analysis.InvestmentRevenueServlet;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
@@ -20,9 +19,9 @@ import java.io.IOException;
  */
 
 @WebServlet(urlPatterns = "/login")
-public class LoginServlet extends HttpServlet {
+public class LoginServletTest extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServletTest.class);
 
     private Long USER_ID;
 

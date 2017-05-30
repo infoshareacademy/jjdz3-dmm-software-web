@@ -13,7 +13,7 @@ public interface IUserService {
 
   User get(long userId);
 
-
+  User get(String userEmail);
 
 
 }

@@ -18,6 +18,7 @@ public class User {
     @GeneratedValue
     private long id;
     private String login;
+    private String name;
     private Boolean isAdmin;
 
 
@@ -38,6 +39,13 @@ public class User {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Boolean getAdmin() {
         return isAdmin;
