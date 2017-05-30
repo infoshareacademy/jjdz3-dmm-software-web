@@ -54,10 +54,10 @@
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
         </form>
-            <button type="button" class="btn btn-danger btn-block">Login with Google</button>
             <button type="button" class="btn btn-success btn-block">Zarejestruj się</button>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
 </div>
 
 <footer class="footer">
