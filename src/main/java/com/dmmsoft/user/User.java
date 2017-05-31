@@ -19,7 +19,7 @@ public class User {
     private long id;
     private String login;
     private String pass;
-    private Boolean isAdmin;
+    private boolean isAdmin;
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE })
     @JoinColumn(name = "user_id")
@@ -43,11 +43,11 @@ public class User {
         this.pass = name;
     }
 
-    public Boolean getAdmin() {
+    public boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
 

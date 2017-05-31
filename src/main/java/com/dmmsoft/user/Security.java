@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.io.IOException;
 /**
  * Created by milo on 28.05.17.
  */
+
 public class Security {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Security.class);
@@ -29,7 +31,8 @@ public class Security {
         User user = (User) req.getSession().getAttribute("authenticatedUser");
         if (user.getAdmin() != isAdminView) {
             LOGGER.warn("Authenticated user not permitted view access attempt!");
-            resp.sendRedirect("../accessdenied.jsp"); // TODO: redirect to Admin menu servlet (not implemented yet)
+            resp.sendRedirect("../accessdenied.jsp");
+            // TODO: redirect to Admin menu servlet (not implemented yet: JZ3D-40, JZ3D-44)
 
         }
     }

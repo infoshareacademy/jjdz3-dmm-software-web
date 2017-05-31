@@ -47,8 +47,7 @@ public class LoginServletGoogle extends HttpServlet {
             session.setAttribute("authenticatedUser", user);
             req.getServletContext();
 
-            LOGGER.info("UserAuthenticated: Id:" + user.getId() + " login:" + user.getLogin()
-                    + "Role(isAdmin): " + user.getAdmin());
+            LOGGER.info("UserAuthenticated: Id:{} login:{} role:{}", user.getId(), user.getLogin(), user.getAdmin());
 
             userViewRedirection(user, req, resp);
 

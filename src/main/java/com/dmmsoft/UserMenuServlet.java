@@ -25,7 +25,7 @@ public class UserMenuServlet extends HttpServlet {
     private final boolean isADMIN_VIEW = false;
 
     @Inject
-    Security security;
+    private Security security;
 
 
     @Override
@@ -34,7 +34,7 @@ public class UserMenuServlet extends HttpServlet {
         security.checkRequest(req, resp, isADMIN_VIEW);
 
         User user = (User) req.getSession().getAttribute("authenticatedUser");
-        LOGGER.info("user from session:" + user.getLogin());
+        LOGGER.info("user from session:{}", user.getLogin());
         resp.sendRedirect("userview/usermenu.jsp");
     }
 }
