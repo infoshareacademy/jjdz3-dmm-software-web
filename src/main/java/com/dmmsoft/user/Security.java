@@ -25,7 +25,7 @@ public class Security {
         if (req.getSession().getAttribute("authenticatedUser") == null) {
             resp.sendRedirect("../accessdenied.jsp");
             LOGGER.warn("Not authenticated user session open attempt!");
-            throw new SecurityException();
+            throw new NullPointerException();
         }
 
         User user = (User) req.getSession().getAttribute("authenticatedUser");

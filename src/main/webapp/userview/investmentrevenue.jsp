@@ -25,11 +25,12 @@
 
 </head>
 <body>
+<p><b> Analysis: Investment Revenue</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../partials/formheader.jsp"/>
 
 <form method="post" action="../analyzer/investmentrevenue">
-    <p><b> Analysis: Investment Revenue</b></p>
+    <p><b>form:</b></p>
     <p>1. <input type="text" name="investmenName" style="width:170px" id="inputForm" placeholder="inv.name, e.g. USD"/>
     </p>
     <p>2. <input type="text" pattern="[0-9]*" name="capital" style="width:170px" placeholder="inv.capital, e.g. 10000"/>
@@ -52,14 +53,16 @@
 <p>marked as favourite: <b>${investmentRevenueResult.finallyEvaluatedInput.favourite}</b></p>
 
 <tags:systemMessage systemMessage="${message}"/>
+<p><b>User input moderation report:</b></p>
+<p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
+<p>sell date: <b>${investmentRevenueResult.finallyEvaluatedInput.sellDate}</b></p>
+
 </br>
 <p><b>Result: </b></p>
 <p>Capital Revenue: <b>${investmentRevenueResult.capitalRevenueValue}</b> [PLN]</p>
 <p>Capital Revenue Delta: <b>${investmentRevenueResult.capitalRevenueDeltaPrecentValue}</b> [%]</p>
 
-<p><b>User input moderation report:</b></p>
-<p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
-<p>sell date: <b>${investmentRevenueResult.finallyEvaluatedInput.sellDate}</b></p>
+
 
 
 <jsp:include page="../partials/footer.jsp"/>
