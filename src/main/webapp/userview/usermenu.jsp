@@ -1,11 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <title>Menu</title>
     <jsp:include page="../partials/meta.jsp" />
 </head>
 <body>
+<tags:userLogin user="${sessionScope.authenticatedUser}"/>
+
 <p>Menu</p>
 <a href="../analyzer/favourite">Favourites</a>
 <br>
