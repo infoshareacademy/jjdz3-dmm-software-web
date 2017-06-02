@@ -9,6 +9,7 @@
 <body>
 <p><b>Menu</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
+</br>
 <a href="../analyzer/favourite">Favourites</a>
 <br>
 <p>Choose your investment analysis:</p>

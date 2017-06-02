@@ -1,4 +1,4 @@
-package com.dmmsoft.analyzer.analysis;
+package com.dmmsoft.analyzer.analysis.InvestmentRevenue;
 
 import com.dmmsoft.analyzer.IFavouriteService;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
@@ -58,13 +58,15 @@ public class InvestmentRevenueServlet extends HttpServlet {
 
         try {
 
-            // default form test values
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String InvestmentName = req.getParameter("investmenName");
             String sCapital = req.getParameter("capital");
             String SBUY_DATE = req.getParameter("buyDate");
             String SSELL_DATE = req.getParameter("sellDate");
             Boolean isFavouriteChecked = req.getParameter("isFavourite") != null;
+
+            // default form test values
 
             if (SBUY_DATE == null || SBUY_DATE.toString().isEmpty())
                 SBUY_DATE = "2009-09-10";
@@ -95,10 +97,12 @@ public class InvestmentRevenueServlet extends HttpServlet {
             user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria));
             userService.update(user);
 
-            resp.setContentType(MediaType.TEXT_HTML);
-            req.setAttribute("investmentRevenueCriteria", criteria);
-            req.setAttribute("investmentRevenueResult", result);
+            DisplayWrapper wrapper = new DisplayWrapper();
+            wrapper.setCriteria(criteria);
+            wrapper.setResult(result);
+            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
 
+            req.setAttribute("displayWrapper", wrapper);
 
             if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
@@ -113,5 +117,8 @@ public class InvestmentRevenueServlet extends HttpServlet {
         }
 
     }
+
+
+
 
 }

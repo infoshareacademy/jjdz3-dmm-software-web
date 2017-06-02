@@ -1,4 +1,4 @@
-package com.dmmsoft.analyzer.analysis;
+package com.dmmsoft.analyzer.analysis.InvestmentRevenue;
 
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.user.User;

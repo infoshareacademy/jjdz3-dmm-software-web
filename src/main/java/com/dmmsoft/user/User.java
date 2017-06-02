@@ -1,6 +1,6 @@
 package com.dmmsoft.user;
 
-import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.util.ArrayList;

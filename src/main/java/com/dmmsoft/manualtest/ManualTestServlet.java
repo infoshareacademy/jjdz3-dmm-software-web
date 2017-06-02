@@ -1,6 +1,6 @@
 package com.dmmsoft.manualtest;
 
-import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;

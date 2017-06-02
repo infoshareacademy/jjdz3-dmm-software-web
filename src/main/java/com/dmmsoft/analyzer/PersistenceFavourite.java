@@ -1,12 +1,10 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
-import com.dmmsoft.user.User;
+import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

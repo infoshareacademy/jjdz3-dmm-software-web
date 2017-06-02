@@ -45,25 +45,7 @@
     </p>
 </form>
 
-<p><b>User input data: </b></p>
-<p>Investment name: <b>${investmentRevenueCriteria.investmentName}</b></p>
-<p>Invested capital: <b>${investmentRevenueCriteria.investedCapital}</b></p>
-<p>Buy date: <b>${investmentRevenueCriteria.buyDate}</b></p>
-<p>Sell date: <b>${investmentRevenueCriteria.sellDate}</b></p>
-<p>marked as favourite: <b>${investmentRevenueResult.finallyEvaluatedInput.favourite}</b></p>
-
-<tags:systemMessage systemMessage="${message}"/>
-<p><b>User input moderation report:</b></p>
-<p>buy date: <b>${investmentRevenueResult.finallyEvaluatedInput.buyDate}</b></p>
-<p>sell date: <b>${investmentRevenueResult.finallyEvaluatedInput.sellDate}</b></p>
-
-</br>
-<p><b>Result: </b></p>
-<p>Capital Revenue: <b>${investmentRevenueResult.capitalRevenueValue}</b> [PLN]</p>
-<p>Capital Revenue Delta: <b>${investmentRevenueResult.capitalRevenueDeltaPrecentValue}</b> [%]</p>
-
-
-
+<tags:analysisResult displayWrapper="${displayWrapper}"/>
 
 <jsp:include page="../partials/footer.jsp"/>
 </body>
