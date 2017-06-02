@@ -21,7 +21,7 @@ public class User {
     private String pass;
     private boolean isAdmin;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE })
+    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
     private List<LocalInvestmentRevenueCriteria> favourites = new ArrayList<>();
 

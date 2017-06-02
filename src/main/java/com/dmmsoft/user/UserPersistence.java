@@ -37,5 +37,11 @@ public class UserPersistence implements IUserService {
 
     }
 
+    @Override
+    @Transactional
+    public void update(User user) {
+       User userToUpdate =  em.find(User.class, user.getId());
+       userToUpdate.setFavourites(user.getFavourites());
 
+    }
 }

@@ -2,15 +2,19 @@ package com.dmmsoft.analyzer.analysis;
 
 import com.dmmsoft.analyzer.Favourite;
 import com.dmmsoft.analyzer.IFavouriteService;
+import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.user.IUserService;
+import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,9 +42,12 @@ public class InvestmentRevenueServlet extends HttpServlet {
 
 
     @Inject
-    IDataContainerService container;
+    private IDataContainerService container;
     @Inject
-    IFavouriteService testcontainer;
+    private IFavouriteService favouriteService;
+
+    @Inject
+    private IUserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,11 +60,6 @@ public class InvestmentRevenueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            //db test
-            Favourite et = new Favourite();
-            et.setValue("test value");
-            testcontainer.addFavourite(et);
-
 
             // default form test values
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -84,10 +86,13 @@ public class InvestmentRevenueServlet extends HttpServlet {
             LocalDate BUY_DATE = LocalDate.parse(SBUY_DATE, formatter);
             LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
 
-            InvestmentRevenueCriteria input = new InvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, InvestmentName, isFavouriteChecked);
+            LocalInvestmentRevenueCriteria input = new LocalInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, InvestmentName, isFavouriteChecked);
             InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
 
-            //InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
+            User user = (User)req.getSession().getAttribute("authenticatedUser");
+            user.getFavourites().add(input);
+            // userService.update(user);
+
 
 
             System.out.println("is favourite: " + input.getFavourite());

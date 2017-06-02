@@ -22,7 +22,7 @@ public class DataContainer implements IDataContainerService {
 
 
     @PostConstruct
-    public void onPostConstruct(){
+    public void onPostConstruct() {
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
         MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
         mainContainerLoader.loadFunds();
@@ -31,12 +31,13 @@ public class DataContainer implements IDataContainerService {
         // jar dependency
         com.dmmsoft.app.model.MainContainer mainContainer = mainContainerLoader.getMainContainer();
         this.investments = mainContainer.getInvestments();
-        this.mainContainer=mainContainer;
+        this.mainContainer = mainContainer;
     }
 
-    public List<Investment> getInvestments(){
+    public List<Investment> getInvestments() {
         return investments;
     }
+
     public MainContainer getMainContainer() {
         return mainContainer;
     }

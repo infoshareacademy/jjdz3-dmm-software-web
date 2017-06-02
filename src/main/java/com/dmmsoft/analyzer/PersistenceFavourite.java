@@ -1,6 +1,7 @@
 package com.dmmsoft.analyzer;
 
 import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.user.User;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
@@ -20,8 +21,10 @@ public class PersistenceFavourite implements IFavouriteService {
 
     @Override
     @Transactional
-   public void addFavourite(Favourite te){
-        em.persist(te);
+   public void addFavourite(LocalInvestmentRevenueCriteria criteria, User user){
+
+        user.getFavourites().add(criteria);
+        em.persist(user);
     }
 
 

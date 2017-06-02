@@ -47,4 +47,6 @@ public class LocalInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
     public LocalInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
         super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
     }
+
+
 }
