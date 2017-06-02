@@ -91,7 +91,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
 
             User user = (User)req.getSession().getAttribute("authenticatedUser");
             user.getFavourites().add(input);
-            // userService.update(user);
+            userService.update(user);
 
 
 
