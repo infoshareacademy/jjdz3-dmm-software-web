@@ -1,6 +1,6 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.user.User;
 
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
 public interface IFavouriteService {
 
 
-    void addFavourite(LocalInvestmentRevenueCriteria favouriteCriteria, User user);
 
-    List<LocalInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId);
+
+    List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId);
 
 
 

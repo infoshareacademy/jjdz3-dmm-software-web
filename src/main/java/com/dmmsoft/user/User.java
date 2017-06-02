@@ -1,6 +1,6 @@
 package com.dmmsoft.user;
 
-import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class User {
 
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
-    private List<LocalInvestmentRevenueCriteria> favourites = new ArrayList<>();
+    private List<PersistedInvestmentRevenueCriteria> favourites = new ArrayList<>();
 
 
 
@@ -68,11 +68,11 @@ public class User {
         this.login = login;
     }
 
-    public List<LocalInvestmentRevenueCriteria> getFavourites() {
+    public List<PersistedInvestmentRevenueCriteria> getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(List<LocalInvestmentRevenueCriteria> favourites) {
+    public void setFavourites(List<PersistedInvestmentRevenueCriteria> favourites) {
         this.favourites = favourites;
     }
 

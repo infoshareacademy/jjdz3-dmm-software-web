@@ -1,8 +1,6 @@
 package com.dmmsoft.analyzer.analysis;
 
-import com.dmmsoft.analyzer.Favourite;
 import com.dmmsoft.analyzer.IFavouriteService;
-import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
@@ -14,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -81,38 +78,38 @@ public class InvestmentRevenueServlet extends HttpServlet {
             if (InvestmentName == null || InvestmentName.isEmpty())
                 InvestmentName = "CHF";
 
-            // TODO BigDecimal
             BigDecimal capital = new BigDecimal(sCapital);
             LocalDate BUY_DATE = LocalDate.parse(SBUY_DATE, formatter);
             LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
 
-            LocalInvestmentRevenueCriteria input = new LocalInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, InvestmentName, isFavouriteChecked);
-            InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
+            InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria(capital
+                    ,BUY_DATE
+                    ,SELL_DATE
+                    ,InvestmentName
+                    ,isFavouriteChecked);
+
+            InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),criteria))
+                    .getResult();
 
             User user = (User)req.getSession().getAttribute("authenticatedUser");
-            user.getFavourites().add(input);
+            user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria));
             userService.update(user);
 
-
-
-            System.out.println("is favourite: " + input.getFavourite());
             resp.setContentType(MediaType.TEXT_HTML);
+            req.setAttribute("investmentRevenueCriteria", criteria);
+            req.setAttribute("investmentRevenueResult", result);
 
-            req.setAttribute("investmentRevenueCriteria", input);
-            req.setAttribute("investmentRevenueResult", ir);
 
-
-            if (ir.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
+            if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
             }
-
             req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+            LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
 
         } catch (NoDataForCriteria ex) {
             req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
             req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
-
         }
 
     }

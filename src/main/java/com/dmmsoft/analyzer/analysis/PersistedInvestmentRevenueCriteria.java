@@ -12,12 +12,11 @@ import java.time.LocalDate;
  */
 
 @Entity
-public class LocalInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
+public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
 
     @Id
     @GeneratedValue
     private long id;
-
 
 
     @ManyToOne
@@ -41,11 +40,19 @@ public class LocalInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
         this.user = user;
     }
 
-    public LocalInvestmentRevenueCriteria() {
+    public PersistedInvestmentRevenueCriteria() {
     }
 
-    public LocalInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
+    public PersistedInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
         super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
+    }
+
+    public PersistedInvestmentRevenueCriteria(InvestmentRevenueCriteria criteria) {
+        super.setInvestedCapital(criteria.getInvestedCapital());
+        super.setBuyDate(criteria.getBuyDate());
+        super.setSellDate(criteria.getSellDate());
+        super.setInvestmentName(criteria.getInvestmentName());
+        super.setFavourite(criteria.getFavourite());
     }
 
 

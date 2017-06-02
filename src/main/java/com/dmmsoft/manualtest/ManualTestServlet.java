@@ -1,6 +1,6 @@
 package com.dmmsoft.manualtest;
 
-import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
@@ -43,10 +43,10 @@ public class ManualTestServlet extends HttpServlet {
             LocalDate BUY_DATE = LocalDate.parse("2009-09-12", formatter);
             LocalDate SELL_DATE = LocalDate.parse("2017-04-04", formatter);
 
-            LocalInvestmentRevenueCriteria criteriaCHF = new LocalInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "CHF", true);
-            LocalInvestmentRevenueCriteria criteriaUSD = new LocalInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "USD", true);
-            LocalInvestmentRevenueCriteria criteriaAUD = new LocalInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "AUD", true);
-            LocalInvestmentRevenueCriteria criteriaAIP = new LocalInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "AIP001", true);
+            PersistedInvestmentRevenueCriteria criteriaCHF = new PersistedInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "CHF", true);
+            PersistedInvestmentRevenueCriteria criteriaUSD = new PersistedInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "USD", true);
+            PersistedInvestmentRevenueCriteria criteriaAUD = new PersistedInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "AUD", true);
+            PersistedInvestmentRevenueCriteria criteriaAIP = new PersistedInvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, "AIP001", true);
 
             User userWithMultipleCriteria = new User();
             userWithMultipleCriteria.setLogin("user1@user1.com");

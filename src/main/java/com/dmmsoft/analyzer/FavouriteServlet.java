@@ -4,7 +4,7 @@ import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IDataContainerService;
-import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.user.Security;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
@@ -45,11 +45,11 @@ public class FavouriteServlet extends HttpServlet {
         security.checkRequest(req,resp, isADMIN_VIEW);
 
         User user = (User) req.getSession().getAttribute("authenticatedUser");
-        List<LocalInvestmentRevenueCriteria> list = favouriteService.getAllUserFavoutiteCriteria(user.getId());
+        List<PersistedInvestmentRevenueCriteria> list = favouriteService.getAllUserFavoutiteCriteria(user.getId());
 
         try {
 
-            for (LocalInvestmentRevenueCriteria criteria : list) {
+            for (PersistedInvestmentRevenueCriteria criteria : list) {
                 InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), criteria)).getResult();
 
                 // TODO implement JSP page displaying favourite analysis results
