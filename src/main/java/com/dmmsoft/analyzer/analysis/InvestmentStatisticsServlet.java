@@ -10,7 +10,7 @@ import com.dmmsoft.app.analyzer.analyses.stats.ItemStatsResult;
 
 import com.dmmsoft.app.model.Investment;
 
-import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.container.IModelContainerService;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -27,7 +27,7 @@ import java.util.List;
 public class InvestmentStatisticsServlet extends HttpServlet {
 
     @Inject
-    IDataContainerService container;
+    IModelContainerService container;
 
     private static final String TEST_INV_NAME= "AGI001";
 

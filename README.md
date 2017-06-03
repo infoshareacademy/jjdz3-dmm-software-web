@@ -24,10 +24,12 @@ To clean maven last build:
 
 test pages:
 
-servlet/jsp: http://localhost:8080/financial-app/login
+servlet/jsp:
+ 
+http://localhost:8080/financial-app/login   (Google+ auth)
 
 
-manual testing welcome page:
+to populate db with example data:
 
 http://localhost:8080/financial-app/manualtest
 

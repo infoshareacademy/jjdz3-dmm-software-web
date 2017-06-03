@@ -7,7 +7,6 @@ import com.dmmsoft.app.model.MainContainer;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
-import javax.enterprise.inject.Default;
 import java.util.List;
 
 /**
@@ -15,14 +14,14 @@ import java.util.List;
  */
 
 @Singleton
-public class DataContainer implements IDataContainerService {
+public class ModelContainer implements IModelContainerService {
 
     private List<Investment> investments;
     private com.dmmsoft.app.model.MainContainer mainContainer;
 
 
     @PostConstruct
-    public void onPostConstruct(){
+    public void onPostConstruct() {
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
         MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
         mainContainerLoader.loadFunds();
@@ -31,12 +30,13 @@ public class DataContainer implements IDataContainerService {
         // jar dependency
         com.dmmsoft.app.model.MainContainer mainContainer = mainContainerLoader.getMainContainer();
         this.investments = mainContainer.getInvestments();
-        this.mainContainer=mainContainer;
+        this.mainContainer = mainContainer;
     }
 
-    public List<Investment> getInvestments(){
+    public List<Investment> getInvestments() {
         return investments;
     }
+
     public MainContainer getMainContainer() {
         return mainContainer;
     }

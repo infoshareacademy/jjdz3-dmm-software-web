@@ -54,7 +54,7 @@
 <p> *** End of content *** </p>
 
 
-<utils:test message="${investment}" />
+<utils:userLogin message="${investment}" />
 
 
 </body>
