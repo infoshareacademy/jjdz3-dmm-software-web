@@ -55,5 +55,14 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         super.setFavourite(criteria.getFavourite());
     }
 
+    public InvestmentRevenueCriteria getEqualEquivalent(PersistedInvestmentRevenueCriteria revenueCriteria){
+        InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria();
+        criteria.setInvestedCapital(revenueCriteria.getInvestedCapital());
+        criteria.setBuyDate(revenueCriteria.getBuyDate());
+        criteria.setSellDate(revenueCriteria.getSellDate());
+        criteria.setInvestmentName(revenueCriteria.getInvestmentName());
+        return criteria;
+    }
+
 
 }

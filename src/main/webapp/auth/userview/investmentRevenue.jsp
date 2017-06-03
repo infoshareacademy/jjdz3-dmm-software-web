@@ -45,7 +45,7 @@
     </p>
 </form>
 
-<tags:analysisResult displayWrapper="${displayWrapper}"/>
+<tags:analysisResult contentWrapper="${contentWrapper}"/>
 
 <jsp:include page="../../partials/footer.jsp"/>
 </body>

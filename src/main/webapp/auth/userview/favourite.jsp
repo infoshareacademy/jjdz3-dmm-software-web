@@ -13,8 +13,8 @@
 <jsp:include page="../../partials/formheader.jsp"/>
 </br>
 <p>Investment Revenue:</p>
-<c:forEach var="displayWrapper" items="${displayWrappers}">
-    <tags:analysisResult displayWrapper="${displayWrapper}"/>
+<c:forEach var="contentWrapper" items="${contentWrappers}">
+    <tags:analysisResult contentWrapper="${contentWrapper}"/>
 </c:forEach>
 </body>
 </html>

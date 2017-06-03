@@ -6,7 +6,7 @@ import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 /**
  * Created by milo on 02.06.17.
  */
-public class DisplayWrapper {
+public class ContentWrapper {
 
         private InvestmentRevenueCriteria criteria;
         private InvestmentRevenueResult result;

@@ -32,7 +32,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
     private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
             "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
-            "    User criteria moderated by systen are listed in User input moderation report.";
+            "    User criteria moderated by system are listed in User input moderation report.";
 
     private static final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
 
@@ -96,16 +96,16 @@ public class InvestmentRevenueServlet extends HttpServlet {
             user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria));
             userService.update(user);
 
-            DisplayWrapper wrapper = new DisplayWrapper();
+            ContentWrapper wrapper = new ContentWrapper();
             wrapper.setCriteria(criteria);
             wrapper.setResult(result);
-            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
-
+            if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
+                wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
+                //req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
+            }
             req.setAttribute("displayWrapper", wrapper);
 
-            if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
-                req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
-            }
+
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
 

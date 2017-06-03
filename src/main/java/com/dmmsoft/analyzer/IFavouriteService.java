@@ -9,11 +9,5 @@ import java.util.List;
  */
 public interface IFavouriteService {
 
-
-
-
     List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId);
-
-
-
 }
