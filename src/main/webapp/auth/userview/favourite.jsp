@@ -10,7 +10,7 @@
 <body>
 <p><b>Favourite Analysis</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-<jsp:include page="../partials/formheader.jsp"/>
+<jsp:include page="../../partials/formheader.jsp"/>
 </br>
 <p>Investment Revenue:</p>
 <c:forEach var="displayWrapper" items="${displayWrappers}">

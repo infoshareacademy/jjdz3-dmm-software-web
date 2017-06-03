@@ -3,11 +3,9 @@ package com.dmmsoft.analyzer;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.DisplayWrapper;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
-import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
-import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
-import com.dmmsoft.user.Security;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,26 +25,21 @@ import java.util.List;
  */
 
 
-@WebServlet(urlPatterns = "/analyzer/favourite")
+@WebServlet(urlPatterns = "/auth/userview/favourite")
 public class FavouriteServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteServlet.class);
     private final boolean isADMIN_VIEW=false;
 
     @Inject
-    IDataContainerService container;
+    IModelContainerService container;
 
     @Inject
     IFavouriteService favouriteService;
 
-    @Inject
-    Security security;
 
-    private DisplayWrapper wrapper = new DisplayWrapper();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        security.checkRequest(req,resp, isADMIN_VIEW);
 
         User user = (User) req.getSession().getAttribute("authenticatedUser");
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService.getAllUserFavoutiteCriteria(user.getId());
@@ -60,6 +53,7 @@ public class FavouriteServlet extends HttpServlet {
             for (PersistedInvestmentRevenueCriteria criteria : criteriaList) {
                 InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(), criteria)).getResult();
 
+                DisplayWrapper wrapper = new DisplayWrapper();
                 wrapper.setCriteria(criteria);
                 wrapper.setResult(result);
                 wrapper.setMessage("not implemented");

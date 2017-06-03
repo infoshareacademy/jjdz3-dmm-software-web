@@ -26,11 +26,10 @@ test pages:
 
 servlet/jsp:
  
-http://localhost:8080/financial-app/login           (manual tests auth)
+http://localhost:8080/financial-app/login   (Google+ auth)
 
-http://localhost:8080/financial-app/login.jsp       (Google+ auth)
 
-manual testing welcome page:
+to populate db with example data:
 
 http://localhost:8080/financial-app/manualtest
 

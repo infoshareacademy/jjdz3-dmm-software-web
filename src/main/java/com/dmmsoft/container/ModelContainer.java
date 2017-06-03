@@ -7,7 +7,6 @@ import com.dmmsoft.app.model.MainContainer;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
-import javax.enterprise.inject.Default;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
  */
 
 @Singleton
-public class DataContainer implements IDataContainerService {
+public class ModelContainer implements IModelContainerService {
 
     private List<Investment> investments;
     private com.dmmsoft.app.model.MainContainer mainContainer;

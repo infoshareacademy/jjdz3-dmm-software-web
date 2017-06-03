@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by milo on 06.05.17.
  */
-public interface IDataContainerService {
+public interface IModelContainerService {
     public List<Investment> getInvestments();
 
     public MainContainer getMainContainer();

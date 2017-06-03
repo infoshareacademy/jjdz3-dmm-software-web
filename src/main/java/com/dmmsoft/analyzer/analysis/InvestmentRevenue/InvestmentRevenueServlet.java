@@ -5,7 +5,7 @@ import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
-import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
@@ -17,7 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +26,7 @@ import java.time.format.DateTimeFormatter;
  * Created by milo on 12.05.17.
  */
 
-@WebServlet(urlPatterns = "/analyzer/investmentrevenue")
+@WebServlet(urlPatterns = "/auth/userview/investmentrevenue")
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
@@ -39,7 +38,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
 
 
     @Inject
-    private IDataContainerService container;
+    private IModelContainerService container;
     @Inject
     private IFavouriteService favouriteService;
 
@@ -49,7 +48,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+        req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
 
     }
 
@@ -107,12 +106,12 @@ public class InvestmentRevenueServlet extends HttpServlet {
             if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
                 req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
             }
-            req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
 
         } catch (NoDataForCriteria ex) {
             req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
-            req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
         }
 

@@ -1,6 +1,6 @@
 package com.dmmsoft;
 
-import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.container.IModelContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public final class WebAppDeployListener implements ServletContextListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebAppDeployListener.class);
     @Inject
-    IDataContainerService container;
+    IModelContainerService container;
 
 
     @Override

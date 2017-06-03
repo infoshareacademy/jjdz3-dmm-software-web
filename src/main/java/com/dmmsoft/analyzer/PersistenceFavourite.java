@@ -20,9 +20,11 @@ public class PersistenceFavourite implements IFavouriteService {
     @Override
     public List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
 
-        return em
+        List<PersistedInvestmentRevenueCriteria> list = em
                 .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id", PersistedInvestmentRevenueCriteria.class)
                 .setParameter("Id", UserId)
                 .getResultList();
+
+        return list;
     }
 }

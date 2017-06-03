@@ -27,9 +27,9 @@
 <body>
 <p><b> Analysis: Investment Revenue</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-<jsp:include page="../partials/formheader.jsp"/>
+<jsp:include page="../../partials/formheader.jsp"/>
 
-<form method="post" action="../analyzer/investmentrevenue">
+<form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
     <p>1. <input type="text" name="investmenName" style="width:170px" id="inputForm" placeholder="inv.name, e.g. USD"/>
     </p>
@@ -47,6 +47,6 @@
 
 <tags:analysisResult displayWrapper="${displayWrapper}"/>
 
-<jsp:include page="../partials/footer.jsp"/>
+<jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>
