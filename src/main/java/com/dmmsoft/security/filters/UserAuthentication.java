@@ -39,7 +39,6 @@ public class UserAuthentication implements Filter {
             if (req.getSession().getAttribute("authenticatedUser") == null) {
                 req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
                 LOGGER.warn("Access denied! Not authenticated user request!");
-                //   throw new NullPointerException();
             } else {
                 filterChain.doFilter(servletRequest, servletResponse);
             }

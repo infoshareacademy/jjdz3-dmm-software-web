@@ -36,7 +36,6 @@ public class Login implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         }
         else {
-
             req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
             LOGGER.warn("Access denied! Not authenticated user request!");
         }

@@ -43,12 +43,10 @@ public class UserView implements Filter {
             } else {
                 req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
                 LOGGER.warn("User access verification failure! Role isAdmin:{} ", user.getAdmin());
-                throw new NullPointerException();
             }
         } else {
             req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
             LOGGER.warn("User access verification failure!");
-            throw new NullPointerException();
         }
     }
 
