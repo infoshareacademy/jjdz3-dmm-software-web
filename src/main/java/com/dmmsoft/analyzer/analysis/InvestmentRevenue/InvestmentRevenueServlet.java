@@ -63,6 +63,8 @@ public class InvestmentRevenueServlet extends HttpServlet {
             String sCapital = req.getParameter("capital");
             String SBUY_DATE = req.getParameter("buyDate");
             String SSELL_DATE = req.getParameter("sellDate");
+            String userCustomName = req.getParameter("userCustomName");
+
             Boolean isFavouriteChecked = req.getParameter("isFavourite") != null;
 
             // default form test values
@@ -93,7 +95,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
                     .getResult();
 
             User user = (User)req.getSession().getAttribute("authenticatedUser");
-            user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria));
+            user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria, userCustomName));
             userService.update(user);
 
             ContentWrapper wrapper = new ContentWrapper();

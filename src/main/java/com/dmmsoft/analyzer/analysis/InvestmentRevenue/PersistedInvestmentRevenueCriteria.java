@@ -59,12 +59,13 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
     }
 
-    public PersistedInvestmentRevenueCriteria(InvestmentRevenueCriteria criteria) {
+    public PersistedInvestmentRevenueCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {
         super.setInvestedCapital(criteria.getInvestedCapital());
         super.setBuyDate(criteria.getBuyDate());
         super.setSellDate(criteria.getSellDate());
         super.setInvestmentName(criteria.getInvestmentName());
         super.setFavourite(criteria.getFavourite());
+        this.setUserCustomName(userCustomName);
     }
 
     public InvestmentRevenueCriteria getEqualEquivalent(PersistedInvestmentRevenueCriteria revenueCriteria){

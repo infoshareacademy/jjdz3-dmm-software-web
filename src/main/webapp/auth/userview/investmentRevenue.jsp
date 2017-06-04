@@ -19,7 +19,11 @@
                 changeMonth: true,
                 changeYear: true,
             }).val()
+            /*$('#isFavourite').click(function() {
+                $('.customNameField')[this.checked ? "show" : "hide"]();
+            });*/
         });
+
     </script>
 </html>
 
@@ -31,15 +35,17 @@
 
 <form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
-    <p>1. <input type="text" name="investmenName" style="width:170px" id="inputForm" placeholder="inv.name, e.g. USD"/>
+    <p>1. <input type="text" name="investmenName"  id="inputForm" placeholder="inv.name, e.g. USD"/>
     </p>
-    <p>2. <input type="text" pattern="[0-9]*" name="capital" style="width:170px" placeholder="inv.capital, e.g. 10000"/>
+    <p>2. <input type="text" pattern="[0-9]*" name="capital"  placeholder="inv.capital, e.g. 10000"/>
     </p>
-    <p>3. <input type="text" class="datePicker" name="buyDate" readonly='true' style="width:85px"
+    <p>3. <input type="text" class="datePicker" name="buyDate" readonly='true'
                  placeholder="buy date"/></p>
-    <p>4. <input type="text" class="datePicker" name="sellDate" readonly='true' style="width:85px"
+    <p>4. <input type="text" class="datePicker" name="sellDate" readonly='true'
                  placeholder="sell date"/></p>
-    <p><input type="checkbox" name="isFavourite"/> add to favourites</p>
+
+    <jsp:include page="/partials/addToFavourites.jsp"></jsp:include>
+
     <p>
         <button type="submit">Submit!</button>
     </p>
