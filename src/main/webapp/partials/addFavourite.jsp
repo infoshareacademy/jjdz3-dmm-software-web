@@ -10,19 +10,18 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-
     $(function () {
          $('#isFavourite').click(function() {
             $('.customNameField')[this.checked ? "show" : "hide"]();
         });
     });
-
 </script>
 </head>
 <body>
 
 <p><input type="checkbox" name="isFavourite" id="isFavourite"/> add to favourites
-    <input type="text" class="customNameField" name="userCustomName" width="150" hidden
-           placeholder="analysis custom name"/></p>
+    <input type="text" class="customNameField" name="userCustomName" width="300" hidden
+           placeholder="my analysis custom name"/></p>
 </body>
 </html>
+

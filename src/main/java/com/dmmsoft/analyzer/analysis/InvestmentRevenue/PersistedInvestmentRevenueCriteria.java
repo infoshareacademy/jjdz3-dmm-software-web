@@ -18,22 +18,19 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     @GeneratedValue
     private long id;
 
-
     @ManyToOne
     private User user;
+    private String userCustomName;
 
     @Override
     public long getId() {
         return id;
     }
-
     @Override
     public void setId(long id) {
         this.id = id;
     }
 
-
-    private String userCustomName;
 
     public String getUserCustomName() {
         return userCustomName;
@@ -74,6 +71,7 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         criteria.setBuyDate(revenueCriteria.getBuyDate());
         criteria.setSellDate(revenueCriteria.getSellDate());
         criteria.setInvestmentName(revenueCriteria.getInvestmentName());
+        criteria.setFavourite(revenueCriteria.getFavourite());
         return criteria;
     }
 

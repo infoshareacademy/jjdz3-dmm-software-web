@@ -10,4 +10,8 @@ import java.util.List;
 public interface IFavouriteService {
 
     List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId);
+
+    void updateCriteria(PersistedInvestmentRevenueCriteria criteria);
+
+    PersistedInvestmentRevenueCriteria getCriteriaById(long criteriaID);
 }

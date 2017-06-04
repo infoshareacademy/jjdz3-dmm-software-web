@@ -5,7 +5,6 @@
 <head>
     <title><b> Investment Revenue </b></title>
 
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -19,9 +18,6 @@
                 changeMonth: true,
                 changeYear: true,
             }).val()
-            /*$('#isFavourite').click(function() {
-                $('.customNameField')[this.checked ? "show" : "hide"]();
-            });*/
         });
 
     </script>
@@ -44,15 +40,11 @@
     <p>4. <input type="text" class="datePicker" name="sellDate" readonly='true'
                  placeholder="sell date"/></p>
 
-    <jsp:include page="/partials/addToFavourites.jsp"></jsp:include>
-
-    <p>
-        <button type="submit">Submit!</button>
-    </p>
+    <jsp:include page="/partials/addFavourite.jsp"></jsp:include>
+    <p><button type="submit">Submit!</button></p>
 </form>
 
 <tags:analysisResult contentWrapper="${contentWrapper}"/>
-
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

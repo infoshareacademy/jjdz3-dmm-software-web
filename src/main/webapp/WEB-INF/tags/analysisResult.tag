@@ -3,6 +3,8 @@
               required="true" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
+
+<div>
 <p><b>User input data: </b></p>
 <p>Investment name: <b>${contentWrapper.criteria.investmentName}</b></p>
 <p>Invested capital: <b>${contentWrapper.criteria.investedCapital}</b></p>
@@ -23,4 +25,4 @@
 <p>Capital Revenue: <b>${contentWrapper.result.capitalRevenueValue}</b> [PLN]</p>
 <p>Capital Revenue Delta: <b>${contentWrapper.result.capitalRevenueDeltaPrecentValue}</b> [%]</p>
 </br>
-
+</div>

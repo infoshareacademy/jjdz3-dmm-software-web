@@ -5,6 +5,7 @@ import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenu
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,10 +22,28 @@ public class PersistenceFavourite implements IFavouriteService {
     public List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
 
         List<PersistedInvestmentRevenueCriteria> list = em
-                .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id", PersistedInvestmentRevenueCriteria.class)
+                .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id AND m.isFavourite=true", PersistedInvestmentRevenueCriteria.class)
                 .setParameter("Id", UserId)
                 .getResultList();
 
         return list;
+    }
+
+    @Override
+    public PersistedInvestmentRevenueCriteria getCriteriaById(long criteriaID) {
+      return  em.find(PersistedInvestmentRevenueCriteria.class, criteriaID);
+    }
+
+    @Override
+    @Transactional
+    public void updateCriteria(PersistedInvestmentRevenueCriteria criteria) {
+    PersistedInvestmentRevenueCriteria criteriaToUpdate= em
+            .find(PersistedInvestmentRevenueCriteria.class, criteria.getId());
+    criteriaToUpdate.setUserCustomName(criteria.getUserCustomName());
+    criteriaToUpdate.setFavourite(criteria.getFavourite());
+    criteriaToUpdate.setBuyDate(criteria.getBuyDate());
+    criteriaToUpdate.setSellDate(criteria.getSellDate());
+    criteriaToUpdate.setInvestedCapital(criteria.getInvestedCapital());
+    criteriaToUpdate.setInvestmentName(criteria.getInvestmentName());
     }
 }
