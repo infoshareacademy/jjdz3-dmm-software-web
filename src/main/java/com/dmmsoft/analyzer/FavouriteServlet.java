@@ -77,4 +77,29 @@ public class FavouriteServlet extends HttpServlet {
 
 
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+       String criteriaId = req.getParameter("criteriaId");
+        System.out.println ("to update name"+ criteriaId);
+
+        if (req.getParameter("updateAction") != null) {
+
+            // TODO update user criteria custom name
+
+            System.out.println ("updateAction"+ criteriaId);
+
+        } else if (req.getParameter("deleteAction") != null) {
+
+            // TODO user criteria isFavourite=false
+
+            System.out.println ("deleteAction"+ criteriaId);
+        }
+
+
+
+    }
+
+
 }

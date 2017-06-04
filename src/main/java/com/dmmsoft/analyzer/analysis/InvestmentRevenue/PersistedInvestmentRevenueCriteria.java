@@ -32,6 +32,17 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         this.id = id;
     }
 
+
+    private String userCustomName;
+
+    public String getUserCustomName() {
+        return userCustomName;
+    }
+
+    public void setUserCustomName(String userCustomName) {
+        this.userCustomName = userCustomName;
+    }
+
     public User getUser() {
         return user;
     }
@@ -39,6 +50,7 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     public void setUser(User user) {
         this.user = user;
     }
+
 
     public PersistedInvestmentRevenueCriteria() {
     }

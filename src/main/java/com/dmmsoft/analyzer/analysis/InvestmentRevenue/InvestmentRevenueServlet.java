@@ -101,10 +101,8 @@ public class InvestmentRevenueServlet extends HttpServlet {
             wrapper.setResult(result);
             if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
                 wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
-                //req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
             }
-            req.setAttribute("displayWrapper", wrapper);
-
+            req.setAttribute("contentWrapper", wrapper);
 
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
@@ -114,10 +112,6 @@ public class InvestmentRevenueServlet extends HttpServlet {
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
         }
-
     }
-
-
-
 
 }

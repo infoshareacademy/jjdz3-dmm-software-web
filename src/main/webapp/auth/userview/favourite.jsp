@@ -14,7 +14,9 @@
 </br>
 <p>Investment Revenue:</p>
 <c:forEach var="contentWrapper" items="${contentWrappers}">
+    <p> ${contentWrapper.criteria.userCustomName}</p>
     <tags:analysisResult contentWrapper="${contentWrapper}"/>
+    <tags:editFavourite contentWrapper="${contentWrapper}"/>
 </c:forEach>
 </body>
 </html>
