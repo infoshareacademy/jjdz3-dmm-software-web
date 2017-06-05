@@ -1,6 +1,5 @@
-package com.dmmsoft;
+package com.dmmsoft.security.loginwithgoogle;
 
-import com.dmmsoft.loginwithgoogle.IdTokenVerifierAndParser;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -21,10 +20,10 @@ import java.io.IOException;
  */
 
 
-@WebServlet(urlPatterns = "login2")
+@WebServlet(urlPatterns = "authentication")
 public class LoginServletGoogle extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServletTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginServletGoogle.class);
 
     @Inject
     IUserService userService;
@@ -47,8 +46,7 @@ public class LoginServletGoogle extends HttpServlet {
             session.setAttribute("authenticatedUser", user);
             req.getServletContext();
 
-            LOGGER.info("UserAuthenticated: Id:" + user.getId() + " login:" + user.getLogin()
-                    + "Role(isAdmin): " + user.getAdmin());
+            LOGGER.info("UserAuthenticated: Id:{} login:{} role isAdmin:{}", user.getId(), user.getLogin(), user.getAdmin());
 
             userViewRedirection(user, req, resp);
 
@@ -63,11 +61,11 @@ public class LoginServletGoogle extends HttpServlet {
 
         try {
             if (user.getAdmin() == false) {
-                LOGGER.info("User view redirection: isAdmin:" + user.getAdmin());
-                req.getRequestDispatcher("usermenu").forward(req, resp);
+                LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
+                req.getRequestDispatcher("auth/userview/usermenu").forward(req, resp);
             } else {
-                LOGGER.info("User view redirection: isAdmin:" + user.getAdmin());
-                req.getRequestDispatcher("../adminview/adminmenu.jsp").forward(req, resp);
+                LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
+                req.getRequestDispatcher("auth/adminview/adminmenu.jsp").forward(req, resp);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

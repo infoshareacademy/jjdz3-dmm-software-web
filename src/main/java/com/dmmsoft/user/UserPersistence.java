@@ -23,23 +23,25 @@ public class UserPersistence implements IUserService {
     }
 
     @Override
-    @Transactional
     public User get(long userId) {
         User user = em.find(User.class, userId);
-        return  user;
+        return user;
+    }
+
+    @Override
+    public List<User> getUserByEmail(String userEmail) {
+
+        // TODO implement criteria
+        return em.createQuery("select distinct m from User m where m.login=:login", User.class)
+                .setParameter("login", userEmail).getResultList();
 
     }
 
     @Override
     @Transactional
-    public List<User> getUserByEmail(String userEmail) {
-
-     // TODO implement criteria
-     return em.createQuery("select distinct m from User m where m.login=:login", User.class)
-                .setParameter("login", userEmail).getResultList();
-
-     }
-
-
-
+    public void update(User user) {
+       User userToUpdate =  em.find(User.class, user.getId());
+       userToUpdate.setFavourites(user.getFavourites());
+       em.merge(userToUpdate);
+    }
 }

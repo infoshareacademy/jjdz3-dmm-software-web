@@ -1,12 +1,13 @@
-package com.dmmsoft.analyzer.analysis;
+package com.dmmsoft.analyzer.analysis.InvestmentRevenue;
 
-import com.dmmsoft.analyzer.Favourite;
 import com.dmmsoft.analyzer.IFavouriteService;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
-import com.dmmsoft.container.IDataContainerService;
+import com.dmmsoft.container.IModelContainerService;
+import com.dmmsoft.user.IUserService;
+import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,26 +26,29 @@ import java.time.format.DateTimeFormatter;
  * Created by milo on 12.05.17.
  */
 
-@WebServlet(urlPatterns = "/analyzer/investmentrevenue")
+@WebServlet(urlPatterns = "/auth/userview/investmentrevenue")
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
     private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
             "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
-            "    User criteria moderated by systen are listed in User input moderation report.";
+            "    User criteria moderated by system are listed in User input moderation report.";
 
     private static final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
 
 
     @Inject
-    IDataContainerService container;
+    private IModelContainerService container;
     @Inject
-    IFavouriteService testcontainer;
+    private IFavouriteService favouriteService;
+
+    @Inject
+    private IUserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+        req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
 
     }
 
@@ -53,19 +56,18 @@ public class InvestmentRevenueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            //db test
-            Favourite et = new Favourite();
-            et.setValue("test value");
-            testcontainer.addFavourite(et);
 
 
-            // default form test values
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String InvestmentName = req.getParameter("investmenName");
             String sCapital = req.getParameter("capital");
             String SBUY_DATE = req.getParameter("buyDate");
             String SSELL_DATE = req.getParameter("sellDate");
+            String userCustomName = req.getParameter("userCustomName");
+
             Boolean isFavouriteChecked = req.getParameter("isFavourite") != null;
+
+            // default form test values
 
             if (SBUY_DATE == null || SBUY_DATE.toString().isEmpty())
                 SBUY_DATE = "2009-09-10";
@@ -79,37 +81,39 @@ public class InvestmentRevenueServlet extends HttpServlet {
             if (InvestmentName == null || InvestmentName.isEmpty())
                 InvestmentName = "CHF";
 
-            // TODO BigDecimal
             BigDecimal capital = new BigDecimal(sCapital);
             LocalDate BUY_DATE = LocalDate.parse(SBUY_DATE, formatter);
             LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
 
-            InvestmentRevenueCriteria input = new InvestmentRevenueCriteria(capital, BUY_DATE, SELL_DATE, InvestmentName, isFavouriteChecked);
-            InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
+            InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria(capital
+                    ,BUY_DATE
+                    ,SELL_DATE
+                    ,InvestmentName
+                    ,isFavouriteChecked);
 
-            //InvestmentRevenueResult ir = (new InvestmentRevenue(container.getMainContainer(), input)).getResult();
+            InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),criteria))
+                    .getResult();
 
+            User user = (User)req.getSession().getAttribute("authenticatedUser");
+            user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria, userCustomName));
+            userService.update(user);
 
-            System.out.println("is favourite: " + input.getFavourite());
-            resp.setContentType(MediaType.TEXT_HTML);
-
-            req.setAttribute("investmentRevenueCriteria", input);
-            req.setAttribute("investmentRevenueResult", ir);
-
-
-            if (ir.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
-                req.setAttribute("message", CRITERIA_MODERATION_MESSAGE);
+            ContentWrapper wrapper = new ContentWrapper();
+            wrapper.setCriteria(criteria);
+            wrapper.setResult(result);
+            if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
+                wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
             }
+            req.setAttribute("contentWrapper", wrapper);
 
-            req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
+            LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
 
         } catch (NoDataForCriteria ex) {
             req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
-            req.getRequestDispatcher("../userview/investmentrevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
-
         }
-
     }
 
 }

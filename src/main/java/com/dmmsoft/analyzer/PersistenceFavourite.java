@@ -1,6 +1,6 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.LocalInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
@@ -19,20 +19,31 @@ public class PersistenceFavourite implements IFavouriteService {
     private EntityManager em;
 
     @Override
-    @Transactional
-   public void addFavourite(Favourite te){
-        em.persist(te);
+    public List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
+
+        List<PersistedInvestmentRevenueCriteria> list = em
+                .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id AND m.isFavourite=true", PersistedInvestmentRevenueCriteria.class)
+                .setParameter("Id", UserId)
+                .getResultList();
+
+        return list;
     }
 
+    @Override
+    public PersistedInvestmentRevenueCriteria getCriteriaById(long criteriaID) {
+      return  em.find(PersistedInvestmentRevenueCriteria.class, criteriaID);
+    }
 
     @Override
-    public List<LocalInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
-
-       List<LocalInvestmentRevenueCriteria> criteria = em
-               .createQuery("select m from LocalInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id", LocalInvestmentRevenueCriteria.class)
-               .setParameter("Id", UserId)
-               .getResultList();
-
-       return criteria;
+    @Transactional
+    public void updateCriteria(PersistedInvestmentRevenueCriteria criteria) {
+    PersistedInvestmentRevenueCriteria criteriaToUpdate= em
+            .find(PersistedInvestmentRevenueCriteria.class, criteria.getId());
+    criteriaToUpdate.setUserCustomName(criteria.getUserCustomName());
+    criteriaToUpdate.setFavourite(criteria.getFavourite());
+    criteriaToUpdate.setBuyDate(criteria.getBuyDate());
+    criteriaToUpdate.setSellDate(criteria.getSellDate());
+    criteriaToUpdate.setInvestedCapital(criteria.getInvestedCapital());
+    criteriaToUpdate.setInvestmentName(criteria.getInvestmentName());
     }
 }

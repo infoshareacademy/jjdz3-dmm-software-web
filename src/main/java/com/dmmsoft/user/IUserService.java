@@ -16,5 +16,7 @@ public interface IUserService {
 
   List<User> getUserByEmail(String userEmail);
 
+  void update(User user);
+
 
 }
