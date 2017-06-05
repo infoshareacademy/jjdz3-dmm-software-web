@@ -31,18 +31,19 @@ public class UserAuthentication implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         String path = req.getRequestURI();
+
         LOGGER.info("login filter request path: {}", path);
-
-        if (req.getSession().getAttribute("authenticatedUser") == null) {
-            req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
-            LOGGER.warn("Not authenticated user session open attempt!");
-            throw new NullPointerException();
+        if (path.startsWith("/financial-app/auth/logout")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            if (req.getSession().getAttribute("authenticatedUser") == null) {
+                req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
+                LOGGER.warn("Access denied! Not authenticated user request!");
+            } else {
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
         }
-
-        filterChain.doFilter(servletRequest, servletResponse);
-
     }
-
 
 
     @Override

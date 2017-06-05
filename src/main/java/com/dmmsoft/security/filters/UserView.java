@@ -39,16 +39,14 @@ public class UserView implements Filter {
 
             if (user.getAdmin() == false) {
                 filterChain.doFilter(servletRequest, servletResponse);
-                LOGGER.info("User view access verification success! Role isAdmin:{} ", user.getAdmin());
+                LOGGER.info("User access verification success. Role isAdmin:{} ", user.getAdmin());
             } else {
                 req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
-                LOGGER.warn("User view access verification failure! Role isAdmin:{} ", user.getAdmin());
-                throw new NullPointerException();
+                LOGGER.warn("User access verification failure! Role isAdmin:{} ", user.getAdmin());
             }
         } else {
             req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
-            LOGGER.warn("User view access verification failure!2");
-            throw new NullPointerException();
+            LOGGER.warn("User access verification failure!");
         }
     }
 
