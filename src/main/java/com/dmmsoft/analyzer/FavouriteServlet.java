@@ -1,11 +1,13 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.InvestmentRevenue.DisplayWrapper;
+import com.dmmsoft.analyzer.analysis.InvestmentRevenue.ContentWrapper;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
+import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
+import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,19 +26,21 @@ import java.util.List;
  * Created by milo on 24.05.17.
  */
 
-
 @WebServlet(urlPatterns = "/auth/userview/favourite")
 public class FavouriteServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteServlet.class);
-    private final boolean isADMIN_VIEW=false;
+    private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
+            "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
+            "    User criteria moderated by system are listed in User input moderation report.";
 
     @Inject
     IModelContainerService container;
 
     @Inject
+    IUserService userService;
+
+    @Inject
     IFavouriteService favouriteService;
-
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,32 +48,30 @@ public class FavouriteServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("authenticatedUser");
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService.getAllUserFavoutiteCriteria(user.getId());
 
-        List<DisplayWrapper> displayWrappers =new ArrayList<>();
+        List<ContentWrapper> contentWrappers = new ArrayList<>();
 
-        LOGGER.info("Current user Favourites to display {}",criteriaList.size());
+        LOGGER.info("Current user Favourites to display {}", criteriaList.size());
 
         try {
-
             for (PersistedInvestmentRevenueCriteria criteria : criteriaList) {
-                InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(), criteria)).getResult();
+                InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),
+                        criteria.getEqualEquivalent(criteria))).getResult();
 
-                DisplayWrapper wrapper = new DisplayWrapper();
+                ContentWrapper wrapper = new ContentWrapper();
                 wrapper.setCriteria(criteria);
                 wrapper.setResult(result);
-                wrapper.setMessage("not implemented");
+                if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
+                    wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
+                }
 
                 LOGGER.info(result.getCapitalRevenueDeltaPrecentValue().toString());
                 LOGGER.info(result.getCapitalRevenueValue().toString());
-                displayWrappers.add(wrapper);
+                contentWrappers.add(wrapper);
             }
             LOGGER.info(user.getLogin());
 
-            req.setAttribute("displayWrappers", displayWrappers);
-
-            //req.setAttribute("favouriteCriterias", criteriaList);
-           // req.setAttribute("favouriteResults", displayWrappers);
-
-            req.getRequestDispatcher("../userview/favourite.jsp").forward(req,resp);
+            req.setAttribute("contentWrappers", contentWrappers);
+            req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
 
         } catch (NoDataForCriteria ex) {
 
@@ -77,6 +79,54 @@ public class FavouriteServlet extends HttpServlet {
             LOGGER.info(user.getLogin());
         }
 
-
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String criteriaId = req.getParameter("criteriaId");
+        String userCustomName = req.getParameter("userCustomName");
+
+        PersistedInvestmentRevenueCriteria criteria = favouriteService
+                .getCriteriaById(Long.parseLong(criteriaId));
+
+        if (req.getParameter("updateAction") != null) {
+
+            LOGGER.info("Analysis retreaved from favourites{} {} {} {} {} {}",
+                    criteria.getId(),
+                    criteria.getModifiedBySuggester(),
+                    criteria.getUserCustomName(),
+                    criteria.getBuyDate(),
+                    criteria.getSellDate(),
+                    criteria.getInvestedCapital());
+
+            criteria.setUserCustomName(userCustomName);
+
+            LOGGER.info("Analysis modified favourites{} {} {} {} {} {}",
+                    criteria.getId(),
+                    criteria.getModifiedBySuggester(),
+                    criteria.getUserCustomName(),
+                    criteria.getBuyDate(),
+                    criteria.getSellDate(),
+                    criteria.getInvestedCapital());
+
+            favouriteService.updateCriteria(criteria);
+
+            LOGGER.info("Analysis after update from favourites{} {} {} {} {} {}",
+                    criteria.getId(),
+                    criteria.getModifiedBySuggester(),
+                    criteria.getUserCustomName(),
+                    criteria.getBuyDate(),
+                    criteria.getSellDate(),
+                    criteria.getInvestedCapital());
+
+        } else if (req.getParameter("deleteAction") != null) {
+            criteria.setFavourite(false);
+            favouriteService.updateCriteria(criteria);
+            LOGGER.info("Analysis removed from favourites{}", criteria.getId());
+        }
+        resp.sendRedirect("../userview/favourite");
+    }
+
+
 }
