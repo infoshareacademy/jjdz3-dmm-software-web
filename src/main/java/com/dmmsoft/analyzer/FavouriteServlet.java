@@ -87,44 +87,43 @@ public class FavouriteServlet extends HttpServlet {
         String criteriaId = req.getParameter("criteriaId");
         String userCustomName = req.getParameter("userCustomName");
 
-        PersistedInvestmentRevenueCriteria criteria = favouriteService
-                .getCriteriaById(Long.parseLong(criteriaId));
+        User user = (User) req.getSession().getAttribute("authenticatedUser");
 
-        if (req.getParameter("updateAction") != null) {
+        List<PersistedInvestmentRevenueCriteria> criteras = favouriteService
+                .getAllUserFavoutiteCriteria(user.getId());
 
-            LOGGER.info("Analysis retreaved from favourites{} {} {} {} {} {}",
-                    criteria.getId(),
-                    criteria.getModifiedBySuggester(),
-                    criteria.getUserCustomName(),
-                    criteria.getBuyDate(),
-                    criteria.getSellDate(),
-                    criteria.getInvestedCapital());
+        if (criteras!=null && criteras.size()!=0) {
 
-            criteria.setUserCustomName(userCustomName);
+            LOGGER.info("criteria list size{}", criteras.size());
 
-            LOGGER.info("Analysis modified favourites{} {} {} {} {} {}",
-                    criteria.getId(),
-                    criteria.getModifiedBySuggester(),
-                    criteria.getUserCustomName(),
-                    criteria.getBuyDate(),
-                    criteria.getSellDate(),
-                    criteria.getInvestedCapital());
+            int i = 0;
+            for (PersistedInvestmentRevenueCriteria c : criteras) {
+                if (c.getId() == Long.parseLong(criteriaId)) {
+                    LOGGER.info("revenue Id:{}", i);
+                    break;
+                }
+                i++;
+            }
 
-            favouriteService.updateCriteria(criteria);
+            if (req.getParameter("updateAction") != null) {
 
-            LOGGER.info("Analysis after update from favourites{} {} {} {} {} {}",
-                    criteria.getId(),
-                    criteria.getModifiedBySuggester(),
-                    criteria.getUserCustomName(),
-                    criteria.getBuyDate(),
-                    criteria.getSellDate(),
-                    criteria.getInvestedCapital());
 
-        } else if (req.getParameter("deleteAction") != null) {
-            criteria.setFavourite(false);
-            favouriteService.updateCriteria(criteria);
-            LOGGER.info("Analysis removed from favourites{}", criteria.getId());
+              //  user.getFavourites().get(i).setUserCustomName(userCustomName);
+
+                LOGGER.info("Analysis removed from favourites - updateAction userId {}"
+                        , user.getFavourites().get(i).getUser().getId());
+
+
+            } else if (req.getParameter("deleteAction") != null) {
+                user.getFavourites().get(i).setFavourite(false);
+                LOGGER.info("Analysis removed from favourites - deleteAction");
+            }
+
         }
+
+
+        userService.update(user);
+        req.getSession().setAttribute("authenticatedUser", user);
         resp.sendRedirect("../userview/favourite");
     }
 

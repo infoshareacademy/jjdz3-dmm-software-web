@@ -97,6 +97,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
             User user = (User)req.getSession().getAttribute("authenticatedUser");
             user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria, userCustomName));
             userService.update(user);
+            req.getSession().setAttribute("authenticatedUser", user);
 
             ContentWrapper wrapper = new ContentWrapper();
             wrapper.setCriteria(criteria);
