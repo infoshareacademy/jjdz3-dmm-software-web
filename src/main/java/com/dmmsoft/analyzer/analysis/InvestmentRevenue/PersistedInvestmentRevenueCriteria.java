@@ -49,20 +49,21 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     }
 
 
-    public PersistedInvestmentRevenueCriteria() {
-    }
+/*     public PersistedInvestmentRevenueCriteria() {
+     }*/
 
-    public PersistedInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
-        super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
-    }
+//    public PersistedInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
+//        super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
+//    }
 
-    public PersistedInvestmentRevenueCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {
-        super.setInvestedCapital(criteria.getInvestedCapital());
-        super.setBuyDate(criteria.getBuyDate());
-        super.setSellDate(criteria.getSellDate());
-        super.setInvestmentName(criteria.getInvestmentName());
-        super.setFavourite(criteria.getFavourite());
-        this.setUserCustomName(userCustomName);
+    public PersistedInvestmentRevenueCriteria get(InvestmentRevenueCriteria criteria, String userCustomName) {
+        setInvestedCapital(criteria.getInvestedCapital());
+        setBuyDate(criteria.getBuyDate());
+        setSellDate(criteria.getSellDate());
+        setInvestmentName(criteria.getInvestmentName());
+        setFavourite(criteria.getFavourite());
+        setUserCustomName(userCustomName);
+        return this;
     }
 
     public InvestmentRevenueCriteria getEqualEquivalent(PersistedInvestmentRevenueCriteria revenueCriteria){

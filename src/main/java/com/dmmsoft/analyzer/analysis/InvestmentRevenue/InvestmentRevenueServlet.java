@@ -30,42 +30,48 @@ import java.time.format.DateTimeFormatter;
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
-    private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
+    private final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
             "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
             "    User criteria moderated by system are listed in User input moderation report.";
+    private final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
 
-    private static final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
+    private final String AUTH_USER = "authenticatedUser";
 
+    private final String DATE_PATTERN = "yyyy-MM-dd";
+    private final String INVESTMENT_NAME = "investmenName";
+    private final String CAPITAL = "capital";
+    private final String BUY_DATE = "buyDate";
+    private final String SELL_DATE = "sellDate";
+    private final String USER_FAVOURITE_CUSTOM_NAME = "userCustomName";
+    private final String IS_FAVOURITE = "isFavourite";
+    private final String CONTENT_WRAPPER = "contentWrapper";
+    private final String APP_MESSAGE = "message";
 
+    private ContentWrapper wrapper = new ContentWrapper();
     @Inject
     private IModelContainerService container;
     @Inject
     private IFavouriteService favouriteService;
-
     @Inject
     private IUserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+            String InvestmentName = req.getParameter(INVESTMENT_NAME);
+            String sCapital = req.getParameter(CAPITAL);
+            String SBUY_DATE = req.getParameter(BUY_DATE);
+            String SSELL_DATE = req.getParameter(SELL_DATE);
+            String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
 
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String InvestmentName = req.getParameter("investmenName");
-            String sCapital = req.getParameter("capital");
-            String SBUY_DATE = req.getParameter("buyDate");
-            String SSELL_DATE = req.getParameter("sellDate");
-            String userCustomName = req.getParameter("userCustomName");
-
-            Boolean isFavouriteChecked = req.getParameter("isFavourite") != null;
+            Boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
 
             // default form test values
 
@@ -86,35 +92,38 @@ public class InvestmentRevenueServlet extends HttpServlet {
             LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
 
             InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria(capital
-                    ,BUY_DATE
-                    ,SELL_DATE
-                    ,InvestmentName
-                    ,isFavouriteChecked);
+                    , BUY_DATE
+                    , SELL_DATE
+                    , InvestmentName
+                    , isFavouriteChecked);
 
-            InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),criteria))
+            InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(), criteria))
                     .getResult();
 
-            User user = (User)req.getSession().getAttribute("authenticatedUser");
-            user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria, userCustomName));
-            userService.update(user);
-            req.getSession().setAttribute("authenticatedUser", user);
+            User dbUser = userService.get(((User) req.getSession().getAttribute(AUTH_USER)).getId());
 
-            ContentWrapper wrapper = new ContentWrapper();
-            wrapper.setCriteria(criteria);
-            wrapper.setResult(result);
-            if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
-                wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
-            }
-            req.setAttribute("contentWrapper", wrapper);
+            dbUser.getFavourites().add(new PersistedInvestmentRevenueCriteria().get(criteria, userCustomName));
+            userService.update(dbUser);
 
+            req.setAttribute(CONTENT_WRAPPER, this.getContent(criteria, result));
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
-            LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
+
+            LOGGER.info("Criteria Submitted by user Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
 
         } catch (NoDataForCriteria ex) {
-            req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
+            req.setAttribute(APP_MESSAGE, NO_DATA_FOR_CRITERIA_MESSAGE);
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
         }
+    }
+
+    private ContentWrapper getContent(InvestmentRevenueCriteria criteria, InvestmentRevenueResult result) {
+        wrapper.setCriteria(criteria);
+        wrapper.setResult(result);
+        if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
+            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
+        }
+        return wrapper;
     }
 
 }

@@ -31,13 +31,13 @@
 
 <form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
-    <p>1. <input type="text" name="investmenName"  id="inputForm" placeholder="inv.name, e.g. USD"/>
+    <p>1. <input type="text" name="investmenName"  id="inputForm" placeholder="inv.name, e.g. USD" required="true"/>
     </p>
-    <p>2. <input type="text" pattern="[0-9]*" name="capital"  placeholder="inv.capital, e.g. 10000"/>
+    <p>2. <input type="text" pattern="[0-9]*" name="capital"  placeholder="inv.capital, e.g. 10000" required="true"/>
     </p>
     <p>3. <input type="text" class="datePicker" name="buyDate" readonly='true'
-                 placeholder="buy date"/></p>
-    <p>4. <input type="text" class="datePicker" name="sellDate" readonly='true'
+                 placeholder="buy date" required="true" /></p>
+    <p>4. <input type="text" class="datePicker" required="true" name="sellDate" readonly='true'
                  placeholder="sell date"/></p>
 
     <jsp:include page="/partials/addFavourite.jsp"></jsp:include>

@@ -43,7 +43,7 @@ public class UserPersistence implements IUserService {
        User userToUpdate =  em.find(User.class, user.getId());
        userToUpdate.setFavourites(user.getFavourites());
        em.merge(userToUpdate);
-       em.flush();
+      // em.flush();
 
     }
 }
