@@ -34,10 +34,12 @@ public class FavouriteServlet extends HttpServlet {
             "    User criteria moderated by system are listed in User input moderation report.";
 
     private final String AUTH_USER = "authenticatedUser";
-    private final String CONTENT_WRAPPER_COLLECTION ="contentWrappers";
+    private final String CONTENT_WRAPPER_COLLECTION = "contentWrappers";
     private final String USER_FAVOURITE_CUSTOM_NAME = "userCustomName";
-    private final String CRITERIA_ID =  "criteriaId";
+    private final String CRITERIA_ID = "criteriaId";
 
+    private final String DELETE_ACTION = "deleteAction";
+    private final String UPDATE_ACTION = "updateAction";
 
 
     @Inject
@@ -50,9 +52,8 @@ public class FavouriteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User user = (User) req.getSession().getAttribute(AUTH_USER);
-
-        List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService.getAllUserFavoutiteCriteria(user.getId());
+        List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
+                .getAllUserFavoutiteCriteria(((User) req.getSession().getAttribute(AUTH_USER)).getId());
 
 
         LOGGER.info("Current user Favourites to display {}", criteriaList.size());
@@ -64,28 +65,19 @@ public class FavouriteServlet extends HttpServlet {
                 InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),
                         criteria.getEqualEquivalent(criteria))).getResult();
 
-                ContentWrapper wrapper = new ContentWrapper();
-                wrapper.setCriteria(criteria);
-                wrapper.setResult(result);
-                if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
-                    wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
-                }
+                ContentWrapper wrapper = getContent(criteria, result);
+                contentWrappers.add(wrapper);
 
                 LOGGER.info(result.getCapitalRevenueDeltaPrecentValue().toString());
                 LOGGER.info(result.getCapitalRevenueValue().toString());
-                contentWrappers.add(wrapper);
             }
 
-            LOGGER.info(user.getLogin());
-
-            req.setAttribute(CONTENT_WRAPPER_COLLECTION, contentWrappers);
-            req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
-
         } catch (NoDataForCriteria ex) {
-
             LOGGER.error("error" + ex.getMessage());
-            LOGGER.info(user.getLogin());
         }
+
+        req.setAttribute(CONTENT_WRAPPER_COLLECTION, contentWrappers);
+        req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
 
     }
 
@@ -97,37 +89,50 @@ public class FavouriteServlet extends HttpServlet {
 
         User dbUser = userService.get(((User) req.getSession().getAttribute(AUTH_USER)).getId());
 
-        List<PersistedInvestmentRevenueCriteria> criteras = dbUser.getFavourites();
+        List<PersistedInvestmentRevenueCriteria> criteriaList = dbUser.getFavourites();
 
+        if (criteriaList != null && !criteriaList.isEmpty()) {
+            LOGGER.info("Criteria list size{}", criteriaList.size());
 
-        if (criteras!=null && criteras.size()!=0) {
-            LOGGER.info("criteria list size{}", criteras.size());
+            int i = getCriteriaArrayListId(criteriaList, criteriaId);
 
-            int i = 0;
-            for (PersistedInvestmentRevenueCriteria c : criteras) {
-                if (c.getId()== Long.parseLong(criteriaId)) {
-                    LOGGER.info("criteria array Id:{}", i);
-                    break;
-                }
-                i++;
+            if (req.getParameter(UPDATE_ACTION) != null) {
+
+                criteriaList.get(i).setUserCustomName(userCustomName);
+                LOGGER.info("Analysis user custom name changed (updateAction)");
+
+            } else if (req.getParameter(DELETE_ACTION) != null) {
+
+                criteriaList.get(i).setFavourite(false);
+                LOGGER.info("Analysis removed from favourites (deleteAction)");
             }
-
-            if (req.getParameter("updateAction") != null) {
-
-                criteras.get(i).setUserCustomName(userCustomName);
-
-            } else if (req.getParameter("deleteAction") != null) {
-                criteras.get(i).setFavourite(false);
-
-                LOGGER.info("Analysis removed from favourites - deleteAction");
-            }
-            dbUser.setFavourites(criteras);
+            dbUser.setFavourites(criteriaList);
             userService.update(dbUser);
         }
-       resp.sendRedirect("../userview/favourite");
+        resp.sendRedirect("../userview/favourite");
     }
 
+    private int getCriteriaArrayListId(List<PersistedInvestmentRevenueCriteria> criteria, String criteriaId) {
+        int i = 0;
+        for (PersistedInvestmentRevenueCriteria c : criteria) {
+            if (c.getId() == Long.parseLong(criteriaId)) {
+                LOGGER.info("criteria array Id:{}", i);
+                break;
+            }
+            i++;
+        }
+        return i;
+    }
 
+    private ContentWrapper getContent(InvestmentRevenueCriteria criteria, InvestmentRevenueResult result) {
+       ContentWrapper wrapper = new ContentWrapper();
+        wrapper.setCriteria(criteria);
+        wrapper.setResult(result);
+        if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
+            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
+        }
+        return wrapper;
+    }
 
 
 }

@@ -24,7 +24,9 @@ import java.io.IOException;
 public class LoginServletGoogle extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginServletGoogle.class);
-
+    private final String AUTH_USER = "authenticatedUser";
+    private final String ID_TOKEN = "id_token";
+    private final String GOOGLE_USER_NAME = "name";
     @Inject
     IUserService userService;
 
@@ -36,15 +38,15 @@ public class LoginServletGoogle extends HttpServlet {
         resp.setContentType("text/html");
 
         try {
-            String idToken = req.getParameter("id_token");
+            String idToken = req.getParameter(ID_TOKEN);
             GoogleIdToken.Payload payLoad = IdTokenVerifierAndParser.getPayload(idToken);
-            String name = (String) payLoad.get("name");
+            String name = (String) payLoad.get(GOOGLE_USER_NAME);
             String email = payLoad.getEmail();
 
             User user = userDBaseProcessing(email);
             HttpSession session = req.getSession(true);
-            session.setAttribute("authenticatedUser", user);
-            req.getServletContext();
+            session.setAttribute(AUTH_USER, user);
+            //req.getServletContext();
 
             LOGGER.info("UserAuthenticated: Id:{} login:{} role isAdmin:{}", user.getId(), user.getLogin(), user.getAdmin());
 
@@ -60,7 +62,7 @@ public class LoginServletGoogle extends HttpServlet {
     private void userViewRedirection(User user, HttpServletRequest req, HttpServletResponse resp) {
 
         try {
-            if (user.getAdmin() == false) {
+            if (!user.getAdmin()) {
                 LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
                 req.getRequestDispatcher("auth/userview/usermenu").forward(req, resp);
             } else {

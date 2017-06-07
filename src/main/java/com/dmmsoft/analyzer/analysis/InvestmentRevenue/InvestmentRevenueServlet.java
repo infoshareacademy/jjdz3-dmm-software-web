@@ -120,7 +120,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
     private ContentWrapper getContent(InvestmentRevenueCriteria criteria, InvestmentRevenueResult result) {
         wrapper.setCriteria(criteria);
         wrapper.setResult(result);
-        if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
+        if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
             wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
         }
         return wrapper;

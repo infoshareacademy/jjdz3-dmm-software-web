@@ -7,9 +7,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/**
- * Created by milo on 23.05.17.
- */
 
 @Entity
 public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
@@ -48,14 +45,6 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         this.user = user;
     }
 
-
-/*     public PersistedInvestmentRevenueCriteria() {
-     }*/
-
-//    public PersistedInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
-//        super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
-//    }
-
     public PersistedInvestmentRevenueCriteria get(InvestmentRevenueCriteria criteria, String userCustomName) {
         setInvestedCapital(criteria.getInvestedCapital());
         setBuyDate(criteria.getBuyDate());
@@ -67,6 +56,7 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     }
 
     public InvestmentRevenueCriteria getEqualEquivalent(PersistedInvestmentRevenueCriteria revenueCriteria){
+
         InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria();
         criteria.setInvestedCapital(revenueCriteria.getInvestedCapital());
         criteria.setBuyDate(revenueCriteria.getBuyDate());
