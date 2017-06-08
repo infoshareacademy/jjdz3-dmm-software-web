@@ -65,10 +65,15 @@ public class LoginServletGoogle extends HttpServlet {
             if (!user.getAdmin()) {
                 LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
                 req.getRequestDispatcher("auth/userview/usermenu").forward(req, resp);
-            } else {
+            } else if (user.getAdmin()){
                 LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
-                req.getRequestDispatcher("auth/adminview/adminmenu.jsp").forward(req, resp);
+                req.getRequestDispatcher("auth/adminview/adminmenu").forward(req, resp);
             }
+            else {
+                LOGGER.warn("User redirection failure.");
+                req.getRequestDispatcher("auth/accessdenied.jsp").forward(req, resp);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

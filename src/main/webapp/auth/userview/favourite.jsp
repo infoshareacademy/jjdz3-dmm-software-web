@@ -27,7 +27,7 @@
 <body>
 <p><b>Favourite Analysis</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-<jsp:include page="../../partials/formheader.jsp"/>
+<jsp:include page="../../partials/backToUserMenu.jsp"/>
 </br>
 <p><b>Investment Revenue:</b><button id="hideBtn">hide</button>
 <button id="editBtn">edit</button></p>

@@ -27,7 +27,7 @@
 <body>
 <p><b> Analysis: Investment Revenue</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-<jsp:include page="../../partials/formheader.jsp"/>
+<jsp:include page="../../partials/backToUserMenu.jsp"/>
 
 <form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
