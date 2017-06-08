@@ -7,9 +7,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/**
- * Created by milo on 23.05.17.
- */
 
 @Entity
 public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteria {
@@ -48,24 +45,18 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         this.user = user;
     }
 
-
-    public PersistedInvestmentRevenueCriteria() {
-    }
-
-    public PersistedInvestmentRevenueCriteria(BigDecimal investedCapital, LocalDate buyDate, LocalDate sellDate, String investmentName, Boolean isFavourite) {
-        super(investedCapital, buyDate, sellDate, investmentName, isFavourite);
-    }
-
-    public PersistedInvestmentRevenueCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {
-        super.setInvestedCapital(criteria.getInvestedCapital());
-        super.setBuyDate(criteria.getBuyDate());
-        super.setSellDate(criteria.getSellDate());
-        super.setInvestmentName(criteria.getInvestmentName());
-        super.setFavourite(criteria.getFavourite());
-        this.setUserCustomName(userCustomName);
+    public PersistedInvestmentRevenueCriteria getCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {
+        setInvestedCapital(criteria.getInvestedCapital());
+        setBuyDate(criteria.getBuyDate());
+        setSellDate(criteria.getSellDate());
+        setInvestmentName(criteria.getInvestmentName());
+        setFavourite(criteria.getFavourite());
+        setUserCustomName(userCustomName);
+        return this;
     }
 
     public InvestmentRevenueCriteria getEqualEquivalent(PersistedInvestmentRevenueCriteria revenueCriteria){
+
         InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria();
         criteria.setInvestedCapital(revenueCriteria.getInvestedCapital());
         criteria.setBuyDate(revenueCriteria.getBuyDate());

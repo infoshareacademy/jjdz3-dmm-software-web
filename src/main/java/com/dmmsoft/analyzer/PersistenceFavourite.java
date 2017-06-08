@@ -40,10 +40,5 @@ public class PersistenceFavourite implements IFavouriteService {
     PersistedInvestmentRevenueCriteria criteriaToUpdate= em
             .find(PersistedInvestmentRevenueCriteria.class, criteria.getId());
     criteriaToUpdate.setUserCustomName(criteria.getUserCustomName());
-    criteriaToUpdate.setFavourite(criteria.getFavourite());
-    criteriaToUpdate.setBuyDate(criteria.getBuyDate());
-    criteriaToUpdate.setSellDate(criteria.getSellDate());
-    criteriaToUpdate.setInvestedCapital(criteria.getInvestedCapital());
-    criteriaToUpdate.setInvestmentName(criteria.getInvestmentName());
     }
 }

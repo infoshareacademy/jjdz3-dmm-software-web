@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer.analysis.InvestmentRevenue;
 
+import com.dmmsoft.ConstantsProvider;
 import com.dmmsoft.analyzer.IFavouriteService;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
@@ -30,90 +31,82 @@ import java.time.format.DateTimeFormatter;
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
-    private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
-            "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
-            "    User criteria moderated by system are listed in User input moderation report.";
+    private final String TEST_BUY_DATE = "2009-09-10";
+    private final String TEST_SELL_DATE = "2017-04-02";
 
-    private static final String NO_DATA_FOR_CRITERIA_MESSAGE = "Error! No data for current criteria!";
-
-
+    private ContentWrapper wrapper = new ContentWrapper();
     @Inject
     private IModelContainerService container;
     @Inject
     private IFavouriteService favouriteService;
-
     @Inject
     private IUserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
+            //TODO form validation
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ConstantsProvider.DATE_PATTERN);
+            String investmentName = req.getParameter(ConstantsProvider.INVESTMENT_NAME);
+            String capital = req.getParameter(ConstantsProvider.CAPITAL);
+            String buyDate = req.getParameter(ConstantsProvider.BUY_DATE);
+            String sellDate = req.getParameter(ConstantsProvider.SELL_DATE);
+            String userCustomName = req.getParameter(ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME);
 
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String InvestmentName = req.getParameter("investmenName");
-            String sCapital = req.getParameter("capital");
-            String SBUY_DATE = req.getParameter("buyDate");
-            String SSELL_DATE = req.getParameter("sellDate");
-            String userCustomName = req.getParameter("userCustomName");
+            Boolean isFavouriteChecked = req.getParameter(ConstantsProvider.IS_FAVOURITE) != null;
 
-            Boolean isFavouriteChecked = req.getParameter("isFavourite") != null;
+            //TODO remove default values for manual tests
+            if (buyDate == null || buyDate.isEmpty())
+                buyDate = TEST_BUY_DATE;
+            if (sellDate == null || sellDate.isEmpty())
+                sellDate = TEST_SELL_DATE;
 
-            // default form test values
+            BigDecimal investmentCapital = new BigDecimal(capital);
+            LocalDate investmentBuyDate = LocalDate.parse(buyDate, formatter);
+            LocalDate investmentSellDate = LocalDate.parse(sellDate, formatter);
 
-            if (SBUY_DATE == null || SBUY_DATE.toString().isEmpty())
-                SBUY_DATE = "2009-09-10";
+            InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria(investmentCapital
+                    , investmentBuyDate
+                    , investmentSellDate
+                    , investmentName
+                    , isFavouriteChecked);
 
-            if (SSELL_DATE == null || SSELL_DATE.toString().isEmpty())
-                SSELL_DATE = "2017-04-02";
-
-            if (sCapital == null || sCapital.toString().isEmpty())
-                sCapital = "120000";
-
-            if (InvestmentName == null || InvestmentName.isEmpty())
-                InvestmentName = "CHF";
-
-            BigDecimal capital = new BigDecimal(sCapital);
-            LocalDate BUY_DATE = LocalDate.parse(SBUY_DATE, formatter);
-            LocalDate SELL_DATE = LocalDate.parse(SSELL_DATE, formatter);
-
-            InvestmentRevenueCriteria criteria = new InvestmentRevenueCriteria(capital
-                    ,BUY_DATE
-                    ,SELL_DATE
-                    ,InvestmentName
-                    ,isFavouriteChecked);
-
-            InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),criteria))
+            InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(), criteria))
                     .getResult();
 
-            User user = (User)req.getSession().getAttribute("authenticatedUser");
-            user.getFavourites().add(new PersistedInvestmentRevenueCriteria(criteria, userCustomName));
-            userService.update(user);
+            User dbUser = userService.get(((User) req.getSession()
+                    .getAttribute(ConstantsProvider.AUTH_USER)).getId());
 
-            ContentWrapper wrapper = new ContentWrapper();
-            wrapper.setCriteria(criteria);
-            wrapper.setResult(result);
-            if (result.getFinallyEvaluatedInput().getModifiedBySuggester() == true) {
-                wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
-            }
-            req.setAttribute("contentWrapper", wrapper);
+            dbUser.getFavourites().add(new PersistedInvestmentRevenueCriteria()
+                    .getCriteria(criteria, userCustomName));
+            userService.update(dbUser);
 
+            req.setAttribute(ConstantsProvider.CONTENT_WRAPPER, this.getContent(criteria, result));
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
-            LOGGER.info("Criteria Submitted by user Id:{}, login:{}", user.getId(), user.getLogin());
+
+            LOGGER.info("Criteria Submitted by user Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
 
         } catch (NoDataForCriteria ex) {
-            req.setAttribute("message", NO_DATA_FOR_CRITERIA_MESSAGE);
+            req.setAttribute(ConstantsProvider.APP_MESSAGE, ConstantsProvider.NO_DATA_FOR_CRITERIA_MESSAGE);
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
         }
+    }
+
+    private ContentWrapper getContent(InvestmentRevenueCriteria criteria, InvestmentRevenueResult result) {
+        wrapper.setCriteria(criteria);
+        wrapper.setResult(result);
+        if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
+            wrapper.setMessage(ConstantsProvider.CRITERIA_MODERATION_MESSAGE);
+        }
+        return wrapper;
     }
 
 }

@@ -27,12 +27,10 @@ public final class WebAppDeployListener implements ServletContextListener {
         // initial csv data load to application memory
         container.getMainContainer();
         LOGGER.info("Application Deployed. Main Container initialized: CSV files loaded.");
-
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         LOGGER.info("Application Servlet Context Destroyed.");
-
     }
 }

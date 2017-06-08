@@ -24,8 +24,7 @@ public class UserPersistence implements IUserService {
 
     @Override
     public User get(long userId) {
-        User user = em.find(User.class, userId);
-        return user;
+        return em.find(User.class, userId);
     }
 
     @Override
@@ -34,7 +33,6 @@ public class UserPersistence implements IUserService {
         // TODO implement criteria
         return em.createQuery("select distinct m from User m where m.login=:login", User.class)
                 .setParameter("login", userEmail).getResultList();
-
     }
 
     @Override

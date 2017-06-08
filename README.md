@@ -29,10 +29,6 @@ servlet/jsp:
 http://localhost:8080/financial-app/login   (Google+ auth)
 
 
-to populate db with example data:
-
-http://localhost:8080/financial-app/manualtest
-
 
 
 

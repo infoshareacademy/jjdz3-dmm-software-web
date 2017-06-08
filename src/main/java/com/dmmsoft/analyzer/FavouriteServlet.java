@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer;
 
+import com.dmmsoft.ConstantsProvider;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.ContentWrapper;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
@@ -29,103 +30,100 @@ import java.util.List;
 @WebServlet(urlPatterns = "/auth/userview/favourite")
 public class FavouriteServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteServlet.class);
-    private static final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
-            "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
-            "    User criteria moderated by system are listed in User input moderation report.";
 
     @Inject
     IModelContainerService container;
-
     @Inject
     IUserService userService;
-
     @Inject
     IFavouriteService favouriteService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User user = (User) req.getSession().getAttribute("authenticatedUser");
-        List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService.getAllUserFavoutiteCriteria(user.getId());
+        List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
+                .getAllUserFavoutiteCriteria(((User) req.getSession()
+                        .getAttribute(ConstantsProvider.AUTH_USER)).getId());
 
         List<ContentWrapper> contentWrappers = new ArrayList<>();
-
-        LOGGER.info("Current user Favourites to display {}", criteriaList.size());
 
         try {
             for (PersistedInvestmentRevenueCriteria criteria : criteriaList) {
                 InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),
                         criteria.getEqualEquivalent(criteria))).getResult();
 
-                ContentWrapper wrapper = new ContentWrapper();
-                wrapper.setCriteria(criteria);
-                wrapper.setResult(result);
-                if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
-                    wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
-                }
+                ContentWrapper wrapper = getContent(criteria, result);
+                contentWrappers.add(wrapper);
 
                 LOGGER.info(result.getCapitalRevenueDeltaPrecentValue().toString());
                 LOGGER.info(result.getCapitalRevenueValue().toString());
-                contentWrappers.add(wrapper);
             }
-            LOGGER.info(user.getLogin());
-
-            req.setAttribute("contentWrappers", contentWrappers);
-            req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
 
         } catch (NoDataForCriteria ex) {
-
-            LOGGER.error("error" + ex.getMessage());
-            LOGGER.info(user.getLogin());
+            LOGGER.error("Content Wrapper failure: {}",ex.getMessage());
         }
+
+        req.setAttribute(ConstantsProvider.CONTENT_WRAPPER_COLLECTION, contentWrappers);
+        req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String criteriaId = req.getParameter("criteriaId");
-        String userCustomName = req.getParameter("userCustomName");
+        String criteriaId = req.getParameter(ConstantsProvider.CRITERIA_ID);
+        String userCustomName = req.getParameter(ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME);
 
-        PersistedInvestmentRevenueCriteria criteria = favouriteService
-                .getCriteriaById(Long.parseLong(criteriaId));
+        User dbUser = userService.get(((User) req.getSession()
+                .getAttribute(ConstantsProvider.AUTH_USER)).getId());
 
-        if (req.getParameter("updateAction") != null) {
+        List<PersistedInvestmentRevenueCriteria> criteriaList = dbUser.getFavourites();
 
-            LOGGER.info("Analysis retreaved from favourites{} {} {} {} {} {}",
-                    criteria.getId(),
-                    criteria.getModifiedBySuggester(),
-                    criteria.getUserCustomName(),
-                    criteria.getBuyDate(),
-                    criteria.getSellDate(),
-                    criteria.getInvestedCapital());
+        if (criteriaList != null && !criteriaList.isEmpty()) {
+            LOGGER.info("Updating Criteria, current user criteria list size:{}, user Id:{}, login:{}",
+                    criteriaList.size(), dbUser.getId(), dbUser.getLogin());
 
-            criteria.setUserCustomName(userCustomName);
+            int i = getCriteriaArrayListId(criteriaList, criteriaId);
 
-            LOGGER.info("Analysis modified favourites{} {} {} {} {} {}",
-                    criteria.getId(),
-                    criteria.getModifiedBySuggester(),
-                    criteria.getUserCustomName(),
-                    criteria.getBuyDate(),
-                    criteria.getSellDate(),
-                    criteria.getInvestedCapital());
+            if (req.getParameter(ConstantsProvider.UPDATE_ACTION) != null) {
 
-            favouriteService.updateCriteria(criteria);
+                criteriaList.get(i).setUserCustomName(userCustomName);
+                LOGGER.info("Analysis user custom name changed (updateAction) user Id:{}, login:{}",
+                        dbUser.getId(), dbUser.getLogin());
 
-            LOGGER.info("Analysis after update from favourites{} {} {} {} {} {}",
-                    criteria.getId(),
-                    criteria.getModifiedBySuggester(),
-                    criteria.getUserCustomName(),
-                    criteria.getBuyDate(),
-                    criteria.getSellDate(),
-                    criteria.getInvestedCapital());
+            } else if (req.getParameter(ConstantsProvider.DELETE_ACTION) != null) {
 
-        } else if (req.getParameter("deleteAction") != null) {
-            criteria.setFavourite(false);
-            favouriteService.updateCriteria(criteria);
-            LOGGER.info("Analysis removed from favourites{}", criteria.getId());
+                criteriaList.get(i).setFavourite(false);
+                LOGGER.info("Analysis removed from favourites (deleteAction) user Id:{}, login:{}",
+                        dbUser.getId(), dbUser.getLogin());
+            }
+            dbUser.setFavourites(criteriaList);
+            userService.update(dbUser);
+            LOGGER.info("Criteria upadted. User Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
         }
         resp.sendRedirect("../userview/favourite");
+    }
+
+    private int getCriteriaArrayListId(List<PersistedInvestmentRevenueCriteria> criteria, String criteriaId) {
+        int i = 0;
+        for (PersistedInvestmentRevenueCriteria c : criteria) {
+            if (c.getId() == Long.parseLong(criteriaId)) {
+                LOGGER.info("criteria array Id:{}", i);
+                break;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    private ContentWrapper getContent(InvestmentRevenueCriteria criteria, InvestmentRevenueResult result) {
+       ContentWrapper wrapper = new ContentWrapper();
+        wrapper.setCriteria(criteria);
+        wrapper.setResult(result);
+        if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
+            wrapper.setMessage(ConstantsProvider.CRITERIA_MODERATION_MESSAGE);
+        }
+        return wrapper;
     }
 
 
