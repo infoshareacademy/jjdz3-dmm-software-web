@@ -45,7 +45,7 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         this.user = user;
     }
 
-    public PersistedInvestmentRevenueCriteria get(InvestmentRevenueCriteria criteria, String userCustomName) {
+    public PersistedInvestmentRevenueCriteria getCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {
         setInvestedCapital(criteria.getInvestedCapital());
         setBuyDate(criteria.getBuyDate());
         setSellDate(criteria.getSellDate());

@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer;
 
+import com.dmmsoft.ConstantsProvider;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.ContentWrapper;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
@@ -29,18 +30,6 @@ import java.util.List;
 @WebServlet(urlPatterns = "/auth/userview/favourite")
 public class FavouriteServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteServlet.class);
-    private final String CRITERIA_MODERATION_MESSAGE = "Note! Your input data does not correspond to current investment history of quotations. \n" +
-            "    For analysis system used nearest possible quoutations acording to dates from submitted form.\n" +
-            "    User criteria moderated by system are listed in User input moderation report.";
-
-    private final String AUTH_USER = "authenticatedUser";
-    private final String CONTENT_WRAPPER_COLLECTION = "contentWrappers";
-    private final String USER_FAVOURITE_CUSTOM_NAME = "userCustomName";
-    private final String CRITERIA_ID = "criteriaId";
-
-    private final String DELETE_ACTION = "deleteAction";
-    private final String UPDATE_ACTION = "updateAction";
-
 
     @Inject
     IModelContainerService container;
@@ -53,10 +42,8 @@ public class FavouriteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
-                .getAllUserFavoutiteCriteria(((User) req.getSession().getAttribute(AUTH_USER)).getId());
-
-
-        LOGGER.info("Current user Favourites to display {}", criteriaList.size());
+                .getAllUserFavoutiteCriteria(((User) req.getSession()
+                        .getAttribute(ConstantsProvider.AUTH_USER)).getId());
 
         List<ContentWrapper> contentWrappers = new ArrayList<>();
 
@@ -73,10 +60,10 @@ public class FavouriteServlet extends HttpServlet {
             }
 
         } catch (NoDataForCriteria ex) {
-            LOGGER.error("error" + ex.getMessage());
+            LOGGER.error("Content Wrapper failure: {}",ex.getMessage());
         }
 
-        req.setAttribute(CONTENT_WRAPPER_COLLECTION, contentWrappers);
+        req.setAttribute(ConstantsProvider.CONTENT_WRAPPER_COLLECTION, contentWrappers);
         req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
 
     }
@@ -84,30 +71,35 @@ public class FavouriteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String criteriaId = req.getParameter(CRITERIA_ID);
-        String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
+        String criteriaId = req.getParameter(ConstantsProvider.CRITERIA_ID);
+        String userCustomName = req.getParameter(ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME);
 
-        User dbUser = userService.get(((User) req.getSession().getAttribute(AUTH_USER)).getId());
+        User dbUser = userService.get(((User) req.getSession()
+                .getAttribute(ConstantsProvider.AUTH_USER)).getId());
 
         List<PersistedInvestmentRevenueCriteria> criteriaList = dbUser.getFavourites();
 
         if (criteriaList != null && !criteriaList.isEmpty()) {
-            LOGGER.info("Criteria list size{}", criteriaList.size());
+            LOGGER.info("Updating Criteria, current user criteria list size:{}, user Id:{}, login:{}",
+                    criteriaList.size(), dbUser.getId(), dbUser.getLogin());
 
             int i = getCriteriaArrayListId(criteriaList, criteriaId);
 
-            if (req.getParameter(UPDATE_ACTION) != null) {
+            if (req.getParameter(ConstantsProvider.UPDATE_ACTION) != null) {
 
                 criteriaList.get(i).setUserCustomName(userCustomName);
-                LOGGER.info("Analysis user custom name changed (updateAction)");
+                LOGGER.info("Analysis user custom name changed (updateAction) user Id:{}, login:{}",
+                        dbUser.getId(), dbUser.getLogin());
 
-            } else if (req.getParameter(DELETE_ACTION) != null) {
+            } else if (req.getParameter(ConstantsProvider.DELETE_ACTION) != null) {
 
                 criteriaList.get(i).setFavourite(false);
-                LOGGER.info("Analysis removed from favourites (deleteAction)");
+                LOGGER.info("Analysis removed from favourites (deleteAction) user Id:{}, login:{}",
+                        dbUser.getId(), dbUser.getLogin());
             }
             dbUser.setFavourites(criteriaList);
             userService.update(dbUser);
+            LOGGER.info("Criteria upadted. User Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
         }
         resp.sendRedirect("../userview/favourite");
     }
@@ -129,7 +121,7 @@ public class FavouriteServlet extends HttpServlet {
         wrapper.setCriteria(criteria);
         wrapper.setResult(result);
         if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
-            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
+            wrapper.setMessage(ConstantsProvider.CRITERIA_MODERATION_MESSAGE);
         }
         return wrapper;
     }
