@@ -22,6 +22,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import static com.dmmsoft.ConstantsProvider.DATE_PATTERN;
 import static com.dmmsoft.ConstantsProvider.INVESTMENT_NAME;
@@ -71,14 +75,34 @@ public class InvestmentRevenueServlet extends HttpServlet {
             String buyDate = req.getParameter(BUY_DATE);
             String sellDate = req.getParameter(SELL_DATE);
             String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
-
             Boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
 
+
             //TODO remove default values for manual tests
-            if (buyDate == null || buyDate.isEmpty())
+ /*           if (buyDate == null || buyDate.isEmpty())
                 buyDate = TEST_BUY_DATE;
             if (sellDate == null || sellDate.isEmpty())
-                sellDate = TEST_SELL_DATE;
+                sellDate = TEST_SELL_DATE;*/
+
+
+            CriteriaForm form = new CriteriaForm();
+            form.setInvestmentName(investmentName);
+            form.setCapital(capital);
+            form.setBuyDate(buyDate);
+            form.setSellDate(sellDate);
+
+            Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+            Set<ConstraintViolation<CriteriaForm>> violations = validator.validate(form);
+
+            if(violations.size()>0){
+                req.setAttribute(INVESTMENT_NAME, investmentName);
+                req.setAttribute(CAPITAL, capital);
+                req.setAttribute(BUY_DATE, buyDate);
+                req.setAttribute(SELL_DATE, sellDate);
+                req.setAttribute("violations", violations);
+                req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
+                return;
+            }
 
             BigDecimal investmentCapital = new BigDecimal(capital);
             LocalDate investmentBuyDate = LocalDate.parse(buyDate, formatter);
