@@ -6,9 +6,9 @@
 <body>
 <br>
 <p><b>DMM-Software Finanncial-App </b></p>
-<p><b>Goodbye! Now you are logout.</b></p>
-<p></p>
-<p>to login again go to:  </p>
+<p style="color:green"><b>Goodbye! Now you are logout.</b></p>
+<br>
+<p>login page:</p>
 <p>http://localhost:8080/financial-app/login</p>
 </body>
 </html>
