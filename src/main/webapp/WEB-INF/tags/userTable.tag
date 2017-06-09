@@ -5,17 +5,21 @@
 <p><b>Table of users</b></p>
 <table style="width:100%">
     <tr>
-        <th>userId</th>
+        <th>Id</th>
         <th>login</th>
-        <th>roleIsAdmin</th>
-        <th>created</th>
+        <th>role: Admin</th>
+        <th>Account Creation Time</th>
+        <th>Last Login Time</th>
+        <th>Last Update Time</th>
     </tr>
     <c:forEach var="user" items="${allUsers}">
         <tr>
             <th>${user.id}</th>
             <th>${user.login}</th>
             <th>${user.admin}</th>
-            <th>TODO</th>
+            <th>${user.creationDateTime}</th>
+            <th>${user.lastLoginDateTime}</th>
+            <th>${user.lastUpdateDateTime}</th>
         </tr>
     </c:forEach>
 </table>

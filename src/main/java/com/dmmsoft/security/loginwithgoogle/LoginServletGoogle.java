@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * Created by daniel on 29.05.17.
@@ -44,6 +45,8 @@ public class LoginServletGoogle extends HttpServlet {
             String email = payLoad.getEmail();
 
             User user = userDBaseProcessing(email);
+            user.setLastLoginDateTime(LocalDateTime.now());
+            userService.update(user);
             HttpSession session = req.getSession(true);
             session.setAttribute(AUTH_USER, user);
             //req.getServletContext();
