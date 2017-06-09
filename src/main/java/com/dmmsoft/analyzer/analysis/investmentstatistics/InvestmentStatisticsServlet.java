@@ -23,59 +23,37 @@ import java.io.IOException;
 
 import java.util.List;
 
+import static com.dmmsoft.ConstantsProvider.*;
+
 @WebServlet(urlPatterns = "/investmentstats")
 public class InvestmentStatisticsServlet extends HttpServlet {
 
     @Inject
     IModelContainerService container;
 
-    private static final String TEST_INV_NAME= "AGI001";
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("testpage.jsp").forward(req, resp);
+
+        req.getRequestDispatcher("../userview/investments.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("name");
-        List<Investment> investments = container.getInvestments();
+        String nameA = req.getParameter(INVESTMENT_NAME_A);
+        String nameB = req.getParameter(INVESTMENT_NAME_B);
 
-        if(name==null){
-            name="AIP001";}
+        ItemStatsResult resultA = new ItemStats().getResult(container.getInvestments()
+                , new ItemStatsCriteria(INVESTMENT_NAME_A));
 
-        ItemStatsCriteria criteria = new ItemStatsCriteria(name);
-        ItemStatsResult s = new ItemStats().getResult(investments, criteria);
+        ItemStatsResult resultB = new ItemStats().getResult(container.getInvestments()
+                , new ItemStatsCriteria(INVESTMENT_NAME_B));
 
-        resp.setContentType(MediaType.TEXT_HTML);
 
-        req.setAttribute("investmentName", s.getName());
-        req.setAttribute("firstQuotationDate",s.getFirstQuotation().getDate());
-        req.setAttribute("firstQuotationValue",s.getFirstQuotation().getClose());
+        req.setAttribute(INVESTMENT_STAT_RESULT_A, resultA);
+        req.setAttribute(INVESTMENT_STAT_RESULT_B, resultB);
 
-        req.setAttribute("lastQuotationDate", s.getLastQuotation().getDate());
-        req.setAttribute("lastQuotationValue", s.getLastQuotation().getClose());
-
-        req.setAttribute("maxDeltaPlusDate", s.getMaxDeltaPlus().getDate());
-        req.setAttribute("maxDeltaPlusValue", s.getMaxDeltaPlus().getClose());
-        req.setAttribute("maxDeltaPlusDelta", s.getMaxDeltaPlus().getDeltaClose());
-
-        req.setAttribute("maxDeltaMinusDate",s.getMaxDeltaMinus().getDate());
-        req.setAttribute("maxDeltaMinusValue",s.getMaxDeltaMinus().getClose());
-        req.setAttribute("maxDeltaMinusDelta",s.getMaxDeltaMinus().getDeltaClose());
-
-        req.setAttribute("maxValueQuotationDate", s.getMaxValueQuotation().getDate());
-        req.setAttribute("maxValueQuotationValue", s.getMaxValueQuotation().getClose());
-        req.setAttribute("maxValueQuotationDelta", s.getMaxValueQuotation().getDeltaClose());
-
-        req.setAttribute("minValueQuotationDate", s.getMinValueQuotation().getDate());
-        req.setAttribute("minValueQuotationValue", s.getMinValueQuotation().getClose());
-        req.setAttribute("minValueQuotationDelta", s.getMinValueQuotation().getDeltaClose());
-
-        //  req.setAttribute("actualValue", s.getActualValue().getClose());
-
+        req.getRequestDispatcher("../userview/investments.jsp").forward(req, resp);
         req.getRequestDispatcher("testpage.jsp").forward(req, resp);
 
     }

@@ -12,6 +12,11 @@
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 <p>Application settings:</p>
+<br>
+<p>Data from CSV files:</p>
+<p>Total Number of Funds: <b>${fundCount}</b></p>
+<p>Total Number of Currencies: <b>${currencyCount}</b></p>
+<br>
 <form action="../adminview/appsettings" method="post">
     <button type="submit">Press to reload data model csv files...</button>
 </form>

@@ -22,8 +22,6 @@
             }).val()
         });
     </script>
-</html>
-
 </head>
 <body>
 <p><b> Analysis: Investment Revenue</b></p>
@@ -45,7 +43,6 @@
         <button type="submit">Submit!</button>
     </p>
 </form>
-
 <c:choose>
     <c:when test="${violations.size() >= 1}">
         <p style="color: red">Number of violations: ${violations.size()}</p>

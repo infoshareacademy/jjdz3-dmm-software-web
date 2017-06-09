@@ -12,11 +12,12 @@
 </br>
 <a href="../userview/favourite">Favourites</a>
 <br>
+
 <p>Choose your investment analysis:</p>
-<a href="../userview/investmentrevenue">Revenue</a><br>
-<a href="../userview/investmentrevenue">Statistics</a><br>
-<a href="../userview/investmentrevenue">Quotation Fluctuations</a><br>
-<a href="../userview/investmentrevenue">Top10</a><br>
+<a href="../userview/investments">Database info</a><br>
+<a href="../userview/investmentrevenue">Investment revenue</a><br>
+<a href="../userview/investments">Investment comparator</a><br>
+<a href="../userview/investments">90 days Top10</a><br>
 <br>
 <jsp:include page="../../partials/footer.jsp" />
 </body>

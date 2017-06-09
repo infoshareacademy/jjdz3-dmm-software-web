@@ -1,16 +1,24 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: milo
-  Date: 09.06.17
-  Time: 21:51
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>$Title$</title>
+    <title>Investments Info</title>
 </head>
 <body>
-$END$
+<p><b>Investments Info</b></p>
+<tags:userLogin user="${sessionScope.authenticatedUser}"/>
+<jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p>In our service you have available quotation data:</p>
+<p>Currencies: <b>${currencyCount}</b> items</p>
+<p>Funds: <b>${fundCount}</b> items</p>
+<br>
+List of investment names:
+<c:forEach var="investment" items="${allInvestments}">
+    ${investment.name},
+</c:forEach>
+
+<jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>
