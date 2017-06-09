@@ -14,7 +14,9 @@ public class ConstantsProvider {
 
     public static final String AUTH_USER = "authenticatedUser";
 
+    public static final String CONTENT_WRAPPER = "contentWrapper";
     public static final String CONTENT_WRAPPER_COLLECTION = "contentWrappers";
+
     public static final String USER_FAVOURITE_CUSTOM_NAME = "userCustomName";
     public static final String CRITERIA_ID = "criteriaId";
     public static final String DELETE_ACTION = "deleteAction";
@@ -26,7 +28,9 @@ public class ConstantsProvider {
     public static final String BUY_DATE = "buyDate";
     public static final String SELL_DATE = "sellDate";
     public static final String IS_FAVOURITE = "isFavourite";
-    public static final String CONTENT_WRAPPER = "contentWrapper";
+
     public static final String APP_MESSAGE = "message";
+
+    public static final String ALL_USERS = "allUsers";
 
 }

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.dmmsoft.ConstantsProvider.ALL_USERS;
+
 /**
  * Created by milo on 08.06.17.
  */
@@ -26,7 +29,9 @@ public class UserMenagement extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            LOGGER.info("User Menagement");
+            req.setAttribute(ALL_USERS, userService.getAllUsers());
             req.getRequestDispatcher("../adminview/userManagement.jsp").forward(req, resp);
+
+            LOGGER.info("User Menagement module accesed.");
         }
 }

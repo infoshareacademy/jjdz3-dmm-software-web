@@ -21,6 +21,7 @@ public class User {
     private String pass;
     private boolean isAdmin;
 
+
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
     private List<PersistedInvestmentRevenueCriteria> favourites = new ArrayList<>();
