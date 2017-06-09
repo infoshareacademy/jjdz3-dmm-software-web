@@ -1,6 +1,6 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
@@ -34,16 +34,4 @@ public class PersistenceFavourite implements IFavouriteService {
                   .getResultList();
     }
 
-    @Override
-    public PersistedInvestmentRevenueCriteria getCriteriaById(long criteriaID) {
-      return  em.find(PersistedInvestmentRevenueCriteria.class, criteriaID);
-    }
-
-    @Override
-    @Transactional
-    public void updateCriteria(PersistedInvestmentRevenueCriteria criteria) {
-    PersistedInvestmentRevenueCriteria criteriaToUpdate= em
-            .find(PersistedInvestmentRevenueCriteria.class, criteria.getId());
-    criteriaToUpdate.setUserCustomName(criteria.getUserCustomName());
-    }
 }

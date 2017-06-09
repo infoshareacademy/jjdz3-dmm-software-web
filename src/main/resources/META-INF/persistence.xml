@@ -7,7 +7,7 @@
         <jta-data-source>java:/datasources/isaDB</jta-data-source>
         <jar-file>lib/financial-app-1.0-SNAPSHOT-jar-with-dependencies.jar</jar-file>
         <class>com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria</class>
-        <class>com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria</class>
+        <class>com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria</class>
         <class>com.dmmsoft.user.User</class>
 
         <properties>

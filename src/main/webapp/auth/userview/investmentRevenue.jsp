@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><b> Investment Revenue </b></title>
+    <title><b>Investment Revenue</b></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,6 @@
                 changeYear: true,
             }).val()
         });
-
     </script>
 </html>
 
@@ -31,22 +30,16 @@
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 
-
 <form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
     <p>1. Investment name:</p>
-    <p><input type="text" name="investmentName" id="inputForm" value="${investmentName}"/>
-    </p>
+    <p><input type="text" name="investmentName" id="inputForm" value="${investmentName}"/></p>
     <p>2. Invested capital:</p>
-    <p><input type="text" pattern="[0-9]*" name="capital" value="${capital}"/>
-    </p>
+    <p><input type="text" pattern="[0-9]*" name="capital" value="${capital}"/></p>
     <p>3. Date of buy:</p>
-    <p><input type="text" class="datePicker" name="buyDate" value="${buyDate}"
-    /></p>
+    <p><input type="text" class="datePicker" name="buyDate" value="${buyDate}"/></p>
     <p>4. Date of sell:</p>
-    <p><input type="text" class="datePicker" name="sellDate" value="${sellDate}"
-    /></p>
-
+    <p><input type="text" class="datePicker" name="sellDate" value="${sellDate}"/></p>
     <jsp:include page="/partials/addFavourite.jsp"></jsp:include>
     <p>
         <button type="submit">Submit!</button>

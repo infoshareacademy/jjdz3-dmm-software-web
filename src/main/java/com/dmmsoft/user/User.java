@@ -1,6 +1,6 @@
 package com.dmmsoft.user;
 
-import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

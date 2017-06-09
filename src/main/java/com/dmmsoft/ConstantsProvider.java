@@ -30,9 +30,7 @@ public class ConstantsProvider {
     public static final String IS_FAVOURITE = "isFavourite";
 
     public static final String APP_MESSAGE = "message";
-
     public static final String ALL_USERS = "allUsers";
-
-    public static final String  ALL_INV_REV_CRIT ="allInvRevCrit";
+    public static final String ALL_INV_REV_CRIT ="allInvRevCrit";
 
 }

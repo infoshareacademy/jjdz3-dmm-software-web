@@ -1,4 +1,4 @@
-package com.dmmsoft.analyzer.analysis;
+package com.dmmsoft.analyzer.analysis.investmentstatistics;
 
 /**
  * Created by milo on 15.04.17.

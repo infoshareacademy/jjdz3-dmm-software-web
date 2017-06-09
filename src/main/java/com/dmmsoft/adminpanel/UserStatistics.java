@@ -31,7 +31,7 @@ public class UserStatistics extends HttpServlet {
 
         req.setAttribute(ALL_INV_REV_CRIT , favouriteService.getAllCriteria());
         req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
-        LOGGER.info("User Statistics module accesed.");
+        LOGGER.info("User Statistics module accessed.");
     }
 }
 

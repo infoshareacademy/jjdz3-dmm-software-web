@@ -5,10 +5,10 @@
 </head>
 <body>
 <br>
-<p><b>DMM-Software Finanncial-App </b></p>
+<p><b>DMM-Software Finanncial-App</b></p>
 <p style="color: red"><b>Security: Access Denied!</b></p>
 <br>
-<p>login page:  </p>
+<p>login page:</p>
 <p>http://localhost:8080/financial-app/login</p>
 </body>
 </html>
