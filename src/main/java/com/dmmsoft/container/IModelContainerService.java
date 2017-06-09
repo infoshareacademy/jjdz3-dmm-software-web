@@ -9,9 +9,11 @@ import java.util.List;
  * Created by milo on 06.05.17.
  */
 public interface IModelContainerService {
-    public List<Investment> getInvestments();
+    List<Investment> getInvestments();
 
-    public MainContainer getMainContainer();
+    MainContainer getMainContainer();
+
+    void reload();
 
 
 }

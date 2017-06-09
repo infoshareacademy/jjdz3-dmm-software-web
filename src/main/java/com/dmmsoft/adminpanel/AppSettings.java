@@ -38,8 +38,7 @@ public class AppSettings extends HttpServlet {
         try {
             LOGGER.info("Administrator Main Container manual reloading initialized...");
 
-           // container.getMainContainer().getInvestments().clear();
-            container.getMainContainer();
+            container.reload();
 
             LOGGER.info("Main Container reloaded! Actual CSV available!");
             LOGGER.info("Currencies items:{} Funds items:{}",
