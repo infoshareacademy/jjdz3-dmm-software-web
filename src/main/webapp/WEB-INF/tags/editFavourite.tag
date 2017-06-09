@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ attribute name="contentWrapper" type="com.dmmsoft.analyzer.analysis.InvestmentRevenue.ContentWrapper"
+<%@ attribute name="contentWrapper" type="com.dmmsoft.analyzer.analysis.investmentrevenue.ContentWrapper"
               required="true" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 

@@ -32,6 +32,6 @@ public class UserMenagement extends HttpServlet {
             req.setAttribute(ALL_USERS, userService.getAllUsers());
             req.getRequestDispatcher("../adminview/userManagement.jsp").forward(req, resp);
 
-            LOGGER.info("User Menagement module accesed.");
+            LOGGER.info("User Menagement module accessed.");
         }
 }

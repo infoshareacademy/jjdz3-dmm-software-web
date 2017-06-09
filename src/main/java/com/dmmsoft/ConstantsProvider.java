@@ -30,9 +30,17 @@ public class ConstantsProvider {
     public static final String IS_FAVOURITE = "isFavourite";
 
     public static final String APP_MESSAGE = "message";
-
     public static final String ALL_USERS = "allUsers";
+    public static final String ALL_INV_REV_CRIT ="allInvRevCrit";
+    public static final String FUND_COUNT = "fundCount";
+    public static final String CURRENCY_COUNT = "currencyCount";
+    public static final String ALL_CURRENCIES ="allCurrencies";
+    public static final String ALL_FUNDS ="allFunds";
+    public static final String ALL_INVESTMENTS ="allInvestments";
 
-    public static final String  ALL_INV_REV_CRIT ="allInvRevCrit";
+    public static final String INVESTMENT_NAME_A="investmentNameA";
+    public static final String INVESTMENT_NAME_B="investmentNameB";
+    public static final String INVESTMENT_STAT_RESULT_A="investmentStatResultA";
+    public static final String INVESTMENT_STAT_RESULT_B="investmentStatResultB";
 
 }

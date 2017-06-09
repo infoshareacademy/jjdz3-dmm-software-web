@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.dmmsoft.ConstantsProvider.FUND_COUNT;
+import static com.dmmsoft.ConstantsProvider.CURRENCY_COUNT;
+
+
 /**
  * Created by milo on 08.06.17.
  */
@@ -28,6 +32,8 @@ public class AppSettings extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        req.setAttribute(FUND_COUNT, container.getMainContainer().getCurrenciesCount());
+        req.setAttribute(CURRENCY_COUNT, container.getMainContainer().getFundsCount());
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
 
     }
@@ -39,6 +45,8 @@ public class AppSettings extends HttpServlet {
             LOGGER.info("Administrator Main Container manual reloading initialized...");
 
             container.reload();
+            req.setAttribute(CURRENCY_COUNT, container.getMainContainer().getCurrenciesCount());
+            req.setAttribute(FUND_COUNT, container.getMainContainer().getFundsCount());
 
             LOGGER.info("Main Container reloaded! Actual CSV available!");
             LOGGER.info("Currencies items:{} Funds items:{}",

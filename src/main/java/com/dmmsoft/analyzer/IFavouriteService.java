@@ -1,6 +1,6 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
+import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import java.util.List;
 
@@ -13,7 +13,4 @@ public interface IFavouriteService {
 
     List<PersistedInvestmentRevenueCriteria> getAllCriteria();
 
-    void updateCriteria(PersistedInvestmentRevenueCriteria criteria);
-
-    PersistedInvestmentRevenueCriteria getCriteriaById(long criteriaID);
 }

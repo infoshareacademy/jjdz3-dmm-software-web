@@ -1,11 +1,9 @@
-package com.dmmsoft.analyzer.analysis.InvestmentRevenue;
+package com.dmmsoft.analyzer.analysis.investmentrevenue;
 
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.user.User;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 

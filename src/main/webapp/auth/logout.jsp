@@ -5,7 +5,7 @@
 </head>
 <body>
 <br>
-<p><b>DMM-Software Finanncial-App </b></p>
+<p><b>DMM-Software Finanncial-App</b></p>
 <p style="color:green"><b>Goodbye! Now you are logout.</b></p>
 <br>
 <p>login page:</p>

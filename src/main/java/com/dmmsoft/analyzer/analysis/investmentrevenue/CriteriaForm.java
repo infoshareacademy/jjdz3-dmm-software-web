@@ -1,15 +1,11 @@
-package com.dmmsoft.analyzer.analysis.InvestmentRevenue;
+package com.dmmsoft.analyzer.analysis.investmentrevenue;
 
 /**
  * Created by milo on 09.06.17.
  */
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class CriteriaForm {
 
