@@ -7,13 +7,13 @@
     <title>Investment comparator</title>
 </head>
 <body>
-<p><b>Investments Comparator</b></p>
+<p><b>Investments indicator comparator</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 <p>Enter names of 2 investments to compare</p>
 <form action="../userview/comparator" method="post">
-    <p><input type="text" name="investmentNameA" value="${investmentNameA}"/></p>
-    <p><input type="text" name="investmentNameB" value="${investmentNameB}"/></p>
+    <p>Investment A<input type="text" name="investmentNameA" value="${investmentNameA} " required/></p>
+    <p>Investment B<input type="text" name="investmentNameB" value="${investmentNameB} " required/></p>
     <button type="submit">Submit</button>
 </form>
 <br>
