@@ -33,4 +33,6 @@ public class ConstantsProvider {
 
     public static final String ALL_USERS = "allUsers";
 
+    public static final String  ALL_INV_REV_CRIT ="allInvRevCrit";
+
 }

@@ -15,11 +15,13 @@ import java.io.IOException;
  * Created by milo on 08.06.17.
  */
 
+import static com.dmmsoft.ConstantsProvider.ALL_INV_REV_CRIT;
+
 @WebServlet(urlPatterns = "/auth/adminview/userstatistics")
 public class UserStatistics extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserStatistics.class);
-    private static final String  ALL_INV_REV_CRIT ="allInvRevCrit";
+
 
     @Inject
     IFavouriteService favouriteService;
