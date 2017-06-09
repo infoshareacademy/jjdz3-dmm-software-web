@@ -10,8 +10,9 @@
 <p><b>User Statistics</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
-<p>TODO</p>
-<p>content: user favourites table</p>
+
+<tags:invRevCritTable allInvRevCrit="${allInvRevCrit}"/>
+
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

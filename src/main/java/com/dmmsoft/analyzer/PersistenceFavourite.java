@@ -25,8 +25,13 @@ public class PersistenceFavourite implements IFavouriteService {
                 .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id AND m.isFavourite=true", PersistedInvestmentRevenueCriteria.class)
                 .setParameter("Id", UserId)
                 .getResultList();
-
         return list;
+    }
+
+    @Override
+    public List<PersistedInvestmentRevenueCriteria> getAllCriteria() {
+        return  em.createQuery("select m from PersistedInvestmentRevenueCriteria m", PersistedInvestmentRevenueCriteria.class)
+                  .getResultList();
     }
 
     @Override

@@ -11,6 +11,8 @@ public interface IFavouriteService {
 
     List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId);
 
+    List<PersistedInvestmentRevenueCriteria> getAllCriteria();
+
     void updateCriteria(PersistedInvestmentRevenueCriteria criteria);
 
     PersistedInvestmentRevenueCriteria getCriteriaById(long criteriaID);

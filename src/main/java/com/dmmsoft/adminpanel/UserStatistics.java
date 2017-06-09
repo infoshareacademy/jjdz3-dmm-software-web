@@ -19,6 +19,7 @@ import java.io.IOException;
 public class UserStatistics extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserStatistics.class);
+    private static final String  ALL_INV_REV_CRIT ="allInvRevCrit";
 
     @Inject
     IFavouriteService favouriteService;
@@ -26,8 +27,9 @@ public class UserStatistics extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LOGGER.info("User Statistics");
+        req.setAttribute(ALL_INV_REV_CRIT , favouriteService.getAllCriteria());
         req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
+        LOGGER.info("User Statistics module accesed.");
     }
 }
 
