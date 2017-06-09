@@ -1,6 +1,5 @@
 package com.dmmsoft.analyzer;
 
-import com.dmmsoft.ConstantsProvider;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.ContentWrapper;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
@@ -23,6 +22,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dmmsoft.ConstantsProvider.AUTH_USER;
+import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER_COLLECTION;
+import static com.dmmsoft.ConstantsProvider.CRITERIA_ID;
+import static com.dmmsoft.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
+import static com.dmmsoft.ConstantsProvider.UPDATE_ACTION;
+import static com.dmmsoft.ConstantsProvider.DELETE_ACTION;
+import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
+
+
 /**
  * Created by milo on 24.05.17.
  */
@@ -43,7 +51,7 @@ public class FavouriteServlet extends HttpServlet {
 
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
                 .getAllUserFavoutiteCriteria(((User) req.getSession()
-                        .getAttribute(ConstantsProvider.AUTH_USER)).getId());
+                        .getAttribute(AUTH_USER)).getId());
 
         List<ContentWrapper> contentWrappers = new ArrayList<>();
 
@@ -63,7 +71,7 @@ public class FavouriteServlet extends HttpServlet {
             LOGGER.error("Content Wrapper failure: {}",ex.getMessage());
         }
 
-        req.setAttribute(ConstantsProvider.CONTENT_WRAPPER_COLLECTION, contentWrappers);
+        req.setAttribute(CONTENT_WRAPPER_COLLECTION, contentWrappers);
         req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
 
     }
@@ -71,11 +79,11 @@ public class FavouriteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String criteriaId = req.getParameter(ConstantsProvider.CRITERIA_ID);
-        String userCustomName = req.getParameter(ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME);
+        String criteriaId = req.getParameter(CRITERIA_ID);
+        String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
 
         User dbUser = userService.get(((User) req.getSession()
-                .getAttribute(ConstantsProvider.AUTH_USER)).getId());
+                .getAttribute(AUTH_USER)).getId());
 
         List<PersistedInvestmentRevenueCriteria> criteriaList = dbUser.getFavourites();
 
@@ -85,13 +93,13 @@ public class FavouriteServlet extends HttpServlet {
 
             int i = getCriteriaArrayListId(criteriaList, criteriaId);
 
-            if (req.getParameter(ConstantsProvider.UPDATE_ACTION) != null) {
+            if (req.getParameter(UPDATE_ACTION) != null) {
 
                 criteriaList.get(i).setUserCustomName(userCustomName);
                 LOGGER.info("Analysis user custom name changed (updateAction) user Id:{}, login:{}",
                         dbUser.getId(), dbUser.getLogin());
 
-            } else if (req.getParameter(ConstantsProvider.DELETE_ACTION) != null) {
+            } else if (req.getParameter(DELETE_ACTION) != null) {
 
                 criteriaList.get(i).setFavourite(false);
                 LOGGER.info("Analysis removed from favourites (deleteAction) user Id:{}, login:{}",
@@ -121,7 +129,7 @@ public class FavouriteServlet extends HttpServlet {
         wrapper.setCriteria(criteria);
         wrapper.setResult(result);
         if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
-            wrapper.setMessage(ConstantsProvider.CRITERIA_MODERATION_MESSAGE);
+            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
         }
         return wrapper;
     }

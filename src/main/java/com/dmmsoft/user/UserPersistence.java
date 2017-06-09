@@ -32,7 +32,14 @@ public class UserPersistence implements IUserService {
 
         // TODO implement criteria
         return em.createQuery("select distinct m from User m where m.login=:login", User.class)
-                .setParameter("login", userEmail).getResultList();
+                .setParameter("login", userEmail)
+                .getResultList();
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return em.createQuery("select m from User m", User.class)
+                .getResultList();
     }
 
     @Override
@@ -40,6 +47,7 @@ public class UserPersistence implements IUserService {
     public void update(User user) {
        User userToUpdate =  em.find(User.class, user.getId());
        userToUpdate.setFavourites(user.getFavourites());
+       userToUpdate.setLastLoginDateTime(user.getLastLoginDateTime());
        em.merge(userToUpdate);
     }
 }

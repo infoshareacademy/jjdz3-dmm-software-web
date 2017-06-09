@@ -1,5 +1,6 @@
 package com.dmmsoft.user;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -17,6 +18,8 @@ public interface IUserService {
   List<User> getUserByEmail(String userEmail);
 
   void update(User user);
+
+  List<User> getAllUsers();
 
 
 }

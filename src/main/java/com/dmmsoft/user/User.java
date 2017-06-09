@@ -3,6 +3,7 @@ package com.dmmsoft.user;
 import com.dmmsoft.analyzer.analysis.InvestmentRevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,23 @@ public class User {
     private String login;
     private String pass;
     private boolean isAdmin;
+    private LocalDateTime creationDateTime;
+    private LocalDateTime lastLoginDateTime;
+    private LocalDateTime lastUpdateDateTime;
+
+    @PrePersist
+    private void onCreate(){
+        creationDateTime=LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void onUpdate(){
+        lastUpdateDateTime=LocalDateTime.now();
+    }
 
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
     private List<PersistedInvestmentRevenueCriteria> favourites = new ArrayList<>();
-
 
 
     public User() {
@@ -66,6 +79,22 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public LocalDateTime getLastUpdateDateTime() {
+        return lastUpdateDateTime;
+    }
+
+    public LocalDateTime getLastLoginDateTime() {
+        return lastLoginDateTime;
+    }
+
+    public void setLastLoginDateTime(LocalDateTime lastLoginDateTime) {
+        this.lastLoginDateTime = lastLoginDateTime;
     }
 
     public List<PersistedInvestmentRevenueCriteria> getFavourites() {

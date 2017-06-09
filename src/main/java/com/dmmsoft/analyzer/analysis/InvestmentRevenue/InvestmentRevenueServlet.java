@@ -23,6 +23,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static com.dmmsoft.ConstantsProvider.DATE_PATTERN;
+import static com.dmmsoft.ConstantsProvider.INVESTMENT_NAME;
+import static com.dmmsoft.ConstantsProvider.CAPITAL;
+import static com.dmmsoft.ConstantsProvider.BUY_DATE;
+import static com.dmmsoft.ConstantsProvider.SELL_DATE;
+import static com.dmmsoft.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
+import static com.dmmsoft.ConstantsProvider.IS_FAVOURITE;
+import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
+import static com.dmmsoft.ConstantsProvider.APP_MESSAGE;
+import static com.dmmsoft.ConstantsProvider.NO_DATA_FOR_CRITERIA_MESSAGE;
+import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
+import static com.dmmsoft.ConstantsProvider.AUTH_USER;
+
 /**
  * Created by milo on 12.05.17.
  */
@@ -52,15 +65,14 @@ public class InvestmentRevenueServlet extends HttpServlet {
 
         try {
             //TODO form validation
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ConstantsProvider.DATE_PATTERN);
-            String investmentName = req.getParameter(ConstantsProvider.INVESTMENT_NAME);
-            String capital = req.getParameter(ConstantsProvider.CAPITAL);
-            String buyDate = req.getParameter(ConstantsProvider.BUY_DATE);
-            String sellDate = req.getParameter(ConstantsProvider.SELL_DATE);
-            String userCustomName = req.getParameter(ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+            String investmentName = req.getParameter(INVESTMENT_NAME);
+            String capital = req.getParameter(CAPITAL);
+            String buyDate = req.getParameter(BUY_DATE);
+            String sellDate = req.getParameter(SELL_DATE);
+            String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
 
-
-            Boolean isFavouriteChecked = req.getParameter(ConstantsProvider.IS_FAVOURITE) != null;
+            Boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
 
             //TODO remove default values for manual tests
             if (buyDate == null || buyDate.isEmpty())
@@ -82,19 +94,19 @@ public class InvestmentRevenueServlet extends HttpServlet {
                     .getResult();
 
             User dbUser = userService.get(((User) req.getSession()
-                    .getAttribute(ConstantsProvider.AUTH_USER)).getId());
+                    .getAttribute(AUTH_USER)).getId());
 
             dbUser.getFavourites().add(new PersistedInvestmentRevenueCriteria()
                     .getCriteria(criteria, userCustomName));
             userService.update(dbUser);
 
-            req.setAttribute(ConstantsProvider.CONTENT_WRAPPER, this.getContent(criteria, result));
+            req.setAttribute(CONTENT_WRAPPER, this.getContent(criteria, result));
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
 
             LOGGER.info("Criteria Submitted by user Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
 
         } catch (NoDataForCriteria ex) {
-            req.setAttribute(ConstantsProvider.APP_MESSAGE, ConstantsProvider.NO_DATA_FOR_CRITERIA_MESSAGE);
+            req.setAttribute(APP_MESSAGE, NO_DATA_FOR_CRITERIA_MESSAGE);
             req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
             LOGGER.warn(ex.getMessage());
         }
@@ -104,9 +116,8 @@ public class InvestmentRevenueServlet extends HttpServlet {
         wrapper.setCriteria(criteria);
         wrapper.setResult(result);
         if (result.getFinallyEvaluatedInput().getModifiedBySuggester()) {
-            wrapper.setMessage(ConstantsProvider.CRITERIA_MODERATION_MESSAGE);
+            wrapper.setMessage(CRITERIA_MODERATION_MESSAGE);
         }
         return wrapper;
     }
-
 }

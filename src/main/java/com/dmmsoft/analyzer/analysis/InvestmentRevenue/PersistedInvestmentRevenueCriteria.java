@@ -6,6 +6,7 @@ import com.dmmsoft.user.User;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -18,6 +19,18 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     @ManyToOne
     private User user;
     private String userCustomName;
+    private LocalDateTime creationDateTime;
+    private LocalDateTime lastUpdateDateTime;
+
+    @PrePersist
+    private void onCreate(){
+        creationDateTime=LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void onUpdate(){
+        lastUpdateDateTime=LocalDateTime.now();
+    }
 
     @Override
     public long getId() {
@@ -27,7 +40,6 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     public void setId(long id) {
         this.id = id;
     }
-
 
     public String getUserCustomName() {
         return userCustomName;
@@ -43,6 +55,13 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+    public LocalDateTime getLastUpdateDateTime() {
+        return lastUpdateDateTime;
     }
 
     public PersistedInvestmentRevenueCriteria getCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {

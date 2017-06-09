@@ -18,6 +18,12 @@ public class Login implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Login.class);
 
+    private final String[] urlAcccessPatterns = {
+            "/financial-app/login",
+            "/financial-app/login.jsp",
+            "/financial-app/auth",
+            "/financial-app/res"};
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -30,21 +36,33 @@ public class Login implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         String path = req.getRequestURI();
 
-        LOGGER.info("login filter request path: {}", path);
-        if ((path.startsWith("/financial-app/login")|path.startsWith("/financial-app/login.jsp")
-                |path.startsWith("/financial-app/auth"))){
+        if (checkIfRequestPathIsValid(urlAcccessPatterns, path)) {
             filterChain.doFilter(servletRequest, servletResponse);
-        }
-        else {
+            LOGGER.info("login filter request path: {}", path);
+            LOGGER.info("Valid request. Access succeed.");
+        } else {
             req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
-            LOGGER.warn("Access denied! Not authenticated user request!");
+            LOGGER.info("login filter request path: {}", path);
+            LOGGER.warn("Not authenticated request! Access denied!");
         }
+    }
 
+    private boolean checkIfRequestPathIsValid(String[] urlAcccessPatterns, String path) {
+        boolean hasAccess = false;
+        for (String item : urlAcccessPatterns) {
+            if (path.startsWith(item)) {
+                hasAccess = true;
+                break;
+            } else {
+                hasAccess=false;
+            }
+        }
+        return hasAccess;
     }
 
     @Override
     public void destroy() {
-
     }
+
 
 }

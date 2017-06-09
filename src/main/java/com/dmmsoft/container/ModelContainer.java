@@ -21,13 +21,28 @@ public class ModelContainer implements IModelContainerService {
 
 
     @PostConstruct
-    public void onPostConstruct() {
+    private void onPostConstruct() {
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
         MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
         mainContainerLoader.loadFunds();
         mainContainerLoader.loadCurrencies();
 
         // jar dependency
+        com.dmmsoft.app.model.MainContainer mainContainer = mainContainerLoader.getMainContainer();
+        this.investments = mainContainer.getInvestments();
+        this.mainContainer = mainContainer;
+    }
+
+    public void reload(){
+      if(!mainContainer.getInvestments().isEmpty()) {
+          mainContainer.getInvestments().clear();
+      }
+
+        AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
+        MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
+        mainContainerLoader.loadFunds();
+        mainContainerLoader.loadCurrencies();
+
         com.dmmsoft.app.model.MainContainer mainContainer = mainContainerLoader.getMainContainer();
         this.investments = mainContainer.getInvestments();
         this.mainContainer = mainContainer;
@@ -40,4 +55,5 @@ public class ModelContainer implements IModelContainerService {
     public MainContainer getMainContainer() {
         return mainContainer;
     }
+
 }
