@@ -23,10 +23,16 @@ public final class WebAppDeployListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-
-        // initial csv data load to application memory
-        container.getMainContainer();
-        LOGGER.info("Application Deployed. Main Container initialized: CSV files loaded.");
+        try {
+            LOGGER.info("Application Deployed. Data model CSV files loading initialized...");
+            container.getMainContainer();
+            LOGGER.info("Application Deployed. Main Container initialized: CSV files successfully loaded.");
+            LOGGER.info("Currencies items:{} Funds items:{}",
+                    container.getMainContainer().getCurrenciesCount(),
+                    container.getMainContainer().getFundsCount());
+        } catch (RuntimeException ex) {
+            LOGGER.error("FATAL ERROR: Failed to load data model CSV files! {}", ex.getMessage());
+        }
     }
 
     @Override

@@ -10,9 +10,11 @@
 <p><b>Application settings</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
-<p>TODO</p>
-<p>content: application settings </p>
-<p>csv refresh button </p>
+<p>Application settings:</p>
+<form action="../adminview/appsettings" method="post">
+    <button type="submit">Press to reload data model csv files...</button>
+</form>
+</br>
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

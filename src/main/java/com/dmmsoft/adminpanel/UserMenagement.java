@@ -28,7 +28,5 @@ public class UserMenagement extends HttpServlet {
 
             LOGGER.info("User Menagement");
             req.getRequestDispatcher("../adminview/userManagement.jsp").forward(req, resp);
-
         }
-
 }

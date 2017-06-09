@@ -28,7 +28,29 @@ public class AppSettings extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LOGGER.info("App settings");
+        req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try {
+            LOGGER.info("Administrator Main Container manual reloading initialized...");
+
+           // container.getMainContainer().getInvestments().clear();
+            container.getMainContainer();
+
+            LOGGER.info("Main Container reloaded! Actual CSV available!");
+            LOGGER.info("Currencies items:{} Funds items:{}",
+                    container.getMainContainer().getCurrenciesCount(),
+                    container.getMainContainer().getFundsCount());
+
+        } catch (RuntimeException ex) {
+
+            LOGGER.error("FATAL ERROR: Failed to manually reload data model CSV files! {}", ex.getMessage());
+        }
+
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
     }
 }
