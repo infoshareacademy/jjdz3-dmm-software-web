@@ -16,7 +16,7 @@
 <p>Choose your investment analysis:</p>
 <a href="../userview/investments">Database info</a><br>
 <a href="../userview/investmentrevenue">Investment revenue</a><br>
-<a href="../userview/investments">Investment comparator</a><br>
+<a href="../userview/comparator">Investment comparator</a><br>
 <a href="../userview/investments">90 days Top10</a><br>
 <br>
 <jsp:include page="../../partials/footer.jsp" />

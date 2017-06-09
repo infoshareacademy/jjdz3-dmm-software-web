@@ -25,7 +25,7 @@ import java.util.List;
 
 import static com.dmmsoft.ConstantsProvider.*;
 
-@WebServlet(urlPatterns = "/investmentstats")
+@WebServlet(urlPatterns = "/auth/userview/comparator")
 public class InvestmentStatisticsServlet extends HttpServlet {
 
     @Inject
@@ -34,7 +34,7 @@ public class InvestmentStatisticsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("../userview/investments.jsp").forward(req, resp);
+        req.getRequestDispatcher("../userview/comparator.jsp").forward(req, resp);
     }
 
     @Override
@@ -44,17 +44,15 @@ public class InvestmentStatisticsServlet extends HttpServlet {
         String nameB = req.getParameter(INVESTMENT_NAME_B);
 
         ItemStatsResult resultA = new ItemStats().getResult(container.getInvestments()
-                , new ItemStatsCriteria(INVESTMENT_NAME_A));
+                , new ItemStatsCriteria(nameA));
 
         ItemStatsResult resultB = new ItemStats().getResult(container.getInvestments()
-                , new ItemStatsCriteria(INVESTMENT_NAME_B));
-
+                , new ItemStatsCriteria(nameB));
 
         req.setAttribute(INVESTMENT_STAT_RESULT_A, resultA);
         req.setAttribute(INVESTMENT_STAT_RESULT_B, resultB);
 
-        req.getRequestDispatcher("../userview/investments.jsp").forward(req, resp);
-        req.getRequestDispatcher("testpage.jsp").forward(req, resp);
+        req.getRequestDispatcher("../userview/comparator.jsp").forward(req, resp);
 
     }
 }
