@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,22 +31,42 @@
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 
+
 <form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
-    <p>1. <input type="text" name="investmenName"  id="inputForm" placeholder="inv.name, e.g. USD" required="true"/>
+    <p>1. Investment name:</p>
+    <p><input type="text" name="investmentName" id="inputForm" value="${investmentName}"/>
     </p>
-    <p>2. <input type="text" pattern="[0-9]*" name="capital"  placeholder="inv.capital, e.g. 10000" required="true"/>
+    <p>2. Invested capital:</p>
+    <p><input type="text" pattern="[0-9]*" name="capital" value="${capital}"/>
     </p>
-    <p>3. <input type="text" class="datePicker" name="buyDate" readonly='true'
-                 placeholder="buy date" required="true" /></p>
-    <p>4. <input type="text" class="datePicker" required="true" name="sellDate" readonly='true'
-                 placeholder="sell date"/></p>
+    <p>3. Date of buy:</p>
+    <p><input type="text" class="datePicker" name="buyDate" value="${buyDate}"
+    /></p>
+    <p>4. Date of sell:</p>
+    <p><input type="text" class="datePicker" name="sellDate" value="${sellDate}"
+    /></p>
 
     <jsp:include page="/partials/addFavourite.jsp"></jsp:include>
-    <p><button type="submit">Submit!</button></p>
+    <p>
+        <button type="submit">Submit!</button>
+    </p>
 </form>
 
-<tags:analysisResult contentWrapper="${contentWrapper}"/>
+<c:choose>
+    <c:when test="${violations.size() >= 1}">
+        <p style="color: red">Number of violations: ${violations.size()}</p>
+        <ul>
+            <c:forEach var="violation" items="${violations}">
+                <li style="color: red">${violation.message}</li>
+            </c:forEach>
+        </ul>
+    </c:when>
+    <c:otherwise>
+        <tags:analysisResult contentWrapper="${contentWrapper}"/>
+    </c:otherwise>
+</c:choose>
+
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

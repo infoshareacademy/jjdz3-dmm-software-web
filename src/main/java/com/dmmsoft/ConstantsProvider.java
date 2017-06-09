@@ -23,7 +23,7 @@ public class ConstantsProvider {
     public static final String UPDATE_ACTION = "updateAction";
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
-    public static final String INVESTMENT_NAME = "investmenName";
+    public static final String INVESTMENT_NAME = "investmentName";
     public static final String CAPITAL = "capital";
     public static final String BUY_DATE = "buyDate";
     public static final String SELL_DATE = "sellDate";
