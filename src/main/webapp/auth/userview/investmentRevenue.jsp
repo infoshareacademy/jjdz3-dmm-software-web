@@ -24,12 +24,16 @@
     </script>
 </head>
 <body>
-<p><b> Analysis: Investment Revenue</b></p>
+<nav class = "navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="#" class="navbar-brand">Analysis: Investment Revenue</a>
+    </div>
+</nav>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 
 <form method="post" action="../userview/investmentrevenue">
-    <p><b>form:</b></p>
+    <p><b><h3>Form</h3></b></p>
     <p>1. Investment name:</p>
     <p><input type="text" name="investmentName" id="inputForm" value="${investmentName}"/></p>
     <p>2. Invested capital:</p>
@@ -40,7 +44,7 @@
     <p><input type="text" class="datePicker" name="sellDate" value="${sellDate}"/></p>
     <jsp:include page="/partials/addFavourite.jsp"></jsp:include>
     <p>
-        <button type="submit">Submit!</button>
+        <button type="submit" class="btn btn-default">Submit!</button>
     </p>
 </form>
 <c:choose>

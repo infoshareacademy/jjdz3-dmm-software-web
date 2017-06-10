@@ -5,12 +5,20 @@
 <html>
 <head>
     <title>Investment comparator</title>
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/styles.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<p><b>Investments indicator comparator</b></p>
+<nav class = "navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="#" class="navbar-brand">Investments indicator comparator</a>
+    </div>
+</nav>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
+
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
-<p>Enter names of 2 investments to compare</p>
+
+<p><h4><b>Enter names of 2 investments to compare</b></h4></p>
 <form action="../userview/comparator" method="post">
     <p>Investment A<input type="text" name="investmentNameA" value="${investmentNameA} " required/></p>
     <p>Investment B<input type="text" name="investmentNameB" value="${investmentNameB} " required/></p>

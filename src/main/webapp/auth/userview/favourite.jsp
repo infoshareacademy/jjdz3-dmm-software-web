@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/styles.css" type="text/css" rel="stylesheet">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script>
@@ -22,7 +24,11 @@
     </script>
 </head>
 <body>
-<p><b>Favourite Analysis</b></p>
+<nav class = "navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="#" class="navbar-brand">Favourite Analysis</a>
+    </div>
+</nav>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 </br>
