@@ -8,7 +8,7 @@
 </head>
 <body>
 <form method="post" action="../logout">
-    <p><h4> <input type="submit" class="btn btn-danger" value="Logout">  ${user.login} </h4></p>
+    <h4> <input type="submit" class="btn btn-danger" value="Logout">  ${user.login} </h4>
 </form>
 </body>
 </html>
