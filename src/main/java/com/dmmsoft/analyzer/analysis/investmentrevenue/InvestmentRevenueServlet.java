@@ -113,8 +113,6 @@ public class InvestmentRevenueServlet extends HttpServlet {
                     , investmentName
                     , isFavouriteChecked);
 
-
-
             InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(), criteria))
                     .getResult();
 

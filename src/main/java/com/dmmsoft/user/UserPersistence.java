@@ -1,5 +1,9 @@
 package com.dmmsoft.user;
 
+import com.dmmsoft.analyzer.analysis.investmentrevenue.InvestmentRevenueServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -12,6 +16,8 @@ import java.util.Optional;
 
 
 public class UserPersistence implements IUserService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserPersistence.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -48,6 +54,7 @@ public class UserPersistence implements IUserService {
        User userToUpdate =  em.find(User.class, user.getId());
        userToUpdate.setFavourites(user.getFavourites());
        userToUpdate.setLastLoginDateTime(user.getLastLoginDateTime());
+       LOGGER.debug("LocalDate passed to db {}", userToUpdate.getFavourites().get(0));
        em.merge(userToUpdate);
     }
 }
