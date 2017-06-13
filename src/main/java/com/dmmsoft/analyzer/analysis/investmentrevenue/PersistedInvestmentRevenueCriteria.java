@@ -4,6 +4,7 @@ import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -19,6 +20,9 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     private String userCustomName;
     private LocalDateTime creationDateTime;
     private LocalDateTime lastUpdateDateTime;
+    private LocalDate testLocalDate;
+
+
 
     @PrePersist
     private void onCreate(){
@@ -62,6 +66,16 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         return lastUpdateDateTime;
     }
 
+    public LocalDate getTestLocalDate() {
+        return testLocalDate;
+    }
+
+    public void setTestLocalDate(LocalDate testLocalDate) {
+        this.testLocalDate = testLocalDate;
+    }
+
+
+
     public PersistedInvestmentRevenueCriteria getCriteria(InvestmentRevenueCriteria criteria, String userCustomName) {
         setInvestedCapital(criteria.getInvestedCapital());
         setBuyDate(criteria.getBuyDate());
@@ -69,6 +83,8 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         setInvestmentName(criteria.getInvestmentName());
         setFavourite(criteria.getFavourite());
         setUserCustomName(userCustomName);
+        setTestLocalDate(LocalDate.now());
+        System.out.println("aktualna data"+LocalDate.now());
         return this;
     }
 
@@ -82,6 +98,4 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
         criteria.setFavourite(revenueCriteria.getFavourite());
         return criteria;
     }
-
-
 }
