@@ -54,7 +54,6 @@ public class UserPersistence implements IUserService {
        User userToUpdate =  em.find(User.class, user.getId());
        userToUpdate.setFavourites(user.getFavourites());
        userToUpdate.setLastLoginDateTime(user.getLastLoginDateTime());
-       LOGGER.debug("LocalDate passed to db {}", userToUpdate.getFavourites().get(0));
        em.merge(userToUpdate);
     }
 }
