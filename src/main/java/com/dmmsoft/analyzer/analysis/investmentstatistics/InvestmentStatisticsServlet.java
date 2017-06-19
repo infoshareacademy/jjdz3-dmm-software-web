@@ -52,7 +52,7 @@ public class InvestmentStatisticsServlet extends HttpServlet {
         req.setAttribute(INVESTMENT_STAT_RESULT_A, resultA);
         req.setAttribute(INVESTMENT_STAT_RESULT_B, resultB);
 
-        req.getRequestDispatcher("../userview/comparator.jsp").forward(req, resp);
+        req.getRequestDispatcher("../userview/comparatorResult.jsp").forward(req, resp);
 
     }
 }
