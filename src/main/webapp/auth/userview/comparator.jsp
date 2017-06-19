@@ -12,8 +12,8 @@
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 <p>Enter names of 2 investments to compare</p>
 <form action="../userview/comparator" method="post">
-    <p>Investment A<input type="text" name="investmentNameA" value="${investmentNameA} " required/></p>
-    <p>Investment B<input type="text" name="investmentNameB" value="${investmentNameB} " required/></p>
+    <p>Investment A<input type="text" name="investmentNameA" value="${investmentNameA}" required/></p>
+    <p>Investment B<input type="text" name="investmentNameB" value="${investmentNameB}" required/></p>
     <button type="submit">Submit</button>
 </form>
 <br>
