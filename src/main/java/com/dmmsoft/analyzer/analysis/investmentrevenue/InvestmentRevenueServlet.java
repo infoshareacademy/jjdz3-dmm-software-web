@@ -124,7 +124,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
             userService.update(dbUser);
 
             req.setAttribute(CONTENT_WRAPPER, this.getContent(criteria, result));
-            req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentRevenueResult.jsp").forward(req, resp);
 
             LOGGER.info("Criteria Submitted by user Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
 

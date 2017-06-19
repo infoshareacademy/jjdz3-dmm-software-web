@@ -52,9 +52,6 @@
             </c:forEach>
         </ul>
     </c:when>
-    <c:otherwise>
-        <tags:analysisResult contentWrapper="${contentWrapper}"/>
-    </c:otherwise>
 </c:choose>
 
 <jsp:include page="../../partials/footer.jsp"/>
