@@ -32,8 +32,8 @@ public class AppSettings extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute(FUND_COUNT, container.getMainContainer().getCurrenciesCount());
-        req.setAttribute(CURRENCY_COUNT, container.getMainContainer().getFundsCount());
+        req.setAttribute(CURRENCY_COUNT , container.getMainContainer().getCurrenciesCount());
+        req.setAttribute(FUND_COUNT, container.getMainContainer().getFundsCount());
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
 
     }

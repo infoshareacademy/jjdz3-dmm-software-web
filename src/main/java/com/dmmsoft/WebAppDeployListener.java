@@ -1,7 +1,6 @@
 package com.dmmsoft;
 
 import com.dmmsoft.container.IModelContainerService;
-import org.joda.time.tz.UTCProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +28,7 @@ public final class WebAppDeployListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
         setApplicationDefaultTimeZone(DEFAULT_TIMEZONE);
-        loadCSVFiles();
+        loadModelData();
     }
 
     @Override
@@ -37,7 +36,7 @@ public final class WebAppDeployListener implements ServletContextListener {
         LOGGER.info("Application Servlet Context Destroyed.");
     }
 
-    private void loadCSVFiles() {
+    private void loadModelData() {
         try {
             LOGGER.info("Application Deployed. Data model CSV files loading initialized...");
 
