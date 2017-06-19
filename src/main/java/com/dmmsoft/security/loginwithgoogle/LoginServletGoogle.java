@@ -32,7 +32,7 @@ public class LoginServletGoogle extends HttpServlet {
     IUserService userService;
 
     @Override
-    protected void doGet(HttpServletRequest req,
+    protected void doPost(HttpServletRequest req,
                          HttpServletResponse resp)
             throws ServletException, IOException {
 

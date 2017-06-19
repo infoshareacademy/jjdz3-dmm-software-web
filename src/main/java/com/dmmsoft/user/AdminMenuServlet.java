@@ -24,9 +24,18 @@ public class AdminMenuServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         User user = (User) req.getSession().getAttribute(ConstantsProvider.AUTH_USER);
-        LOGGER.info("User from session:{}", user.getLogin());
         resp.sendRedirect("adminMenu.jsp");
+        LOGGER.info("User from session:{}", user.getLogin());
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        User user = (User) req.getSession().getAttribute(ConstantsProvider.AUTH_USER);
+        resp.sendRedirect("adminMenu.jsp");
+        LOGGER.info("User from session:{}", user.getLogin());
+    }
+
 }
 
 

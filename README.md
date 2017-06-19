@@ -24,7 +24,8 @@ To clean maven last build:
 
 Note: 
 Application default timezone is set to UTC and is platform independent.
-MySQL database time zone is also set to UTC.
+MySQL database timezone is also set to UTC.
+Keep timezones synchronized to avoid LocalDate issues.
 
 welcome page:
  
