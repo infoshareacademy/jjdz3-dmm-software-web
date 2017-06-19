@@ -3,10 +3,8 @@ DMMsoftware  Finance-app
 
 #### Build & run
 
-1 Install Docker on your server. Synchronize Docker container and server timezone 
-(to avoid eventual LocalDate insert/update issues), e.g.: 
+1 Install Docker on your server. 
 
-    $ sudo export TZ=UTC
     
 2 Run MySQL in Docker container:
 
@@ -24,6 +22,9 @@ To clean maven last build:
   
     $ sudo mvn install clean
 
+Note: 
+Application default timezone is set to UTC and is platform independent.
+MySQL database time zone is also set to UTC.
 
 welcome page:
  
