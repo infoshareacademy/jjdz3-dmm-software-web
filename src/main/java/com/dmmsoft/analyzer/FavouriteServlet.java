@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static com.dmmsoft.ConstantsProvider.AUTH_USER;
@@ -85,7 +87,7 @@ public class FavouriteServlet extends HttpServlet {
         User dbUser = userService.get(((User) req.getSession()
                 .getAttribute(AUTH_USER)).getId());
 
-        List<PersistedInvestmentRevenueCriteria> criteriaList = dbUser.getFavourites();
+        List<PersistedInvestmentRevenueCriteria> criteriaList = new ArrayList<>(dbUser.getFavourites());
 
         if (criteriaList != null && !criteriaList.isEmpty()) {
             LOGGER.info("Updating Criteria, current user criteria list size:{}, user Id:{}, login:{}",
@@ -105,7 +107,7 @@ public class FavouriteServlet extends HttpServlet {
                 LOGGER.info("Analysis removed from favourites (deleteAction) user Id:{}, login:{}",
                         dbUser.getId(), dbUser.getLogin());
             }
-            dbUser.setFavourites(criteriaList);
+            dbUser.setFavourites( new LinkedHashSet<>(criteriaList));
             userService.update(dbUser);
             LOGGER.info("Criteria upadted. User Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
         }

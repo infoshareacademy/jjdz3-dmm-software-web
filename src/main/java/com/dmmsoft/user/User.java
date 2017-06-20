@@ -37,11 +37,11 @@ public class User {
 
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
-    private List<PersistedInvestmentRevenueCriteria> favourites = new ArrayList<>();
+    private Set<PersistedInvestmentRevenueCriteria> favourites = new LinkedHashSet<>();
 
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
-    private Set<PersistedIndicatorCriteria> favouriteInvestmentIndicators = new HashSet<>();
+    private Set<PersistedIndicatorCriteria> favouriteInvestmentIndicators = new LinkedHashSet<>();
 
 
     public Set<PersistedIndicatorCriteria> getFavouriteInvestmentIndicators() {
@@ -109,17 +109,11 @@ public class User {
         this.lastLoginDateTime = lastLoginDateTime;
     }
 
-    public List<PersistedInvestmentRevenueCriteria> getFavourites() {
+    public Set<PersistedInvestmentRevenueCriteria> getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(List<PersistedInvestmentRevenueCriteria> favourites) {
+    public void setFavourites(Set<PersistedInvestmentRevenueCriteria> favourites) {
         this.favourites = favourites;
     }
-
-
-
-
-
-
 }
