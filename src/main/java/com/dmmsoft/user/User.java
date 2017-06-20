@@ -1,11 +1,11 @@
 package com.dmmsoft.user;
 
+import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by milo on 23.05.17.
@@ -39,6 +39,18 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<PersistedInvestmentRevenueCriteria> favourites = new ArrayList<>();
 
+    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private Set<PersistedIndicatorCriteria> favouriteInvestmentIndicators = new HashSet<>();
+
+
+    public Set<PersistedIndicatorCriteria> getFavouriteInvestmentIndicators() {
+        return favouriteInvestmentIndicators;
+    }
+
+    public void setFavouriteInvestmentIndicators(Set<PersistedIndicatorCriteria> favouriteInvestmentIndicators) {
+        this.favouriteInvestmentIndicators = favouriteInvestmentIndicators;
+    }
 
     public User() {
     }
