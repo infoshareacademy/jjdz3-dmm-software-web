@@ -14,6 +14,7 @@
 <form action="../userview/comparator" method="post">
     <p>Investment A<input type="text" name="investmentNameA" value="${investmentNameA}" required/></p>
     <p>Investment B<input type="text" name="investmentNameB" value="${investmentNameB}" required/></p>
+    <jsp:include page="/partials/addFavourite.jsp"></jsp:include>
     <button type="submit">Submit</button>
 </form>
 <br>

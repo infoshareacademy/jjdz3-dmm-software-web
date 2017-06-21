@@ -17,6 +17,15 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
     private User user;
     private LocalDateTime creationDateTime;
     private LocalDateTime lastUpdateDateTime;
+    private String userCustomName;
+
+    public String getUserCustomName() {
+        return userCustomName;
+    }
+
+    public void setUserCustomName(String userCustomName) {
+        this.userCustomName = userCustomName;
+    }
 
     public User getUser() {
         return user;
@@ -30,17 +39,11 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
         return creationDateTime;
     }
 
-    public void setCreationDateTime(LocalDateTime creationDateTime) {
-        this.creationDateTime = creationDateTime;
-    }
 
     public LocalDateTime getLastUpdateDateTime() {
         return lastUpdateDateTime;
     }
 
-    public void setLastUpdateDateTime(LocalDateTime lastUpdateDateTime) {
-        this.lastUpdateDateTime = lastUpdateDateTime;
-    }
 
     public PersistedIndicatorCriteria() {
 

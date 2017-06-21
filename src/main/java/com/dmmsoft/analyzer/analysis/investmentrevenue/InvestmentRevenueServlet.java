@@ -47,8 +47,6 @@ import static com.dmmsoft.ConstantsProvider.AUTH_USER;
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
-    private final String TEST_BUY_DATE = "2009-09-10";
-    private final String TEST_SELL_DATE = "2017-04-02";
 
     private ContentWrapper wrapper = new ContentWrapper();
     @Inject
