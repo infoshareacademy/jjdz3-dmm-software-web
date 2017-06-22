@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer;
 
+import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.enterprise.inject.Default;
@@ -19,7 +20,7 @@ public class PersistenceFavourite implements IFavouriteService {
     private EntityManager em;
 
     @Override
-    public List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId) {
+    public List<PersistedInvestmentRevenueCriteria> getAllFavouriteRevenueCriteria(long UserId) {
 
         List<PersistedInvestmentRevenueCriteria> list = em
                 .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user t where t.id=:Id AND m.isFavourite=true", PersistedInvestmentRevenueCriteria.class)
@@ -29,9 +30,17 @@ public class PersistenceFavourite implements IFavouriteService {
     }
 
     @Override
-    public List<PersistedInvestmentRevenueCriteria> getAllCriteria() {
+    public List<PersistedInvestmentRevenueCriteria> getAllRevenueCriteria() {
         return  em.createQuery("select m from PersistedInvestmentRevenueCriteria m", PersistedInvestmentRevenueCriteria.class)
                   .getResultList();
     }
 
+    @Override
+    public List<PersistedComparatorIndicatorCriteria> getAllFavouriteComparatorIndicatorCriteria(long UserId) {
+        List<PersistedComparatorIndicatorCriteria> list = em
+                .createQuery("select m from PersistedComparatorIndicatorCriteria m left join fetch m.user t where t.id=:Id AND m.isFavourite=true", PersistedComparatorIndicatorCriteria.class)
+                .setParameter("Id", UserId)
+                .getResultList();
+        return list;
+    }
 }

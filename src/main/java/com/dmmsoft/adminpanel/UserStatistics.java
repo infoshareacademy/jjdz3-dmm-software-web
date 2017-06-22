@@ -29,7 +29,7 @@ public class UserStatistics extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute(ALL_INV_REV_CRIT , favouriteService.getAllCriteria());
+        req.setAttribute(ALL_INV_REV_CRIT , favouriteService.getAllRevenueCriteria());
         req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
         LOGGER.info("User Statistics module accessed.");
     }

@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer;
 
+import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import java.util.List;
@@ -9,8 +10,12 @@ import java.util.List;
  */
 public interface IFavouriteService {
 
-    List<PersistedInvestmentRevenueCriteria> getAllUserFavoutiteCriteria(long UserId);
+    List<PersistedInvestmentRevenueCriteria> getAllFavouriteRevenueCriteria(long UserId);
 
-    List<PersistedInvestmentRevenueCriteria> getAllCriteria();
+    List<PersistedInvestmentRevenueCriteria> getAllRevenueCriteria();
+
+    List<PersistedComparatorIndicatorCriteria> getAllFavouriteComparatorIndicatorCriteria(long UserId);
+
+
 
 }

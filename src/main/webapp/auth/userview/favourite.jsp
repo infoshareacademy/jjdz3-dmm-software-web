@@ -31,15 +31,16 @@
     <button id="editBtn">edit</button>
 </p>
 <div class="Favourite" style="background-color: #e0e0e0">
-    <c:forEach var="contentWrapper" items="${contentWrappers}">
+    <c:forEach var="revenueWrapper" items="${contentWrappers}">
         <hr>
-        <p><b>${contentWrapper.criteria.userCustomName}</b></p>
-        <tags:analysisResult contentWrapper="${contentWrapper}"/>
+        <p><b>${revenueWrapper.criteria.userCustomName}</b></p>
+        <tags:analysisResult revenueWrapper="${revenueWrapper}"/>
         <div class="editFavourite" hidden>
-            <tags:editFavourite contentWrapper="${contentWrapper}"/>
+            <tags:editFavourite contentWrapper="${revenueWrapper}"/>
         </div>
     </c:forEach>
 </div>
+
 <br>
 <jsp:include page="../../partials/footer.jsp"/>
 </body>

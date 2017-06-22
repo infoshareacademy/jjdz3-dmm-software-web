@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class FavouriteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
-                .getAllUserFavoutiteCriteria(((User) req.getSession()
+                .getAllFavouriteRevenueCriteria(((User) req.getSession()
                         .getAttribute(AUTH_USER)).getId());
 
         List<ContentWrapper> contentWrappers = new ArrayList<>();
@@ -62,12 +61,17 @@ public class FavouriteServlet extends HttpServlet {
                 InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),
                         criteria.getEqualEquivalent(criteria))).getResult();
 
-                ContentWrapper wrapper = getContent(criteria, result);
-                contentWrappers.add(wrapper);
+                ContentWrapper revenueWrapper = getContent(criteria, result);
+                contentWrappers.add(revenueWrapper);
 
                 LOGGER.info(result.getCapitalRevenueDeltaPrecentValue().toString());
                 LOGGER.info(result.getCapitalRevenueValue().toString());
             }
+
+
+
+
+
 
         } catch (NoDataForCriteria ex) {
             LOGGER.error("Content Wrapper failure: {}",ex.getMessage());

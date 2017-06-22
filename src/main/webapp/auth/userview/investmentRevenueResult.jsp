@@ -12,7 +12,7 @@
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 
-<tags:analysisResult contentWrapper="${contentWrapper}"/>
+<tags:analysisResult revenueWrapper="${contentWrapper}"/>
 
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
