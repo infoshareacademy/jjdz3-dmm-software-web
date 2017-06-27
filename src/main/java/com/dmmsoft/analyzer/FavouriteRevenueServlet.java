@@ -36,9 +36,9 @@ import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
  * Created by milo on 24.05.17.
  */
 
-@WebServlet(urlPatterns = "/auth/userview/favourite")
-public class FavouriteServlet extends HttpServlet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteServlet.class);
+@WebServlet(urlPatterns = "/auth/userview/favouriterevenue")
+public class FavouriteRevenueServlet extends HttpServlet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteRevenueServlet.class);
 
     @Inject
     IModelContainerService container;
@@ -54,8 +54,15 @@ public class FavouriteServlet extends HttpServlet {
                 .getAllFavouriteRevenueCriteria(((User) req.getSession()
                         .getAttribute(AUTH_USER)).getId());
 
-        List<ContentWrapper> contentWrappers = new ArrayList<>();
 
+        req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getAllWrapperedContent(criteriaList));
+        req.getRequestDispatcher("../userview/favouriteRevenue.jsp").forward(req, resp);
+
+    }
+
+    private List<ContentWrapper> getAllWrapperedContent(List<PersistedInvestmentRevenueCriteria> criteriaList){
+
+        List<ContentWrapper> contentWrappers = new ArrayList<>();
         try {
             for (PersistedInvestmentRevenueCriteria criteria : criteriaList) {
                 InvestmentRevenueResult result = (new InvestmentRevenue(container.getMainContainer(),
@@ -68,19 +75,15 @@ public class FavouriteServlet extends HttpServlet {
                 LOGGER.info(result.getCapitalRevenueValue().toString());
             }
 
-
-
-
-
-
         } catch (NoDataForCriteria ex) {
             LOGGER.error("Content Wrapper failure: {}",ex.getMessage());
         }
-
-        req.setAttribute(CONTENT_WRAPPER_COLLECTION, contentWrappers);
-        req.getRequestDispatcher("../userview/favourite.jsp").forward(req, resp);
-
+        return contentWrappers;
     }
+
+
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

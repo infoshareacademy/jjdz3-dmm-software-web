@@ -74,7 +74,7 @@ public class IndicatorServlet extends HttpServlet {
 
         userService.update(user);
 
-        LOGGER.debug("Number of favourite indicators"+user.getFavourireIndicatorsCompareSet().size());
+        LOGGER.debug("Number of favourite indicators: {}", user.getFavourireIndicatorsCompareSet().size());
 
         IndicatorResult resultA = new Indicator().getResult(container.getInvestments()
                 , new IndicatorCriteria(nameA));

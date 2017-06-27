@@ -38,7 +38,7 @@ public class PersistenceFavourite implements IFavouriteService {
     @Override
     public List<PersistedComparatorIndicatorCriteria> getAllFavouriteComparatorIndicatorCriteria(long UserId) {
         List<PersistedComparatorIndicatorCriteria> list = em
-                .createQuery("select m from PersistedComparatorIndicatorCriteria m left join fetch m.user t where t.id=:Id AND m.isFavourite=true", PersistedComparatorIndicatorCriteria.class)
+                .createQuery("select m from PersistedComparatorIndicatorCriteria m left join fetch m.user t where t.id=:Id AND m.isFavouriteChecked=true", PersistedComparatorIndicatorCriteria.class)
                 .setParameter("Id", UserId)
                 .getResultList();
         return list;
