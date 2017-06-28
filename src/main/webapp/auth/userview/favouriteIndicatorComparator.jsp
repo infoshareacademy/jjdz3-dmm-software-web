@@ -31,7 +31,7 @@
     <button id="editBtn">edit</button>
 </p>
 <div class="Favourite" style="background-color: #e0e0e0">
-    <c:forEach var="revenueWrapper" items="${results}">
+    <c:forEach var="revenueWrapper" items="${contentWrappers}">
         <hr>
         <th>Indicator</th>
         <p><b>${revenueWrapper.name}</b></p>

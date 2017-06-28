@@ -7,6 +7,7 @@ import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -36,11 +37,11 @@ public class PersistenceFavourite implements IFavouriteService {
     }
 
     @Override
-    public List<PersistedComparatorIndicatorCriteria> getAllFavouriteComparatorIndicatorCriteria(long UserId) {
+    public LinkedHashSet<PersistedComparatorIndicatorCriteria> getAllFavouriteComparatorIndicatorCriteria(long UserId) {
         List<PersistedComparatorIndicatorCriteria> list = em
                 .createQuery("select m from PersistedComparatorIndicatorCriteria m left join fetch m.user t where t.id=:Id AND m.isFavouriteChecked=true", PersistedComparatorIndicatorCriteria.class)
                 .setParameter("Id", UserId)
                 .getResultList();
-        return list;
+        return new LinkedHashSet<>(list);
     }
 }

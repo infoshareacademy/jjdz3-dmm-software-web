@@ -1,6 +1,7 @@
 package com.dmmsoft.analyzer;
 
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
+import com.dmmsoft.analyzer.analysis.investmentrevenue.ComparatorContentWrapper;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.ContentWrapper;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
@@ -42,7 +43,7 @@ import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
 
 @WebServlet(urlPatterns = "/auth/userview/favouriteindicatorcomparator")
 public class FavouriteIndicatorComparatorServlet extends HttpServlet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteRevenueServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteIndicatorComparatorServlet.class);
 
     @Inject
     IModelContainerService container;
@@ -54,30 +55,39 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<PersistedComparatorIndicatorCriteria> criteriaList = favouriteService
+        LinkedHashSet<PersistedComparatorIndicatorCriteria> criteriaList = favouriteService
                 .getAllFavouriteComparatorIndicatorCriteria(((User) req.getSession()
                         .getAttribute(AUTH_USER)).getId());
 
-        req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getAllResultsToCompare(new HashSet<>(criteriaList)));
-        req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
+        LOGGER.info("critiriaList: {}", criteriaList.size());
+
+         req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getAllResultsToCompare(new LinkedHashSet<>(criteriaList)));
+         req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
 
     }
 
     private Set<IndicatorResult> getAllResultsToCompare(Set<PersistedComparatorIndicatorCriteria> criteriaList){
 
-        Set<IndicatorResult> results = new HashSet<>();
+        List<ComparatorContentWrapper> wrappers = new ArrayList<>();
+
+        Set<IndicatorResult> results = new LinkedHashSet<>();
         try {
             for (PersistedComparatorIndicatorCriteria criteria : criteriaList) {
+                ComparatorContentWrapper wrapper = new ComparatorContentWrapper();
+                wrapper.setComparatorIndicatorCriteria(criteria);
 
                 for (String investmentName : criteria.getInvestmentNamesToCompare()) {
                     IndicatorResult result = new Indicator().getResult(container.getInvestments()
                             , new IndicatorCriteria(investmentName));
                     results.add(result);
                     LOGGER.info("result: {}",result.getName());
+                   // wrapper.setResult(result);
                 }
+
+
             }
 
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
             LOGGER.error("IndicatorResult failure: {}",ex.getMessage());
         }
         return results;
