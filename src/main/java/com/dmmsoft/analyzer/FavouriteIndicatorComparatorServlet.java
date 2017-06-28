@@ -3,15 +3,13 @@ package com.dmmsoft.analyzer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.ComparatorContentWrapper;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.ContentWrapper;
-import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
+import com.dmmsoft.app.analyzer.analyses.Analysis;
+import com.dmmsoft.app.analyzer.analyses.AnalysisResult;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
-import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenue;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
-import com.dmmsoft.app.analyzer.comparator.InvestmentComparator;
-import com.dmmsoft.app.model.Investment;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.user.IUserService;
@@ -30,10 +28,6 @@ import java.util.*;
 
 import static com.dmmsoft.ConstantsProvider.AUTH_USER;
 import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER_COLLECTION;
-import static com.dmmsoft.ConstantsProvider.CRITERIA_ID;
-import static com.dmmsoft.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
-import static com.dmmsoft.ConstantsProvider.UPDATE_ACTION;
-import static com.dmmsoft.ConstantsProvider.DELETE_ACTION;
 import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
 
 
@@ -61,36 +55,39 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
 
         LOGGER.info("critiriaList: {}", criteriaList.size());
 
-         req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getAllResultsToCompare(new LinkedHashSet<>(criteriaList)));
+         req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getWrapperedContent(new LinkedHashSet<>(criteriaList)));
          req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
 
     }
 
-    private Set<IndicatorResult> getAllResultsToCompare(Set<PersistedComparatorIndicatorCriteria> criteriaList){
+    private List<ComparatorContentWrapper> getWrapperedContent(Set<PersistedComparatorIndicatorCriteria> criteriaList){
 
         List<ComparatorContentWrapper> wrappers = new ArrayList<>();
 
-        Set<IndicatorResult> results = new LinkedHashSet<>();
+       // Set<IndicatorResult> results = new LinkedHashSet<>();
         try {
             for (PersistedComparatorIndicatorCriteria criteria : criteriaList) {
                 ComparatorContentWrapper wrapper = new ComparatorContentWrapper();
                 wrapper.setComparatorIndicatorCriteria(criteria);
 
+
                 for (String investmentName : criteria.getInvestmentNamesToCompare()) {
                     IndicatorResult result = new Indicator().getResult(container.getInvestments()
                             , new IndicatorCriteria(investmentName));
-                    results.add(result);
-                    LOGGER.info("result: {}",result.getName());
-                   // wrapper.setResult(result);
+                  //  results.add(result);
+                  LOGGER.info("result: {}",result.getName());
+
+                  wrapper.getResultList().add(result);
                 }
-
-
+                wrappers.add(wrapper);
             }
 
         } catch (Exception ex) {
-            LOGGER.error("IndicatorResult failure: {}",ex.getMessage());
+            LOGGER.error("IndicatorResult failure: {}",ex.getStackTrace());
         }
-        return results;
+
+        return wrappers;
+        //return results;
     }
 
 

@@ -34,8 +34,9 @@
     <c:forEach var="revenueWrapper" items="${contentWrappers}">
         <hr>
         <th>Indicator</th>
-        <p><b>${revenueWrapper.name}</b></p>
-        <p><b>${revenueWrapper.firstQuotation.date}</b></p>
+        <p><b>${revenueWrapper.resultList.size()}</b> size </p>
+        <p><b>${revenueWrapper.resultList.get(0).name}</b> resultA</p>
+        <p><b>${revenueWrapper.resultList.get(1).name}</b> resultB</p>
     </c:forEach>
 </div>
 

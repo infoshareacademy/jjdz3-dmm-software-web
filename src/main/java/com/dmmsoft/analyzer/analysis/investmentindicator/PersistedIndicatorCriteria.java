@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer.analysis.investmentindicator;
 
+import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.user.User;
 
@@ -15,9 +16,19 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private AnalysisComparisonContainer analysisComparisonContainer;
+
+
     private LocalDateTime creationDateTime;
     private LocalDateTime lastUpdateDateTime;
     private String userCustomName;
+
+    public PersistedIndicatorCriteria() {
+
+    }
+
 
     public String getUserCustomName() {
         return userCustomName;
@@ -45,9 +56,8 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
     }
 
 
-    public PersistedIndicatorCriteria() {
 
-    }
+
 
 
     @PrePersist
@@ -58,6 +68,15 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
     @PreUpdate
     private void onUpdate() {
         lastUpdateDateTime = LocalDateTime.now();
+    }
+
+
+    public AnalysisComparisonContainer getAnalysisComparisonContainer() {
+        return analysisComparisonContainer;
+    }
+
+    public void setAnalysisComparisonContainer(AnalysisComparisonContainer analysisComparisonContainer) {
+        this.analysisComparisonContainer = analysisComparisonContainer;
     }
 
 

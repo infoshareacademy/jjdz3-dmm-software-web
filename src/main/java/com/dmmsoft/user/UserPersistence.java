@@ -56,6 +56,8 @@ public class UserPersistence implements IUserService {
        userToUpdate.setLastLoginDateTime(user.getLastLoginDateTime());
        userToUpdate.setFavourireIndicatorsCompareSet(user.getFavourireIndicatorsCompareSet());
        userToUpdate.setFavouriteInvestmentIndicators(user.getFavouriteInvestmentIndicators());
+
+       userToUpdate.setComparisonContainers(user.getComparisonContainers());
        em.merge(userToUpdate);
     }
 }

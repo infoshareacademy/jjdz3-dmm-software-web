@@ -72,9 +72,6 @@ public class IndicatorServlet extends HttpServlet {
         user.getFavourireIndicatorsCompareSet().add(criteriaToCompare);
         user.getFavouriteInvestmentIndicators().addAll(criteriaSet);
 
-        userService.update(user);
-
-        LOGGER.debug("Number of favourite indicators: {}", user.getFavourireIndicatorsCompareSet().size());
 
         IndicatorResult resultA = new Indicator().getResult(container.getInvestments()
                 , new IndicatorCriteria(nameA));
@@ -82,9 +79,14 @@ public class IndicatorServlet extends HttpServlet {
         IndicatorResult  resultB = new Indicator().getResult(container.getInvestments()
                 , new IndicatorCriteria(nameB));
 
+        userService.update(user);
+
         req.setAttribute(INVESTMENT_STAT_RESULT_A, resultA);
         req.setAttribute(INVESTMENT_STAT_RESULT_B, resultB);
 
         req.getRequestDispatcher("../userview/comparatorResult.jsp").forward(req, resp);
+
+        LOGGER.debug("Number of favourite indicators: {}", user.getFavourireIndicatorsCompareSet().size());
+
     }
 }

@@ -1,5 +1,6 @@
 package com.dmmsoft.user;
 
+import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
@@ -48,6 +49,17 @@ public class User {
     @JoinColumn(name = "user_id")
     private Set<PersistedComparatorIndicatorCriteria> favourireIndicatorsCompareSet = new LinkedHashSet<>();
 
+    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private Set<AnalysisComparisonContainer> comparisonContainers = new LinkedHashSet<>();
+
+    public Set<AnalysisComparisonContainer> getComparisonContainers() {
+        return comparisonContainers;
+    }
+
+    public void setComparisonContainers(Set<AnalysisComparisonContainer> comparisonContainers) {
+        this.comparisonContainers = comparisonContainers;
+    }
 
     public Set<PersistedComparatorIndicatorCriteria> getFavourireIndicatorsCompareSet() {
         return favourireIndicatorsCompareSet;
