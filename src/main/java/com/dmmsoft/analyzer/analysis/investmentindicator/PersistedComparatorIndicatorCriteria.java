@@ -1,5 +1,6 @@
 package com.dmmsoft.analyzer.analysis.investmentindicator;
 
+import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.model.Investment;
 import com.dmmsoft.user.User;
 import sun.awt.SunHints;

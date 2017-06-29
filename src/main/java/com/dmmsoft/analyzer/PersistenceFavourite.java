@@ -1,6 +1,8 @@
 package com.dmmsoft.analyzer;
 
+import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
+import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.enterprise.inject.Default;
@@ -44,4 +46,24 @@ public class PersistenceFavourite implements IFavouriteService {
                 .getResultList();
         return new LinkedHashSet<>(list);
     }
+
+    @Override
+    public List<AnalysisComparisonContainer> getAllUserFavouriteAnalysisContainers(long UserId) {
+        List<AnalysisComparisonContainer> list = em
+                .createQuery("select m from AnalysisComparisonContainer m left join fetch m.user t WHERE t.id=:Id AND m.isFavouriteChecked=true", AnalysisComparisonContainer.class)
+                .setParameter("Id", UserId)
+                .getResultList();
+        return list;
+    }
+
+    /*@Override
+    public List<AnalysisComparisonContainer> getAllUserFavouriteAnalysisContainers(long UserId) {
+        List<AnalysisComparisonContainer> list = em
+                .createQuery("select m from AnalysisComparisonContainer m left join fetch m.user t left join fetch m.criteriaSet w WHERE t.id=:Id AND w.isFavourite=true", AnalysisComparisonContainer.class)
+                .setParameter("Id", UserId)
+                .getResultList();
+        return list;
+    }*/
+
+
 }

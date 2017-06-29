@@ -1,10 +1,11 @@
 package com.dmmsoft.analyzer;
 
+import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
+import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.ComparatorContentWrapper;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.ContentWrapper;
-import com.dmmsoft.app.analyzer.analyses.Analysis;
-import com.dmmsoft.app.analyzer.analyses.AnalysisResult;
+import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
@@ -53,7 +54,15 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
                 .getAllFavouriteComparatorIndicatorCriteria(((User) req.getSession()
                         .getAttribute(AUTH_USER)).getId());
 
+        List<AnalysisComparisonContainer> criteriaList2 =
+        favouriteService.getAllUserFavouriteAnalysisContainers(((User) req.getSession()
+                .getAttribute(AUTH_USER)).getId());
+
+
+        LOGGER.info("is instance of PersistedIndicatorCriteria: {}", criteriaList2.get(0).getCriteriaSet().get(0).getClass().getName());
+
         LOGGER.info("critiriaList: {}", criteriaList.size());
+        LOGGER.info("comparison container critiriaList2: {}", criteriaList2.size());
 
          req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getWrapperedContent(new LinkedHashSet<>(criteriaList)));
          req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);

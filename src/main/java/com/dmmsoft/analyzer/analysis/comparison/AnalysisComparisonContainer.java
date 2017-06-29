@@ -2,6 +2,7 @@ package com.dmmsoft.analyzer.analysis.comparison;
 
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 
+import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
 import com.dmmsoft.user.User;
 
 import javax.persistence.*;
@@ -32,13 +33,13 @@ public class AnalysisComparisonContainer {
     private Set<String> investmentNamesToCompare = new HashSet<>();*/
 
     @OneToMany (fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
-    private List<PersistedIndicatorCriteria> criteriaSet = new ArrayList<>();
+    private List<AnalysisCriteria> criteriaSet = new ArrayList<>();
 
-    public List<PersistedIndicatorCriteria> getCriteriaSet() {
+    public List<AnalysisCriteria> getCriteriaSet() {
         return criteriaSet;
     }
 
-    public void setCriteriaSet(List<PersistedIndicatorCriteria> criteriaSet) {
+    public void setCriteriaSet(List<AnalysisCriteria> criteriaSet) {
         this.criteriaSet = criteriaSet;
     }
 

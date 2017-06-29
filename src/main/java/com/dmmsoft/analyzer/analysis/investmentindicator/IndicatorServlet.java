@@ -4,10 +4,13 @@ package com.dmmsoft.analyzer.analysis.investmentindicator;
  * Created by milo on 15.04.17.
  */
 
+import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
+import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
 
+import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static com.dmmsoft.ConstantsProvider.*;
@@ -68,10 +72,13 @@ public class IndicatorServlet extends HttpServlet {
             criteriaSet.add(criteria);
         }
 
+        AnalysisComparisonContainer comparisonContainer = new AnalysisComparisonContainer();
+        comparisonContainer.setCriteriaSet(new ArrayList<>(criteriaSet));
+
         User user = (User) req.getSession().getAttribute(AUTH_USER);
         user.getFavourireIndicatorsCompareSet().add(criteriaToCompare);
         user.getFavouriteInvestmentIndicators().addAll(criteriaSet);
-
+        user.getComparisonContainers().add(comparisonContainer);
 
         IndicatorResult resultA = new Indicator().getResult(container.getInvestments()
                 , new IndicatorCriteria(nameA));
