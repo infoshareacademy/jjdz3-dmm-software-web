@@ -22,18 +22,15 @@ public class AnalysisComparisonContainer {
     @GeneratedValue
     private long Id;
 
-    private boolean isFavouriteChecked;
-    private String  userCustomName;
-   // private List<AnalysisComparisonData> comparisonData;
-
     @ManyToOne
     private User user;
 
-/*  @ElementCollection
-    private Set<String> investmentNamesToCompare = new HashSet<>();*/
-
     @OneToMany (fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<AnalysisCriteria> criteriaSet = new ArrayList<>();
+
+    private boolean isFavouriteChecked;
+    private String  userCustomName;
+
 
     public List<AnalysisCriteria> getCriteriaSet() {
         return criteriaSet;
@@ -75,6 +72,12 @@ public class AnalysisComparisonContainer {
         this.user = user;
     }
 
+    public AnalysisComparisonContainer() {
+    }
 
-
+    public AnalysisComparisonContainer(boolean isFavouriteChecked, String userCustomName, List<AnalysisCriteria> criteriaSet) {
+        this.isFavouriteChecked = isFavouriteChecked;
+        this.userCustomName = userCustomName;
+        this.criteriaSet = criteriaSet;
+    }
 }

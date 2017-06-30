@@ -2,10 +2,8 @@ package com.dmmsoft.analyzer;
 
 import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
-import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
-import com.dmmsoft.analyzer.analysis.investmentrevenue.ComparatorContentWrapper;
+import com.dmmsoft.analyzer.analysis.wrapper.ComparisonContentWrapper;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.ContentWrapper;
-import com.dmmsoft.app.analyzer.analyses.AnalysisCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
@@ -27,9 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import static com.dmmsoft.ConstantsProvider.AUTH_USER;
-import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER_COLLECTION;
-import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
+import static com.dmmsoft.ConstantsProvider.*;
 
 
 /**
@@ -55,8 +51,8 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
                         .getAttribute(AUTH_USER)).getId());
 
         List<AnalysisComparisonContainer> criteriaList2 =
-        favouriteService.getAllUserFavouriteAnalysisContainers(((User) req.getSession()
-                .getAttribute(AUTH_USER)).getId());
+                favouriteService.getAllUserFavouriteAnalysisContainers(((User) req.getSession()
+                        .getAttribute(AUTH_USER)).getId());
 
 
         LOGGER.info("is instance of PersistedIndicatorCriteria: {}", criteriaList2.get(0).getCriteriaSet().get(0).getClass().getName());
@@ -64,35 +60,38 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
         LOGGER.info("critiriaList: {}", criteriaList.size());
         LOGGER.info("comparison container critiriaList2: {}", criteriaList2.size());
 
-         req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getWrapperedContent(new LinkedHashSet<>(criteriaList)));
-         req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
+        req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getWrapperedContent(new LinkedHashSet<>(criteriaList)));
+
+      //  req.setAttribute(CONTENT_WRAPPER, this.getWrapperedContent(((User) req.getSession().getAttribute(AUTH_USER)).getId()));
+        req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
 
     }
 
-    private List<ComparatorContentWrapper> getWrapperedContent(Set<PersistedComparatorIndicatorCriteria> criteriaList){
 
-        List<ComparatorContentWrapper> wrappers = new ArrayList<>();
 
-       // Set<IndicatorResult> results = new LinkedHashSet<>();
+
+    private List<ComparisonContentWrapper> getWrapperedContent(Set<PersistedComparatorIndicatorCriteria> criteriaList) {
+
+        List<ComparisonContentWrapper> wrappers = new ArrayList<>();
+
+        // Set<IndicatorResult> results = new LinkedHashSet<>();
         try {
             for (PersistedComparatorIndicatorCriteria criteria : criteriaList) {
-                ComparatorContentWrapper wrapper = new ComparatorContentWrapper();
+                ComparisonContentWrapper wrapper = new ComparisonContentWrapper();
                 wrapper.setComparatorIndicatorCriteria(criteria);
-
 
                 for (String investmentName : criteria.getInvestmentNamesToCompare()) {
                     IndicatorResult result = new Indicator().getResult(container.getInvestments()
                             , new IndicatorCriteria(investmentName));
-                  //  results.add(result);
-                  LOGGER.info("result: {}",result.getName());
-
-                  wrapper.getResultList().add(result);
+                    //  results.add(result);
+                    LOGGER.info("result: {}", result.getName());
+                    wrapper.getResultList().add(result);
                 }
                 wrappers.add(wrapper);
             }
 
         } catch (Exception ex) {
-            LOGGER.error("IndicatorResult failure: {}",ex.getStackTrace());
+            LOGGER.error("IndicatorResult failure: {}", ex.getStackTrace());
         }
 
         return wrappers;

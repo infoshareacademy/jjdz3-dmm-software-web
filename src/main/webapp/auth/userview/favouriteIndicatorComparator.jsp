@@ -31,25 +31,10 @@
     <button id="editBtn">edit</button>
 </p>
 <div class="Favourite" style="background-color: #e0e0e0">
-    <c:forEach var="revenueWrapper" items="${contentWrappers}">
-        <hr>
-        <th>Indicator</th>
-        <p><b>${revenueWrapper.resultList.size()}</b> size </p>
-        <p><b>${revenueWrapper.resultList.get(0).name}</b> resultA</p>
-        <p><b>${revenueWrapper.resultList.get(1).name}</b> resultB</p>
+    <c:forEach var="contentWrapper" items="${contentWrappers}">
+        <tags:indicatorResult contentWrapper="${contentWrapper}"/>
     </c:forEach>
 </div>
-
-<%--<div class="Favourite" style="background-color: #e0e0e0">
-    <c:forEach var="revenueWrapper" items="${contentWrappers}">
-        <hr>
-        <p><b>${revenueWrapper.criteria.userCustomName}</b></p>
-        <tags:analysisResult revenueWrapper="${revenueWrapper}"/>
-        <div class="editFavourite" hidden>
-            <tags:editFavourite contentWrapper="${revenueWrapper}"/>
-        </div>
-    </c:forEach>
-</div>--%>
 
 <br>
 <jsp:include page="../../partials/footer.jsp"/>

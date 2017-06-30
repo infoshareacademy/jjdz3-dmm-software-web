@@ -26,8 +26,14 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
     private String userCustomName;
 
     public PersistedIndicatorCriteria() {
-
     }
+    public PersistedIndicatorCriteria(String investmentName, String userCustomName, boolean isFavouriteChecked) {
+            this.setInvestmentName(investmentName);
+            this.setFavourite(isFavouriteChecked);
+          //  this.setModifiedBySuggester(false);
+            this.setUserCustomName(userCustomName);
+    }
+
 
 
     public String getUserCustomName() {
