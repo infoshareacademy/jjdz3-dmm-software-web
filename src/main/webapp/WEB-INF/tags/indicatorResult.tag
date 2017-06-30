@@ -5,9 +5,9 @@
 
 
 <hr>
-<p><b>My criteria: ${contentWrapper.comparatorIndicatorCriteria.userCustomName}</b></p>
+<p><b>My criteria: ${contentWrapper.userCustomName}</b></p>
 <table style="width:100%">
-    <c:forEach var="content" items="${contentWrapper.ananysisContent}">
+    <c:forEach var="content" items="${contentWrapper.ananysisContentList}">
         <tr align="left">
             <th>
                 <p>Investment: <b>${content.result.name}</b></p>

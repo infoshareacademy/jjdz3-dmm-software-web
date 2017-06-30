@@ -70,7 +70,7 @@ public class IndicatorServlet extends HttpServlet {
                     , new IndicatorCriteria(item));
 
             criteriaList.add(criteria);
-            wrapper.getAnanysisContent().add(new AnalysisContent(criteria,result));
+            wrapper.getAnanysisContentList().add(new AnalysisContent(criteria,result));
         }
 
         AnalysisComparisonContainer comparisonContainer =

@@ -62,7 +62,7 @@ public class PersistenceFavourite implements IFavouriteService {
         return list;
     }
 
-    @Override
+   /* @Override
     public List<PersistedIndicatorCriteria> getAllUserFavouriteAnalaysisCriteria(long UserId) {
        List<PersistedIndicatorCriteria> criteria = new ArrayList<>();
 
@@ -76,7 +76,7 @@ public class PersistenceFavourite implements IFavouriteService {
             }
        }
         return criteria;
-    }
+    }*/
 
 
 

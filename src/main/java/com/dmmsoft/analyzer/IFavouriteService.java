@@ -21,6 +21,6 @@ public interface IFavouriteService {
 
     List<AnalysisComparisonContainer> getAllUserFavouriteAnalysisContainers(long UserId);
 
-    List<PersistedIndicatorCriteria> getAllUserFavouriteAnalaysisCriteria(long UserId);
+  //  List<PersistedIndicatorCriteria> getAllUserFavouriteAnalaysisCriteria(long UserId);
 
 }

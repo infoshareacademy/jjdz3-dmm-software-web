@@ -26,18 +26,17 @@ public class AnalysisComparisonContainer {
     private User user;
 
     @OneToMany (fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
-    private List<AnalysisCriteria> criteriaSet = new ArrayList<>();
+    private List<PersistedIndicatorCriteria> criteriaList = new ArrayList<>();
 
     private boolean isFavouriteChecked;
     private String  userCustomName;
 
-
-    public List<AnalysisCriteria> getCriteriaSet() {
-        return criteriaSet;
+    public List<PersistedIndicatorCriteria> getCriteriaList() {
+        return criteriaList;
     }
 
-    public void setCriteriaSet(List<AnalysisCriteria> criteriaSet) {
-        this.criteriaSet = criteriaSet;
+    public void setCriteriaList(List<PersistedIndicatorCriteria> criteriaList) {
+        this.criteriaList = criteriaList;
     }
 
     public long getId() {
@@ -75,9 +74,9 @@ public class AnalysisComparisonContainer {
     public AnalysisComparisonContainer() {
     }
 
-    public AnalysisComparisonContainer(boolean isFavouriteChecked, String userCustomName, List<AnalysisCriteria> criteriaSet) {
+    public AnalysisComparisonContainer(boolean isFavouriteChecked, String userCustomName, List<PersistedIndicatorCriteria> criteriaList) {
         this.isFavouriteChecked = isFavouriteChecked;
         this.userCustomName = userCustomName;
-        this.criteriaSet = criteriaSet;
+        this.criteriaList = criteriaList;
     }
 }

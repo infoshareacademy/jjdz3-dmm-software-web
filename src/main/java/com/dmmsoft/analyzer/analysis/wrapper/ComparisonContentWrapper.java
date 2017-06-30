@@ -12,14 +12,8 @@ import java.util.List;
  */
 public class ComparisonContentWrapper {
 
-    private List<AnalysisContent> ananysisContent = new ArrayList<>();
+    private List<AnalysisContent> ananysisContentList = new ArrayList<>();
     private String userCustomName;
-
-
-
-    private PersistedComparatorIndicatorCriteria comparatorIndicatorCriteria;
-    private List<AnalysisResult> resultList =new ArrayList<>();
-    private PersistedIndicatorCriteria persistedIndicatorCriteria;
 
     public String getUserCustomName() {
         return userCustomName;
@@ -29,35 +23,15 @@ public class ComparisonContentWrapper {
         this.userCustomName = userCustomName;
     }
 
-    public List<AnalysisContent> getAnanysisContent() {
-        return ananysisContent;
+    public List<AnalysisContent> getAnanysisContentList() {
+        return ananysisContentList;
     }
 
-    public void setAnanysisContent(List<AnalysisContent> ananysisContent) {
-        this.ananysisContent = ananysisContent;
+    public void setAnanysisContentList(List<AnalysisContent> ananysisContentList) {
+        this.ananysisContentList = ananysisContentList;
     }
 
-    public PersistedIndicatorCriteria getPersistedIndicatorCriteria() {
-        return persistedIndicatorCriteria;
+    public ComparisonContentWrapper() {
     }
 
-    public void setPersistedIndicatorCriteria(PersistedIndicatorCriteria persistedIndicatorCriteria) {
-        this.persistedIndicatorCriteria = persistedIndicatorCriteria;
-    }
-
-    public List<AnalysisResult> getResultList() {
-        return resultList;
-    }
-
-    public void setResultList(List<AnalysisResult> resultList) {
-        this.resultList = resultList;
-    }
-
-    public PersistedComparatorIndicatorCriteria getComparatorIndicatorCriteria() {
-        return comparatorIndicatorCriteria;
-    }
-
-    public void setComparatorIndicatorCriteria(PersistedComparatorIndicatorCriteria comparatorIndicatorCriteria) {
-        this.comparatorIndicatorCriteria = comparatorIndicatorCriteria;
-    }
 }
