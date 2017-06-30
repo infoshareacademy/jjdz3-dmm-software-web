@@ -1,8 +1,6 @@
 package com.dmmsoft.analyzer;
 
 import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
-import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
-import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import java.util.LinkedHashSet;
@@ -17,10 +15,6 @@ public interface IFavouriteService {
 
     List<PersistedInvestmentRevenueCriteria> getAllRevenueCriteria();
 
-  LinkedHashSet<PersistedComparatorIndicatorCriteria> getAllFavouriteComparatorIndicatorCriteria(long UserId);
-
     List<AnalysisComparisonContainer> getAllUserFavouriteAnalysisContainers(long UserId);
-
-  //  List<PersistedIndicatorCriteria> getAllUserFavouriteAnalaysisCriteria(long UserId);
 
 }

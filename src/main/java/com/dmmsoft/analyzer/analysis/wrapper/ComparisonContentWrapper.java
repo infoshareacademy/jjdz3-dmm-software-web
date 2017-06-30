@@ -1,9 +1,5 @@
 package com.dmmsoft.analyzer.analysis.wrapper;
 
-import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedComparatorIndicatorCriteria;
-import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
-import com.dmmsoft.app.analyzer.analyses.AnalysisResult;
-
 import java.util.ArrayList;
 import java.util.List;
 

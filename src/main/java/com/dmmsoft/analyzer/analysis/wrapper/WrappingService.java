@@ -1,6 +1,6 @@
 package com.dmmsoft.analyzer.analysis.wrapper;
 
-import com.dmmsoft.analyzer.FavouriteIndicatorComparatorServlet;
+
 import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class WrappingService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteIndicatorComparatorServlet.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WrappingService.class);
 
     @Inject
     IModelContainerService container;
