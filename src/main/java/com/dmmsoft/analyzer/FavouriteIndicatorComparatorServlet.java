@@ -2,6 +2,7 @@ package com.dmmsoft.analyzer;
 
 import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.wrapper.WrappingService;
+import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import org.slf4j.Logger;
@@ -36,21 +37,25 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            List<AnalysisComparisonContainer> comparisonContainers =
+                    favouriteService.getAllUserFavouriteAnalysisContainers(((User) req.getSession()
+                            .getAttribute(AUTH_USER)).getId());
 
-        List<AnalysisComparisonContainer> comparisonContainers =
-                favouriteService.getAllUserFavouriteAnalysisContainers(((User) req.getSession()
-                        .getAttribute(AUTH_USER)).getId());
+            req.setAttribute(CONTENT_WRAPPER_COLLECTION, wrappingService.getWrapperedContentList(comparisonContainers));
+            req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
 
-        req.setAttribute(CONTENT_WRAPPER_COLLECTION, wrappingService.getWrapperedContentList(comparisonContainers));
-        req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
-
-        LOGGER.info("Analysis comparison containers list size: {}", comparisonContainers.size());
+            LOGGER.info("Analysis comparison containers list size: {}", comparisonContainers.size());
+        } catch (NoDataForCriteria ex) {
+            LOGGER.error("Failed to generate favourites", ex.getMessage());
+            req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);
+        }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        @Override
+        protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-      //  TODO favourites update
+            //  TODO favourites update
 
+        }
     }
-}

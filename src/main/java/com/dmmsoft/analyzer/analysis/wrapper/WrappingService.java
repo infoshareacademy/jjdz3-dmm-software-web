@@ -3,6 +3,7 @@ package com.dmmsoft.analyzer.analysis.wrapper;
 
 import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
+import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
@@ -26,7 +27,8 @@ public class WrappingService {
     @Inject
     IModelContainerService container;
 
-    public List<ComparisonContentWrapper> getWrapperedContentList(List<AnalysisComparisonContainer> containers) {
+    public List<ComparisonContentWrapper> getWrapperedContentList(List<AnalysisComparisonContainer> containers)
+            throws NoDataForCriteria  {
 
         List<ComparisonContentWrapper> wrappers = new ArrayList<>();
         try {
@@ -40,12 +42,14 @@ public class WrappingService {
         return wrappers;
     }
 
-    private ComparisonContentWrapper getWrapperedContent1(List<PersistedIndicatorCriteria> criteriaList) {
+    private ComparisonContentWrapper getWrapperedContent1(List<PersistedIndicatorCriteria> criteriaList)
+            throws NoDataForCriteria {
+
         ComparisonContentWrapper wrapper = new ComparisonContentWrapper();
 
         for (PersistedIndicatorCriteria criteria : criteriaList) {
-            IndicatorResult result = new Indicator().getResult(container.getInvestments()
-                    , new IndicatorCriteria(criteria.getInvestmentName()));
+            IndicatorResult result = new Indicator(container.getMainContainer(),
+                    new IndicatorCriteria(criteria.getInvestmentName())).getResult();
 
             wrapper.setUserCustomName(criteria.getUserCustomName());
             wrapper.getAnanysisContentList().add(new AnalysisContent(criteria,result));

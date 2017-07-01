@@ -7,6 +7,7 @@ package com.dmmsoft.analyzer.analysis.investmentindicator;
 import com.dmmsoft.analyzer.analysis.wrapper.AnalysisContent;
 import com.dmmsoft.analyzer.analysis.wrapper.ComparisonContentWrapper;
 import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
+import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.Indicator;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria;
 import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
@@ -48,39 +49,47 @@ public class IndicatorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String nameA = req.getParameter(INVESTMENT_NAME_A);
-        String nameB = req.getParameter(INVESTMENT_NAME_B);
-        boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
-        String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
+        try {
+            String nameA = req.getParameter(INVESTMENT_NAME_A);
+            String nameB = req.getParameter(INVESTMENT_NAME_B);
+            boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
+            String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
 
-        List<String> names = new ArrayList<>();
-        names.add(nameA);
-        names.add(nameB);
+            List<String> names = new ArrayList<>();
+            names.add(nameA);
+            names.add(nameB);
 
-        List<PersistedIndicatorCriteria> criteriaList = new ArrayList<>();
-        ComparisonContentWrapper wrapper = new ComparisonContentWrapper();
+            List<PersistedIndicatorCriteria> criteriaList = new ArrayList<>();
+            ComparisonContentWrapper wrapper = new ComparisonContentWrapper();
 
-        wrapper.setUserCustomName(userCustomName);
+            wrapper.setUserCustomName(userCustomName);
 
-        for(String item : names) {
-            PersistedIndicatorCriteria criteria = new PersistedIndicatorCriteria(
-                    item, userCustomName, isFavouriteChecked);
+            for (String item : names) {
+                PersistedIndicatorCriteria criteria = new PersistedIndicatorCriteria(
+                        item, userCustomName, isFavouriteChecked);
 
-            IndicatorResult result = new Indicator().getResult(container.getInvestments()
-                    , new IndicatorCriteria(item));
+                IndicatorResult result = new Indicator(container.getMainContainer()
+                        , new IndicatorCriteria(item)).getResult();
 
-            criteriaList.add(criteria);
-            wrapper.getAnanysisContentList().add(new AnalysisContent(criteria,result));
+
+                criteriaList.add(criteria);
+                wrapper.getAnanysisContentList().add(new AnalysisContent(criteria, result));
+            }
+
+            AnalysisComparisonContainer comparisonContainer =
+                    new AnalysisComparisonContainer(isFavouriteChecked
+                            , userCustomName, new ArrayList<>(criteriaList));
+
+            User user = (User) req.getSession().getAttribute(AUTH_USER);
+            user.getComparisonContainers().add(comparisonContainer);
+            userService.update(user);
+            req.setAttribute(CONTENT_WRAPPER, wrapper);
+            req.getRequestDispatcher("../userview/comparatorResult.jsp").forward(req, resp);
+
+        } catch (NoDataForCriteria exception) {
+
+            req.getRequestDispatcher("../userview/comparator.jsp").forward(req, resp);
+            LOGGER.error("Failed to calculate Investment indicators.{}", exception.getMessage());
         }
-
-        AnalysisComparisonContainer comparisonContainer =
-                new AnalysisComparisonContainer(isFavouriteChecked, userCustomName, new ArrayList<>(criteriaList));
-
-        User user = (User) req.getSession().getAttribute(AUTH_USER);
-        user.getComparisonContainers().add(comparisonContainer);
-        userService.update(user);
-
-        req.setAttribute(CONTENT_WRAPPER, wrapper);
-        req.getRequestDispatcher("../userview/comparatorResult.jsp").forward(req, resp);
     }
 }
