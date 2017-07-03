@@ -9,10 +9,9 @@
 <body>
 <p><b>Menu</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-</br>
-<a href="../userview/favourite">Favourites</a>
+<hr>
+<a href="../userview/favouritesmenu">Favourites</a>
 <br>
-
 <p>Choose your investment analysis:</p>
 <a href="../userview/investments">Database info</a><br>
 <a href="../userview/investmentrevenue">Investment revenue</a><br>

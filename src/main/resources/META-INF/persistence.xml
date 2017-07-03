@@ -7,10 +7,12 @@
         <jta-data-source>java:/datasources/isaDB</jta-data-source>
         <jar-file>lib/financial-app-1.0-SNAPSHOT-jar-with-dependencies.jar</jar-file>
         <class>com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria</class>
+        <class>com.dmmsoft.app.analyzer.analyses.indicator.IndicatorCriteria</class>
 
 
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

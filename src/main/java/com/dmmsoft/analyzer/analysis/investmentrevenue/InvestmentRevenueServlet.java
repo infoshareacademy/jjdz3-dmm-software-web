@@ -47,8 +47,6 @@ import static com.dmmsoft.ConstantsProvider.AUTH_USER;
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
-    private final String TEST_BUY_DATE = "2009-09-10";
-    private final String TEST_SELL_DATE = "2017-04-02";
 
     private ContentWrapper wrapper = new ContentWrapper();
     @Inject
@@ -124,7 +122,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
             userService.update(dbUser);
 
             req.setAttribute(CONTENT_WRAPPER, this.getContent(criteria, result));
-            req.getRequestDispatcher("../userview/investmentRevenue.jsp").forward(req, resp);
+            req.getRequestDispatcher("../userview/investmentRevenueResult.jsp").forward(req, resp);
 
             LOGGER.info("Criteria Submitted by user Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
 

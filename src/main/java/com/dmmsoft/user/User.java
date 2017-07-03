@@ -1,11 +1,12 @@
 package com.dmmsoft.user;
 
+import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
+import com.dmmsoft.analyzer.analysis.investmentindicator.PersistedIndicatorCriteria;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by milo on 23.05.17.
@@ -37,8 +38,33 @@ public class User {
 
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id")
-    private List<PersistedInvestmentRevenueCriteria> favourites = new ArrayList<>();
+    private Set<PersistedInvestmentRevenueCriteria> favourites = new LinkedHashSet<>();
 
+    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private Set<PersistedIndicatorCriteria> favouriteInvestmentIndicators = new LinkedHashSet<>();
+
+
+    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private Set<AnalysisComparisonContainer> comparisonContainers = new LinkedHashSet<>();
+
+    public Set<AnalysisComparisonContainer> getComparisonContainers() {
+        return comparisonContainers;
+    }
+
+    public void setComparisonContainers(Set<AnalysisComparisonContainer> comparisonContainers) {
+        this.comparisonContainers = comparisonContainers;
+    }
+
+
+    public Set<PersistedIndicatorCriteria> getFavouriteInvestmentIndicators() {
+        return favouriteInvestmentIndicators;
+    }
+
+    public void setFavouriteInvestmentIndicators(Set<PersistedIndicatorCriteria> favouriteInvestmentIndicators) {
+        this.favouriteInvestmentIndicators = favouriteInvestmentIndicators;
+    }
 
     public User() {
     }
@@ -97,17 +123,11 @@ public class User {
         this.lastLoginDateTime = lastLoginDateTime;
     }
 
-    public List<PersistedInvestmentRevenueCriteria> getFavourites() {
+    public Set<PersistedInvestmentRevenueCriteria> getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(List<PersistedInvestmentRevenueCriteria> favourites) {
+    public void setFavourites(Set<PersistedInvestmentRevenueCriteria> favourites) {
         this.favourites = favourites;
     }
-
-
-
-
-
-
 }
