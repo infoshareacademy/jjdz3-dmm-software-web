@@ -1,6 +1,7 @@
 package com.dmmsoft.adminpanel;
 
 import com.dmmsoft.analyzer.IFavouriteService;
+import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by milo on 08.06.17.
@@ -22,7 +24,6 @@ public class UserStatistics extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserStatistics.class);
 
-
     @Inject
     IFavouriteService favouriteService;
 
@@ -33,6 +34,7 @@ public class UserStatistics extends HttpServlet {
         req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
         LOGGER.info("User Statistics module accessed.");
     }
+
 }
 
 
