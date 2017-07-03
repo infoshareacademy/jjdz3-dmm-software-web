@@ -48,12 +48,10 @@ public final class WebAppDeployListener implements ServletContextListener {
         } catch (RuntimeException ex) {
             LOGGER.error("FATAL ERROR: Failed to load data model CSV files! {}", ex.getMessage());
         }
-
     }
 
     private void setApplicationDefaultTimeZone(String timeZone) {
         TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
         LOGGER.info("Default application timezone set to: {}", TimeZone.getDefault());
     }
-
 }
