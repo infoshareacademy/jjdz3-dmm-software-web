@@ -22,9 +22,9 @@ import static com.dmmsoft.ConstantsProvider.CURRENCY_COUNT;
  */
 
 @WebServlet(urlPatterns = "/auth/adminview/appsettings")
-public class AppSettings extends HttpServlet {
+public class AppSettingsServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AppSettings.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppSettingsServlet.class);
 
     @Inject
     IModelContainerService container;

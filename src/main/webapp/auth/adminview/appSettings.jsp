@@ -21,6 +21,11 @@
     <button type="submit">Press to reload data model csv files...</button>
 </form>
 </br>
+<br>
+<form action="../adminview/emailSender" method="post">
+    <button type="submit">Press to send email</button>
+</form>
+</br>
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

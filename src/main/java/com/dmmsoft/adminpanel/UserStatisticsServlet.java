@@ -1,7 +1,6 @@
 package com.dmmsoft.adminpanel;
 
 import com.dmmsoft.analyzer.IFavouriteService;
-import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by milo on 08.06.17.
@@ -20,9 +18,9 @@ import java.util.ArrayList;
 import static com.dmmsoft.ConstantsProvider.ALL_INV_REV_CRIT;
 
 @WebServlet(urlPatterns = "/auth/adminview/userstatistics")
-public class UserStatistics extends HttpServlet {
+public class UserStatisticsServlet extends HttpServlet {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserStatistics.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserStatisticsServlet.class);
 
     @Inject
     IFavouriteService favouriteService;
