@@ -1,6 +1,6 @@
 package com.dmmsoft;
 
-import com.dmmsoft.app.file.RemoteDownloader;
+
 import com.dmmsoft.container.IModelContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.io.IOException;
+
 import java.util.TimeZone;
 
 /**
@@ -30,7 +30,6 @@ public final class WebAppDeployListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         LOGGER.info("Application context Initialized.");
         this.setApplicationDefaultTimeZone(DEFAULT_TIMEZONE);
-
         this.loadModelData();
     }
 

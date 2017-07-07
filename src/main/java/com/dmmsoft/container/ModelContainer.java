@@ -26,8 +26,7 @@ public class ModelContainer implements IModelContainerService {
     private List<Investment> investments;
     private MainContainer mainContainer;
     private RemoteDownloader remoteDownloader = new RemoteDownloader();
-    private static final Logger LOGGER = LoggerFactory.getLogger(ModelContainer.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebAppDeployListener.class);
     @PostConstruct
     private void onPostConstruct() {
 
@@ -44,12 +43,10 @@ public class ModelContainer implements IModelContainerService {
 
     }
 
-
     public void reload(){
       if(!mainContainer.getInvestments().isEmpty()) {
           mainContainer.getInvestments().clear();
       }
-        this.updateModelFileResources();
 
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
         MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
