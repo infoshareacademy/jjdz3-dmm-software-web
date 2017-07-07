@@ -37,6 +37,7 @@ Keep timezones synchronized to avoid LocalDate issues.
 ------------------------------------------------------------------------------------
 Note!
 Set proper <user_name> in Configuration.json (file inside jar dependency)
+
 ------------------------------------------------------------------------------------
 Note!
 Default application directories:
@@ -47,12 +48,12 @@ Default application directories:
 /home/<user_name>/dmmfinance/bossa/backup/funds/       (zip files location)
 
 ------------------------------------------------------------------------------------
-
-
 Note! 
 Add smtpconfig.json file to location: "/home/<user_name>/dmmfinance/smtpconfig.json"
 
-------smtpconfig.json file content:-------------------------------------------------
+------------------------------------------------------------------------------------
+
+------smtpconfig.json file example content:------------------------------------------
 
 {
   "email":"xxxxx@gmail.com",
@@ -67,6 +68,7 @@ Add smtpconfig.json file to location: "/home/<user_name>/dmmfinance/smtpconfig.j
   
   "targetEmail":"xxxxxx@xxxx.com"
 }
+
 ------------------------------------------------------------------------------------
 
 
