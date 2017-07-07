@@ -43,8 +43,11 @@ Note!
 Default application directories:
 
 /home/<user_name>/dmmfinance/bossa/currencies/
-/home/<user_name>/dmmfinance/bossa/funds/ 
+
+/home/<user_name>/dmmfinance/bossa/funds/
+ 
 /home/<user_name>/dmmfinance/bossa/backup/currencies/  (zip files location)
+
 /home/<user_name>/dmmfinance/bossa/backup/funds/       (zip files location)
 
 ------------------------------------------------------------------------------------
