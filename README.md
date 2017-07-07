@@ -22,17 +22,52 @@ To clean maven last build:
   
     $ sudo mvn install clean
 
-Note: 
-Application default timezone is set to UTC and is platform independent.
-MySQL database timezone is also set to UTC.
-Keep timezones synchronized to avoid LocalDate issues.
 
 welcome page:
  
 http://localhost:8080/financial-app/login.jsp   (Google+ auth)
 
 
+------------------------------------------------------------------------------------
+Note! 
+Application default timezone is set to UTC.
+MySQL database timezone should also be set to UTC.
+Keep timezones synchronized to avoid LocalDate issues.
 
+------------------------------------------------------------------------------------
+Note!
+Set proper <user_name> in Configuration.json (file inside jar dependency)
+------------------------------------------------------------------------------------
+Note!
+Default application directories:
+
+/home/<user_name>/dmmfinance/bossa/currencies/
+/home/<user_name>/dmmfinance/bossa/funds/ 
+/home/<user_name>/dmmfinance/bossa/backup/currencies/  (zip files location)
+/home/<user_name>/dmmfinance/bossa/backup/funds/       (zip files location)
+
+------------------------------------------------------------------------------------
+
+
+Note! 
+Add smtpconfig.json file to location: "/home/<user_name>/dmmfinance/smtpconfig.json"
+
+------smtpconfig.json file content:-------------------------------------------------
+
+{
+  "email":"xxxxx@gmail.com",
+  
+  "login":"xxxxx@gmail.com",
+  
+  "password":"xxxxxxxx",
+  
+  "smtpHost":"smtp.gmail.com",
+  
+  "smtpPort":"465",
+  
+  "targetEmail":"xxxxxx@xxxx.com"
+}
+------------------------------------------------------------------------------------
 
 
 

@@ -30,9 +30,8 @@ public class EmailSenderServlet extends HttpServlet {
         try {
 
             MailSender sender = new MailSender();
-            sender.sendEmail("content");
+            sender.sendEmail();
 
-            LOGGER.info("doPost email sender action. ");
              /*
                 req.setAttribute(...);
                 req.setAttribute(...);*/
