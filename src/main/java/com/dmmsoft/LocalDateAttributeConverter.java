@@ -15,14 +15,14 @@ public class LocalDateAttributeConverter implements AttributeConverter<LocalDate
 
     @Override
     public Date convertToDatabaseColumn(LocalDate locDate) {
-    LOGGER.info("converted LocalDate to DatabaseColumn {}",locDate);
+   // LOGGER.info("converted LocalDate to DatabaseColumn {}",locDate);
         return (locDate == null ? null : Date.valueOf(locDate));
     }
 
     @Override
     public LocalDate convertToEntityAttribute(Date sqlDate) {
 
-        LOGGER.info("converted to entity Attribute date {}",sqlDate);
+     //   LOGGER.info("converted to entity Attribute date {}",sqlDate);
         return (sqlDate == null ? null : sqlDate.toLocalDate());
     }
 }

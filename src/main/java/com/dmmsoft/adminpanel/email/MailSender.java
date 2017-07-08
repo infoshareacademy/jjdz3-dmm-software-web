@@ -3,6 +3,7 @@ package com.dmmsoft.adminpanel.email;
 import com.dmmsoft.adminpanel.email.confing.JsonSerializer;
 import com.dmmsoft.adminpanel.email.confing.PathFileReader;
 import com.dmmsoft.adminpanel.email.confing.SmtpProperties;
+import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
 
@@ -30,17 +31,22 @@ public class MailSender implements ITriggerable {
     private final String TARGET_EMAIL = "targetEmail";
     private final String SMTP_CONFIG_FILE_NAME = "smtpconfig.json";
     private Properties emailProps = new Properties();
+    private ReportComponents reportComponents;
+
+    public MailSender(ReportComponents reportComponents) {
+        this.reportComponents = reportComponents;
+    }
 
     @Override
     public void executeAction() {
         try {
-            this.sendEmail();
+            this.sendEmail(reportComponents);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void sendEmail() throws IOException {
+    private void sendEmail(ReportComponents reportComponents) throws IOException {
 
         this.getEmailAccountProperties();
 
@@ -55,7 +61,7 @@ public class MailSender implements ITriggerable {
         try {
             LOGGER.info("before compose message");
 
-            Transport.send(new MessageGenerator().composeMessage(session, emailProps));
+            Transport.send(new MessageGenerator(reportComponents).composeMessage(session, emailProps));
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
