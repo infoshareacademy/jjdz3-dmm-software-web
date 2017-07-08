@@ -1,4 +1,4 @@
-package com.dmmsoft.adminpanel.emailsender;
+package com.dmmsoft.adminpanel.email.confing;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

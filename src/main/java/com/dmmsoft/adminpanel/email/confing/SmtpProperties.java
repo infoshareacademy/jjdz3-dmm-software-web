@@ -1,4 +1,4 @@
-package com.dmmsoft.adminpanel.emailsender;
+package com.dmmsoft.adminpanel.email.confing;
 
 /**
  * Created by milo on 07.07.17.

@@ -1,17 +1,16 @@
-package com.dmmsoft.adminpanel.emailsender;
+package com.dmmsoft.adminpanel.email.confing;
 
 import java.io.IOException;
 
-import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
-import com.dmmsoft.app.appconfiguration.exception.AppConfigurationProviderException;
+import com.dmmsoft.adminpanel.email.confing.SmtpProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class UniversalJsonMapper {
+public class JsonSerializer {
 
     private final String jsonString;
 
-    public UniversalJsonMapper(String jsonString)
+    public JsonSerializer(String jsonString)
     {
         this.jsonString = jsonString;
     }

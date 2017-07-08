@@ -1,6 +1,7 @@
-package com.dmmsoft.adminpanel.emailsender;
+package com.dmmsoft.adminpanel.email;
 
 
+import com.dmmsoft.adminpanel.trigger.TimeTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
