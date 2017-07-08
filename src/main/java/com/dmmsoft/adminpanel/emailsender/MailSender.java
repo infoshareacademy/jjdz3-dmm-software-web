@@ -23,7 +23,7 @@ import javax.mail.internet.MimeMessage;
 /**
  * Created by milo on 07.07.17.
  */
-public class MailSender {
+public class MailSender implements ITrigerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailSender.class);
     private final String MAIL_SMTP_HOST = "mail.smtp.host";
@@ -35,8 +35,16 @@ public class MailSender {
     private final String SMTP_CONFIG_FILE_PATH = "/home/milo/dmmfinance/";
     private final String SMTP_CONFIG_FILE_NAME = "smtpconfig.json";
 
+    @Override
+    public void executeAction() {
+        try {
+            this.sendEmail();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void sendEmail() throws IOException {
+    private void sendEmail() throws IOException {
 
         Properties properties = this.getEmailAccountProperties();
 
@@ -95,4 +103,6 @@ public class MailSender {
         props.put("mail.smtp.auth", "true");
         return props;
     }
+
+
 }

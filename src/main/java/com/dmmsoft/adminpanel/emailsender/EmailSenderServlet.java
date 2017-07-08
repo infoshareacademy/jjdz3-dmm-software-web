@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -29,8 +30,9 @@ public class EmailSenderServlet extends HttpServlet {
 
         try {
 
-            MailSender sender = new MailSender();
-            sender.sendEmail();
+           MailSender actionPovider = new MailSender();
+
+           new TimeTrigger().startAction(actionPovider, 30, 10 , TimeUnit.SECONDS);
 
              /*
                 req.setAttribute(...);
@@ -40,7 +42,6 @@ public class EmailSenderServlet extends HttpServlet {
 
             LOGGER.error("Failed to send Email{}", ex.getMessage());
         }
-
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
     }
 }
