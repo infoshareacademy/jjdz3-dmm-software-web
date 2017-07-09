@@ -1,6 +1,7 @@
 package com.dmmsoft.adminpanel.email;
 
 
+import com.dmmsoft.adminpanel.Schedule.Agent;
 import com.dmmsoft.adminpanel.Schedule.ITaskService;
 import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.TriggerProvider;
@@ -47,13 +48,21 @@ public class EmailServlet extends HttpServlet {
 
         try {
 
-            ReportComponents reportComponents = new ReportComponents(favouriteService);
+            Agent actionPovider = new Agent(taskService, favouriteService);
+            new TriggerProvider(actionPovider, 5, 30, TimeUnit.SECONDS).startAction();
+
+
+/*            ReportComponents reportComponents = new ReportComponents(favouriteService);
             MailSender actionPovider = new MailSender(reportComponents);
-            new TriggerProvider().startAction(actionPovider, 5, 30, TimeUnit.SECONDS);
+            new TriggerProvider(actionPovider, 5, 30, TimeUnit.SECONDS).startAction();*/
+
+
+
+
 
         } catch (RuntimeException ex) {
 
-            LOGGER.error("Failed to send Email{}", ex.getMessage());
+            LOGGER.error("Failed to send Email{}", ex.getStackTrace());
         }
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }

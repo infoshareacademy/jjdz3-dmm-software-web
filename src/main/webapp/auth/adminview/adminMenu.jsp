@@ -13,7 +13,7 @@
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <p>Application:</p>
 <a href="../adminview/appsettings">Settings</a><br>
-<a href="../adminview/emailsender">Reports</a><br>
+<a href="../adminview/emailsender">Reporting Agent</a><br>
 <br>
 <p>User:</p>
 <a href="../adminview/usermanagement">Management</a><br>

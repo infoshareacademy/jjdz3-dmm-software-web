@@ -1,6 +1,5 @@
 package com.dmmsoft.adminpanel.Schedule;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
 
@@ -30,13 +30,7 @@ public class TaskServlet extends HttpServlet {
 
         String editId = req.getParameter("id");
         long Id = Long.parseLong(editId);
-
-        Task task = new Task();
-
-        task.setId(Id);
-        task.setTaskName("task edited by Id");
-        task.setActive(true);
-        task.setTimeSpan(60);
+        Task task = taskService.getTaskbyId(Id);
 
         req.setAttribute(CONTENT_WRAPPER,task);
         req.getRequestDispatcher("../adminview/taskview.jsp").forward(req, resp);
@@ -46,19 +40,34 @@ public class TaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // TODO optional if present update if !present add
+        String taskId=req.getParameter("id");
+        String taskName = req.getParameter("taskName");
+        String endDate;
+        String startDate;
+        String startDelay = req.getParameter("startDelay");
+        String timeSpan = req.getParameter("timeSpan");
+        String isActive = req.getParameter("isActive");
 
+        Optional<Long> id = Optional.ofNullable(req.getParameter("id"))
+                .map(String::trim)
+                .filter(idString -> !idString.isEmpty())
+                .map(Long::parseLong);
 
-       String isActive = req.getParameter("isActive");
-       String taskName = req.getParameter("taskName");
+        Task task = id.map(Task::new)
+                .orElseGet(Task::new);
 
-
-        Task task = new Task();
         task.setTaskName(taskName);
-        task.setActive(true);
-        task.setTimeSpan(60);
 
-        taskService.AddTask(task);
+        // TODO datetime
+        task.setStartDelay(Long.parseLong(startDelay));
+        task.setTimeSpan(Long.parseLong(timeSpan));
+        task.setActive(true);
+
+        if(id.isPresent()){
+            taskService.updateTask(task);
+        }else {
+            taskService.AddTask(task);
+        }
 
         req.setAttribute(CONTENT_WRAPPER, taskService.getAllTasks());
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);

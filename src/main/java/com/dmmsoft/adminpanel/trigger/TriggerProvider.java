@@ -15,27 +15,48 @@ import static java.util.concurrent.TimeUnit.*;
 
 public class TriggerProvider {
 
-
     private final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(1);
 
-    public void startAction(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
+    private long delay;
+    private long period;
+    private TimeUnit timeUnit;
+    private ScheduledFuture<?> actionHandle;
+    ITriggerable actionProvider;
 
-        final Runnable trigger = new Runnable() {
+    public TriggerProvider(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
+
+        this.actionProvider=actionProvider;
+        this.delay = delay;
+        this.period = period;
+        this.timeUnit = timeUnit;
+
+    }
+
+    public void startAction() {
+
+        Runnable trigger = new Runnable() {
             public void run() {
                 actionProvider.executeAction();
             }
         };
-        final ScheduledFuture<?> actionHandle =
-                scheduler.scheduleAtFixedRate(trigger, delay, period, timeUnit);
+        this.actionHandle = scheduler.scheduleAtFixedRate(trigger, delay, period, timeUnit);
+    }
+
+    public void killAction() {
 
         scheduler.schedule(new Runnable() {
 
             public void run() {
                 actionHandle.cancel(true);
             }
-        }, 60 * 60, SECONDS);
+        }, 10, SECONDS);
+
     }
+
+
+
+
 }
 
 

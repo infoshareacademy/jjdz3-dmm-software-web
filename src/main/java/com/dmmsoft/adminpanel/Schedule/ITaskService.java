@@ -11,5 +11,8 @@ public interface ITaskService {
 
     void AddTask(Task task);
 
+    Task getTaskbyId(long id);
+
+    void updateTask(Task task);
 
 }

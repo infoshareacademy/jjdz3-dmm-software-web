@@ -7,6 +7,7 @@ import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,27 @@ public class TaskPersistence implements ITaskService  {
 
     @Override
     public List<Task> getAllTasks() {
-        return (List<Task>) em.createQuery("select m from Task m").getResultList();
+        List<Task> tasks = new ArrayList<>();
+        tasks  = em.createQuery("select m from Task m", Task.class).getResultList();
+        return tasks;
+    }
+
+    @Override
+    public Task getTaskbyId(long taskId) {
+         return em.find(Task.class, taskId);
+    }
+
+    @Override
+    @Transactional
+    public void updateTask(Task task){
+        Task t = em.find(Task.class, task.getId());
+             t.setTaskName(task.getTaskName());
+             t.setStartDate(task.getStartDate());
+             t.setEndDate(task.getEndDate());
+             t.setStartDelay(task.getStartDelay());
+             t.setTimeSpan(task.getTimeSpan());
+             t.setActive(task.isActive());
+             em.merge(t);
     }
 
     @Override

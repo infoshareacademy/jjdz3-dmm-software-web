@@ -7,8 +7,8 @@
     <tr>
         <th>Id</th>
         <th>Task name</th>
-        <th>End date</th>
         <th>Start date</th>
+        <th>End date</th>
         <th>Delay</th>
         <th>Time span</th>
         <th>Active</th>
@@ -18,8 +18,8 @@
         <tr>
             <th>${task.id}</th>
             <th>${task.taskName}</th>
-            <th>${task.endDate}</th>
             <th>${task.startDate}</th>
+            <th>${task.endDate}</th>
             <th>${task.startDelay}</th>
             <th>${task.timeSpan}</th>
             <th>${task.active}</th>

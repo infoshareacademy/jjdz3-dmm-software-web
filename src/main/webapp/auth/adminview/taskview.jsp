@@ -31,20 +31,20 @@
 
 <form method="post" action="../adminview/task">
     <p><b>Task form:</b></p>
-    <p>id:</p>
-    <p><input name="id" value="${contentWrapper.id}"/>${contentWrapper.id}</p>
+    <p>id:${contentWrapper.id}</p>
+    <p><input name="id" value="${contentWrapper.id}" hidden/></p>
     <p>1. name:</p>
-    <p><input type="text" name="taskName" id="inputForm" value="${contentWrapper.taskName}"/></p>
+    <p><input type="text" name="taskName" value="${contentWrapper.taskName}"/></p>
     <p>2. Start Date:</p>
-    <p><input type="text" class="datePicker" name="startDate" value="${startDate}"/></p>
+    <p><input type="text" class="datePicker" name="startDate" value="${contentWrapper.startDate}"/></p>
     <p>3. End Date:</p>
-    <p><input type="text" class="datePicker" name="endDate" value="${endDate}"/></p>
+    <p><input type="text" class="datePicker" name="endDate" value="${contentWrapper.endDate}"/></p>
     <p>4. Start Delay:</p>
-    <p><input type="text" pattern="[0-9]*" name="startDelay" value="${startDelay}"/></p>
+    <p><input type="text" pattern="[0-9]*" name="startDelay" value="${contentWrapper.startDelay}"/></p>
     <p>5. Time Span:</p>
-    <p><input type="text" pattern="[0-9]*" name="timeSpan" value="${timeSpan}"/></p>
+    <p><input type="text" pattern="[0-9]*" name="timeSpan" value="${contentWrapper.timeSpan}"/></p>
     <p>6. Active:</p>
-    <p><input type="checkbox" clas name="isActive" value="${isActive}"/></p>
+    <p><input type="checkbox" clas name="isActive" value="${contentWrapper.active}"/></p>
     <p>
         <button type="submit">Submit!</button>
     </p>

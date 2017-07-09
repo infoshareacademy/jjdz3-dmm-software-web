@@ -13,7 +13,7 @@ public class Task {
 
     @Id
     @GeneratedValue
-    private long Id;
+    private long id;
     private String taskName;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -21,20 +21,23 @@ public class Task {
     private long startDelay;
     private long timeSpan;
 
+
     public String getTaskName() {
         return taskName;
     }
+
+
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(long id) {
-        Id = id;
+        this.id = id;
     }
 
     public LocalDateTime getStartDate() {
@@ -77,4 +80,10 @@ public class Task {
         this.timeSpan = timeSpan;
     }
 
+    public Task() {
+    }
+
+    public Task(long id){
+        this.id = id;
+    }
 }
