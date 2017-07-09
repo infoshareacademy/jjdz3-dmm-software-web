@@ -9,13 +9,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-
-
 public class AgentTrigger {
 
-
     private final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(1);
+            Executors.newSingleThreadScheduledExecutor();
 
     public void startAction(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
 
@@ -27,12 +24,6 @@ public class AgentTrigger {
         final ScheduledFuture<?> actionHandle =
                 scheduler.scheduleAtFixedRate(trigger, delay, period, timeUnit);
 
-/*        scheduler.schedule(new Runnable() {
-
-            public void run() {
-                actionHandle.cancel(true);
-            }
-        }, 60 * 60, SECONDS);*/
     }
 }
 

@@ -4,7 +4,7 @@ package com.dmmsoft.adminpanel.trigger;
  * Created by milo on 08.07.17.
  */
 
-import com.dmmsoft.adminpanel.trigger.ITriggerable;
+import com.dmmsoft.adminpanel.Schedule.Task;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -13,24 +13,34 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.*;
 
-public class TriggerProvider {
+public class TriggerProvider implements ITerminable {
 
     private final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(1);
+            Executors.newSingleThreadScheduledExecutor();
+    private ScheduledFuture<?> actionHandle;
+    private ITriggerable actionProvider;
 
     private long delay;
     private long period;
     private TimeUnit timeUnit;
-    private ScheduledFuture<?> actionHandle;
-    ITriggerable actionProvider;
+
+    private Task triggeredTask;
+
+    public void setTriggeredTask(Task triggeredTask) {
+        this.triggeredTask = triggeredTask;
+    }
 
     public TriggerProvider(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
 
-        this.actionProvider=actionProvider;
+        this.actionProvider = actionProvider;
         this.delay = delay;
         this.period = period;
         this.timeUnit = timeUnit;
+    }
 
+    @Override
+    public long getTaskId() {
+        return triggeredTask.getId();
     }
 
     public void startAction() {
@@ -46,17 +56,11 @@ public class TriggerProvider {
     public void killAction() {
 
         scheduler.schedule(new Runnable() {
-
             public void run() {
                 actionHandle.cancel(true);
             }
-        }, 10, SECONDS);
-
+        }, 5, SECONDS);
     }
-
-
-
-
 }
 
 

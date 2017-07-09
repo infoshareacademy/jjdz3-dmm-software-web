@@ -4,6 +4,7 @@ package com.dmmsoft.adminpanel.email;
 import com.dmmsoft.adminpanel.Schedule.Agent;
 import com.dmmsoft.adminpanel.Schedule.ITaskService;
 import com.dmmsoft.adminpanel.report.ReportComponents;
+import com.dmmsoft.adminpanel.trigger.AgentTrigger;
 import com.dmmsoft.adminpanel.trigger.TriggerProvider;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
@@ -45,19 +46,14 @@ public class EmailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
         try {
-
             Agent actionPovider = new Agent(taskService, favouriteService);
-            new TriggerProvider(actionPovider, 5, 30, TimeUnit.SECONDS).startAction();
+            new AgentTrigger().startAction(actionPovider, 3, 10, TimeUnit.SECONDS);
 
 
 /*            ReportComponents reportComponents = new ReportComponents(favouriteService);
             MailSender actionPovider = new MailSender(reportComponents);
             new TriggerProvider(actionPovider, 5, 30, TimeUnit.SECONDS).startAction();*/
-
-
-
 
 
         } catch (RuntimeException ex) {

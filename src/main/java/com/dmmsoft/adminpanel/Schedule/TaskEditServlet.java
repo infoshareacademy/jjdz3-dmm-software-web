@@ -27,9 +27,6 @@ public class TaskEditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
         req.getRequestDispatcher("../adminview/task.jsp").forward(req, resp);
     }
 
