@@ -32,6 +32,8 @@ public class EmailServlet extends HttpServlet {
     private ITaskService taskService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServlet.class);
+    private static final long TRIGGER_DELAY = 0;
+    private static final long TRIGGER_TIMESPAN = 5;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,11 +47,11 @@ public class EmailServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Agent actionPovider = new Agent(taskService, favouriteService);
-            new AgentTrigger().startAction(actionPovider, 0, 5, TimeUnit.SECONDS);
+            new AgentTrigger().startAction(actionPovider, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS);
 
         } catch (RuntimeException ex) {
 
-            LOGGER.error("Failed to send Email{}", ex.getStackTrace());
+            LOGGER.error("Failed to send Email: {}", ex.getStackTrace());
         }
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }

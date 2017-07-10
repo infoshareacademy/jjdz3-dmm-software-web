@@ -1,7 +1,7 @@
 package com.dmmsoft.adminpanel.email;
 
 import com.dmmsoft.adminpanel.email.confing.JsonSerializer;
-import com.dmmsoft.adminpanel.email.confing.PathFileReader;
+import com.dmmsoft.adminpanel.email.confing.ConfigFileReader;
 import com.dmmsoft.adminpanel.email.confing.SmtpProperties;
 import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
@@ -17,19 +17,20 @@ import java.util.Properties;
 
 import javax.mail.*;
 
+import static com.dmmsoft.ConstantsProvider.MAIL_SMTP_HOST;
+import static com.dmmsoft.ConstantsProvider.MAIL_SMTP_SOCKETFACTORY_PORT;
+import static com.dmmsoft.ConstantsProvider.MAIL_SMTP_PORT;
+import static com.dmmsoft.ConstantsProvider.EMAIL;
+import static com.dmmsoft.ConstantsProvider.PASSWORD;
+import static com.dmmsoft.ConstantsProvider.TARGET_EMAIL;
+import static com.dmmsoft.ConstantsProvider.SMTP_CONFIG_FILE_NAME;
+
 /**
  * Created by milo on 07.07.17.
  */
 public class MailSender implements ITriggerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailSender.class);
-    private final String MAIL_SMTP_HOST = "mail.smtp.host";
-    private final String MAIL_SMTP_SOCKETFACTORY_PORT = "mail.smtp.socketFactory.port";
-    private final String MAIL_SMTP_PORT = "mail.smtp.port";
-    private final String EMAIL = "email";
-    private final String PASSWORD = "password";
-    private final String TARGET_EMAIL = "targetEmail";
-    private final String SMTP_CONFIG_FILE_NAME = "smtpconfig.json";
     private Properties emailProps = new Properties();
     private ReportComponents reportComponents;
 
@@ -59,10 +60,12 @@ public class MailSender implements ITriggerable {
                     }
                 });
         try {
-            LOGGER.info("before compose message");
 
-            Transport.send(new MessageGenerator(reportComponents).composeMessage(session, emailProps));
+            Transport.send(new MessageGenerator(reportComponents)
+                    .composeMessage(session, emailProps));
+            LOGGER.info("Email sent succesfully to destination: {}", emailProps.getProperty(EMAIL));
         } catch (MessagingException e) {
+            LOGGER.error("Failed to send e-mail! {} {}", e.getMessage(), e.getStackTrace());
             throw new RuntimeException(e);
         }
     }
@@ -88,7 +91,7 @@ public class MailSender implements ITriggerable {
                 .getSmtpConfigFilePath();
 
         Path path = Paths.get(smtpConfigFilePath, SMTP_CONFIG_FILE_NAME);
-        String content = new PathFileReader(path).getFileAsString();
+        String content = new ConfigFileReader(path).getFileAsString();
         return new JsonSerializer(content).getProperties();
     }
 

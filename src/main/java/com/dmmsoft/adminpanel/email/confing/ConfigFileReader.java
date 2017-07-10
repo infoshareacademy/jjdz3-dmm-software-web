@@ -7,12 +7,11 @@ import java.nio.file.Path;
 import java.util.List;
 
 
-public class PathFileReader {
+public class ConfigFileReader {
 
     public Path resourceFilePath;
 
-
-    public PathFileReader(Path filePath) {
+    public ConfigFileReader(Path filePath) {
         this.resourceFilePath = filePath;
     }
 
@@ -24,5 +23,4 @@ public class PathFileReader {
         }
         return stringBuilder.toString();
     }
-
 }

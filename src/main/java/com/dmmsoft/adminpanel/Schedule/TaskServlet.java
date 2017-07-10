@@ -16,10 +16,17 @@ import java.util.Optional;
 
 import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
 import static com.dmmsoft.ConstantsProvider.DATE_PATTERN;
+import static com.dmmsoft.ConstantsProvider.TASK_NAME;
+import static com.dmmsoft.ConstantsProvider.TASK_START_DATE;
+import static com.dmmsoft.ConstantsProvider.TASK_END_DATE;
+import static com.dmmsoft.ConstantsProvider.TASK_START_DELAY;
+import static com.dmmsoft.ConstantsProvider.TASK_TIMESPAN;
+import static com.dmmsoft.ConstantsProvider.TASK_ISACTIVE;
 
 /**
  * Created by milo on 08.07.17.
  */
+
 
 @WebServlet(urlPatterns = "/auth/adminview/task")
 public class TaskServlet extends HttpServlet {
@@ -27,6 +34,7 @@ public class TaskServlet extends HttpServlet {
     @Inject
     private ITaskService taskService;
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskServlet.class);
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
 
     @Override
@@ -36,7 +44,7 @@ public class TaskServlet extends HttpServlet {
         long Id = Long.parseLong(editId);
         Task task = taskService.getTaskbyId(Id);
 
-        req.setAttribute(CONTENT_WRAPPER,task);
+        req.setAttribute(CONTENT_WRAPPER, task);
         req.getRequestDispatcher("../adminview/taskview.jsp").forward(req, resp);
     }
 
@@ -44,13 +52,13 @@ public class TaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String taskName = req.getParameter("taskName");
+        String taskName = req.getParameter(TASK_NAME);
 
-        String startDate =req.getParameter("startDate");
-        String endDate =req.getParameter("endDate");
-        String startDelay = req.getParameter("startDelay");
-        String timeSpan = req.getParameter("timeSpan");
-        boolean isActive = req.getParameter("isActive") != null;
+        String startDate = req.getParameter(TASK_START_DATE);
+        String endDate = req.getParameter(TASK_END_DATE);
+        String startDelay = req.getParameter(TASK_START_DELAY);
+        String timeSpan = req.getParameter(TASK_TIMESPAN);
+        boolean isActive = req.getParameter(TASK_ISACTIVE) != null;
 
         Optional<Long> id = Optional.ofNullable(req.getParameter("id"))
                 .map(String::trim)
@@ -67,9 +75,9 @@ public class TaskServlet extends HttpServlet {
         task.setTimeSpan(Long.parseLong(timeSpan));
         task.setActive(isActive);
 
-        if(id.isPresent()){
+        if (id.isPresent()) {
             taskService.updateTask(task);
-        }else {
+        } else {
             taskService.AddTask(task);
         }
 

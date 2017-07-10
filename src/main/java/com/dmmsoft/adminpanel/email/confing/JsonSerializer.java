@@ -23,6 +23,4 @@ public class JsonSerializer {
             throw new IOException();
         }
     }
-
-
 }

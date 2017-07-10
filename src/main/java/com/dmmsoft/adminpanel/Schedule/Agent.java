@@ -37,12 +37,11 @@ public class Agent implements ITriggerable {
 
     @Override
     public void executeAction() {
-        LOGGER.debug("Agent execute action");
         this.doAgentJob();
     }
 
     private void doAgentJob() {
-        LOGGER.info("Agent executes job start");
+        LOGGER.info("Agent job execution - START");
         this.checkActualTime();
         List<Task> userTasks = taskService.getAllTasks();
 
@@ -59,22 +58,21 @@ public class Agent implements ITriggerable {
             } else {
                 if (!triggeredTasks.isEmpty()) {
                     for (Task task : triggeredTasks) {
-                        LOGGER.info("task to kill{} {} {}", isTaskToKill(task), task.getId(), task.getTaskName());
+                        LOGGER.info("Evautated Task Id:{}, Name:{}, isTaskToKill:{} ",
+                                task.getId(), task.getTaskName(),  isTaskToKill(task));
 
                         if(isTaskToKill(task))
                         {
-                            LOGGER.info("Killing Task Trigger - TEST");
                             if (!triggerProviders.isEmpty())
                                 for(ITerminable triggerProvider : triggerProviders)
                                 {
                                     if(triggerProvider.getTaskId()==task.getId()){
                                         triggerProvider.killAction();
-                                        LOGGER.info("Killing Task Trigger {} {}",
+                                        LOGGER.info("Killing Task Id:{}, Name:{} ",
                                                 task.getId(),
                                                 task.getTaskName());
                                         triggeredTasks.remove(task);
                                         triggerProviders.remove(triggerProvider);
-                                        LOGGER.info("Agent killing task trigger job end");
                                         if(triggeredTasks.isEmpty() || triggerProviders.isEmpty()){
                                             break;
                                         }
@@ -87,8 +85,8 @@ public class Agent implements ITriggerable {
                     }
                 }
             }
-            LOGGER.info("Agent executes job end");
         }
+        LOGGER.info("Agent job execution - END");
     }
 
     private LocalDate checkActualTime() {
@@ -119,8 +117,8 @@ public class Agent implements ITriggerable {
 
 
     private boolean hasTriggeredStatus(Task task) {
-        LOGGER.info("number of triggered tasks:{} ", triggeredTasks.size());
-        LOGGER.info("checked task:{} ", task.getId());
+        LOGGER.info("Number of triggered tasks:{} ", triggeredTasks.size());
+        LOGGER.info("Checked Task Id:{} ", task.getId());
 
         Predicate<Task> hasItem = x -> Objects.equals(x.getId(), task.getId());
 
@@ -129,10 +127,10 @@ public class Agent implements ITriggerable {
                 .findAny();
 
         if (any.isPresent()) {
-            LOGGER.info("has triggered status {}", task.getId());
+            LOGGER.info("Triggered status:true TaskId: {}", task.getId());
             return true;
         } else {
-            LOGGER.info("has not treiggered status {}", task.getId());
+            LOGGER.info("Triggered status:false TaskId: {}", task.getId());
             return false;
         }
     }
@@ -141,7 +139,7 @@ public class Agent implements ITriggerable {
         boolean isActual = task.getStartDate().isBefore(this.checkActualTime())
                 && task.getEndDate().isAfter(this.checkActualTime());
 
-        LOGGER.info("Actual:{}, taskId:{}", isActual, task.getId());
+        LOGGER.info("Is task actual:{}, TaskId:{}", isActual, task.getId());
         return isActual;
     }
 

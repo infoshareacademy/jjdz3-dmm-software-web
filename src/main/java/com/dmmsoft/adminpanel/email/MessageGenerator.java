@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static com.dmmsoft.ConstantsProvider.EMAIL;
+import static com.dmmsoft.ConstantsProvider.TARGET_EMAIL;
+import static com.dmmsoft.ConstantsProvider.TMP_FILE_NAME;
+import static com.dmmsoft.ConstantsProvider.LINE_SEPARATOR;
+
 /**
  * Created by milo on 08.07.17.
  */
@@ -28,10 +33,9 @@ import java.util.Properties;
 public class MessageGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageGenerator.class);
-    private final String EMAIL = "email";
-    private final String TARGET_EMAIL = "targetEmail";
-    private final String TMP_FILE_NAME = "tmp/reportComponents.csv";
     private ReportComponents reportComponents;
+    private final String MESSAGE_INFO = "Scheduled Report.";
+
 
     public MessageGenerator(ReportComponents reportComponents) {
         this.reportComponents = reportComponents;
@@ -44,8 +48,8 @@ public class MessageGenerator {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(properties.getProperty(TARGET_EMAIL)));
 
-            message.setSubject("Testing Subject");
-            message.setText("Test Content");
+            message.setSubject(MESSAGE_INFO);
+            message.setText(MESSAGE_INFO);
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(this.generateEmailAttachment());
@@ -55,7 +59,7 @@ public class MessageGenerator {
             return message;
 
         } catch (MessagingException e) {
-            LOGGER.error("Failed to send email:{}", e.getMessage());
+            LOGGER.error("Failed to generate message email components: {} {}", e.getMessage(), e.getStackTrace());
             throw new RuntimeException(e);
         }
     }
@@ -91,7 +95,7 @@ public class MessageGenerator {
                 .getAllRevenueCriteria();
 
         lines.add("InvestmentName,InvestedCapital,BuyDate,SellDate"
-                .concat(System.getProperty("line.separator")));
+                .concat(System.getProperty(LINE_SEPARATOR)));
 
         for (InvestmentRevenueCriteria item : criteria) {
 
@@ -102,7 +106,7 @@ public class MessageGenerator {
             sb.append(item.getInvestedCapital()).append(separator);
             sb.append(item.getBuyDate().toString()).append(separator);
             sb.append(item.getSellDate().toString());
-            sb.append(System.getProperty("line.separator"));
+            sb.append(System.getProperty(LINE_SEPARATOR));
             lines.add(sb.toString());
             LOGGER.info("Adding Line to CSV: {}", sb.toString());
         }

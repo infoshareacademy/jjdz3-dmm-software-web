@@ -14,5 +14,4 @@ public interface ITaskService {
     Task getTaskbyId(long id);
 
     void updateTask(Task task);
-
 }

@@ -35,7 +35,6 @@ public class AppSettingsServlet extends HttpServlet {
         req.setAttribute(CURRENCY_COUNT , container.getMainContainer().getCurrenciesCount());
         req.setAttribute(FUND_COUNT, container.getMainContainer().getFundsCount());
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -48,8 +47,7 @@ public class AppSettingsServlet extends HttpServlet {
             req.setAttribute(CURRENCY_COUNT, container.getMainContainer().getCurrenciesCount());
             req.setAttribute(FUND_COUNT, container.getMainContainer().getFundsCount());
 
-            LOGGER.info("Main Container reloaded!");
-            LOGGER.info("Currencies items:{} Funds items:{}",
+            LOGGER.info("Main Container reloaded!Currencies items:{} Funds items:{}",
                     container.getMainContainer().getCurrenciesCount(),
                     container.getMainContainer().getFundsCount());
 

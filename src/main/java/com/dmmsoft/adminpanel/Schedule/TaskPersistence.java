@@ -16,7 +16,6 @@ import java.util.List;
 
 @Default
 public class TaskPersistence implements ITaskService  {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskPersistence.class);
 
     @PersistenceContext
     private EntityManager em;
