@@ -1,4 +1,4 @@
-package com.dmmsoft.adminpanel.Schedule;
+package com.dmmsoft.adminpanel.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,7 +4,7 @@ package com.dmmsoft.adminpanel.trigger;
  * Created by milo on 08.07.17.
  */
 
-import com.dmmsoft.adminpanel.Schedule.Task;
+import com.dmmsoft.adminpanel.schedule.Task;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

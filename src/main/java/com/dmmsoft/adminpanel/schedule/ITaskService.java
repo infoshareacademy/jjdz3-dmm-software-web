@@ -1,4 +1,4 @@
-package com.dmmsoft.adminpanel.Schedule;
+package com.dmmsoft.adminpanel.schedule;
 
 import java.util.List;
 

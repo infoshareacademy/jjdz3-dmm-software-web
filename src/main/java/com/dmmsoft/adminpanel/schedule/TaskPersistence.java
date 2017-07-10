@@ -1,7 +1,4 @@
-package com.dmmsoft.adminpanel.Schedule;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.dmmsoft.adminpanel.schedule;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;

@@ -1,4 +1,4 @@
-package com.dmmsoft.adminpanel.Schedule;
+package com.dmmsoft.adminpanel.schedule;
 
 import com.dmmsoft.adminpanel.email.MailSender;
 import com.dmmsoft.adminpanel.report.ReportComponents;

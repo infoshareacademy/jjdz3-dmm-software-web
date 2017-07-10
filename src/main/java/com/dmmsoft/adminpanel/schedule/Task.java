@@ -1,10 +1,9 @@
-package com.dmmsoft.adminpanel.Schedule;
+package com.dmmsoft.adminpanel.schedule;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by milo on 08.07.17.

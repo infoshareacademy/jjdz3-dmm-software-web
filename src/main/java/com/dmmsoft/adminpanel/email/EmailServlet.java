@@ -1,8 +1,8 @@
 package com.dmmsoft.adminpanel.email;
 
 
-import com.dmmsoft.adminpanel.Schedule.Agent;
-import com.dmmsoft.adminpanel.Schedule.ITaskService;
+import com.dmmsoft.adminpanel.schedule.Agent;
+import com.dmmsoft.adminpanel.schedule.ITaskService;
 import com.dmmsoft.adminpanel.trigger.AgentTrigger;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
