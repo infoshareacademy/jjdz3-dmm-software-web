@@ -19,6 +19,12 @@ public class ChartGenerator  {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChartGenerator.class);
 
+    private String chartTitle;
+
+    public ChartGenerator(String chartTitle) {
+        this.chartTitle = chartTitle;
+    }
+
     public JFreeChart renderChart() {
         final XYDataset dataset = createDataset();
         final JFreeChart chart = createChart(dataset);
@@ -45,7 +51,7 @@ public class ChartGenerator  {
 
     private JFreeChart createChart(final XYDataset dataset) {
         return ChartFactory.createTimeSeriesChart(
-                "Prototype","time","value",
+                this.chartTitle,"time","value",
                 dataset,false,false,false);
     }
 }
