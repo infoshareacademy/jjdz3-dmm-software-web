@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class AgentTrigger {
 
     private final ScheduledExecutorService scheduler =
-            Executors.newSingleThreadScheduledExecutor();
+            Executors.newScheduledThreadPool(1);
 
     public void startAction(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
 

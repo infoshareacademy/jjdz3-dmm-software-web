@@ -9,9 +9,7 @@ import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,21 +29,11 @@ public class Agent implements ITriggerable {
     private IFavouriteService favouriteService;
     private List<Task> triggeredTasks = new ArrayList<>();
     private List<ITerminable> triggerProviders = new ArrayList<>();
-    private boolean isAgentActive;
-
-    public boolean isAgentActive() {
-        return isAgentActive;
-    }
-
-    public void setAgentActive(boolean agentActive) {
-        isAgentActive = agentActive;
-    }
 
     public Agent(ITaskService taskService, IFavouriteService favouriteService) {
         this.taskService = taskService;
         this.favouriteService = favouriteService;
     }
-
 
     @Override
     public void executeAction() {
@@ -115,7 +103,6 @@ public class Agent implements ITriggerable {
             return false;
         }
     }
-
 
     private void startTask(Task task) {
         ReportComponents reportComponents = new ReportComponents(favouriteService);

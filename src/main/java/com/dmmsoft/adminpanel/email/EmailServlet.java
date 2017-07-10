@@ -48,13 +48,7 @@ public class EmailServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Agent actionPovider = new Agent(taskService, favouriteService);
-            new AgentTrigger().startAction(actionPovider, 3, 10, TimeUnit.SECONDS);
-
-
-/*            ReportComponents reportComponents = new ReportComponents(favouriteService);
-            MailSender actionPovider = new MailSender(reportComponents);
-            new TriggerProvider(actionPovider, 5, 30, TimeUnit.SECONDS).startAction();*/
-
+            new AgentTrigger().startAction(actionPovider, 0, 5, TimeUnit.SECONDS);
 
         } catch (RuntimeException ex) {
 
