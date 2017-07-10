@@ -3,9 +3,7 @@ package com.dmmsoft.adminpanel.email;
 
 import com.dmmsoft.adminpanel.Schedule.Agent;
 import com.dmmsoft.adminpanel.Schedule.ITaskService;
-import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.AgentTrigger;
-import com.dmmsoft.adminpanel.trigger.TriggerProvider;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
-import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER_COLLECTION;
 
 
 /**

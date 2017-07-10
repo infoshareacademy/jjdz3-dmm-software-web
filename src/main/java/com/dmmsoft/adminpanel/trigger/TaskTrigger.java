@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.*;
 
-public class TriggerProvider implements ITerminable {
+public class TaskTrigger implements ITerminable {
 
     private final ScheduledExecutorService scheduler =
             Executors.newSingleThreadScheduledExecutor();
@@ -30,7 +30,7 @@ public class TriggerProvider implements ITerminable {
         this.triggeredTask = triggeredTask;
     }
 
-    public TriggerProvider(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
+    public TaskTrigger(ITriggerable actionProvider, long delay, long period, TimeUnit timeUnit) {
 
         this.actionProvider = actionProvider;
         this.delay = delay;

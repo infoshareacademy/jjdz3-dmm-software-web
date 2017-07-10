@@ -4,7 +4,7 @@ import com.dmmsoft.adminpanel.email.MailSender;
 import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.ITerminable;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
-import com.dmmsoft.adminpanel.trigger.TriggerProvider;
+import com.dmmsoft.adminpanel.trigger.TaskTrigger;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,12 +107,12 @@ public class Agent implements ITriggerable {
     private void startTask(Task task) {
         ReportComponents reportComponents = new ReportComponents(favouriteService);
         MailSender actionPovider = new MailSender(reportComponents);
-        TriggerProvider triggerProvider = new TriggerProvider(actionPovider, task.getStartDelay(), task.getTimeSpan(), TimeUnit.SECONDS);
+        TaskTrigger taskTrigger = new TaskTrigger(actionPovider, task.getStartDelay(), task.getTimeSpan(), TimeUnit.SECONDS);
         triggeredTasks.add(task);
-        triggerProvider.setTriggeredTask(task);
-        triggerProvider.startAction();
+        taskTrigger.setTriggeredTask(task);
+        taskTrigger.startAction();
 
-        triggerProviders.add(triggerProvider);
+        triggerProviders.add(taskTrigger);
 
         LOGGER.info("Agent started Task: {} {}", task.getId(), task.getTaskName());
     }
