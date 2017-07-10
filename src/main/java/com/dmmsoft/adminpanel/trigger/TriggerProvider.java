@@ -59,7 +59,7 @@ public class TriggerProvider implements ITerminable {
             public void run() {
                 actionHandle.cancel(true);
             }
-        }, 5, SECONDS);
+        }, 0, SECONDS);
     }
 }
 

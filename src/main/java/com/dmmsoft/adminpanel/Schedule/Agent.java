@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +103,8 @@ public class Agent implements ITriggerable {
         }
     }
 
-    private LocalDateTime checkActualTime() {
-        return LocalDateTime.now();
+    private LocalDate checkActualTime() {
+        return LocalDate.now();
     }
 
     private boolean isTaskToKill(Task task) {

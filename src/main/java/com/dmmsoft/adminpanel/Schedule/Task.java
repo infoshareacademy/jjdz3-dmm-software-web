@@ -3,6 +3,7 @@ package com.dmmsoft.adminpanel.Schedule;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,8 +16,8 @@ public class Task {
     @GeneratedValue
     private long id;
     private String taskName;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private boolean isActive;
     private long startDelay;
     private long timeSpan;
@@ -40,19 +41,19 @@ public class Task {
         this.id = id;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

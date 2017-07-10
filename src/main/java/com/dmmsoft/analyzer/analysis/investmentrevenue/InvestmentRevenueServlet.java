@@ -74,14 +74,6 @@ public class InvestmentRevenueServlet extends HttpServlet {
             String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
             Boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
 
-
-            //TODO remove default values for manual tests
- /*           if (buyDate == null || buyDate.isEmpty())
-                buyDate = TEST_BUY_DATE;
-            if (sellDate == null || sellDate.isEmpty())
-                sellDate = TEST_SELL_DATE;*/
-
-
             CriteriaForm form = new CriteriaForm();
             form.setInvestmentName(investmentName);
             form.setCapital(capital);
