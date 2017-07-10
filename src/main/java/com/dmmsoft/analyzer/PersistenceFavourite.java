@@ -3,9 +3,12 @@ import com.dmmsoft.analyzer.analysis.comparison.AnalysisComparisonContainer;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ejb.Singleton;
 import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class PersistenceFavourite implements IFavouriteService {
     }
 
     @Override
+    @Transactional
     public List<PersistedInvestmentRevenueCriteria> getAllRevenueCriteria() {
         List<PersistedInvestmentRevenueCriteria> list = em
                 .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user", PersistedInvestmentRevenueCriteria.class)

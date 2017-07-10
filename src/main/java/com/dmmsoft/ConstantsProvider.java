@@ -43,4 +43,22 @@ public class ConstantsProvider {
     public static final String INVESTMENT_STAT_RESULT_A="investmentStatResultA";
     public static final String INVESTMENT_STAT_RESULT_B="investmentStatResultB";
 
+    public static final String MAIL_SMTP_HOST = "mail.smtp.host";
+    public static final String MAIL_SMTP_SOCKETFACTORY_PORT = "mail.smtp.socketFactory.port";
+    public static final String MAIL_SMTP_PORT = "mail.smtp.port";
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
+    public static final String TARGET_EMAIL = "targetEmail";
+    public static final String SMTP_CONFIG_FILE_NAME = "smtpconfig.json";
+
+    public static final String TMP_FILE_NAME = "tmp/reportComponents.csv";
+
+    public static final String TASK_NAME="taskName";
+    public static final String TASK_START_DATE="startDate";
+    public static final String TASK_END_DATE="endDate";
+    public static final String TASK_START_DELAY="startDelay";
+    public static final String TASK_TIMESPAN="timeSpan";
+    public static final String TASK_ISACTIVE="isActive";
+
+    public static final String LINE_SEPARATOR ="line.separator";
 }

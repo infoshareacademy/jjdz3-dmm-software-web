@@ -30,14 +30,14 @@ public class AdminView implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         String path = req.getRequestURI();
-        LOGGER.info("login filter request path: {}", path);
+      //  LOGGER.info("login filter request path: {}", path);
 
         if (req.getSession().getAttribute("authenticatedUser") != null) {
             User user = (User) req.getSession().getAttribute("authenticatedUser");
 
             if (user.getAdmin()==true) {
                 filterChain.doFilter(servletRequest, servletResponse);
-                LOGGER.info("User access verification success. Role isAdmin:{} ", user.getAdmin());
+             //   LOGGER.info("User access verification success. Role isAdmin:{} ", user.getAdmin());
             } else {
                 req.getRequestDispatcher("/auth/accessdenied.jsp").forward(req, resp);
                 LOGGER.warn("User access verification failure! Role isAdmin:{} ", user.getAdmin());
