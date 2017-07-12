@@ -1,12 +1,16 @@
 package com.dmmsoft.charts;
 
 import com.dmmsoft.adminpanel.AppSettingsServlet;
+import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
+import com.dmmsoft.app.model.MainContainer;
+import com.dmmsoft.container.IModelContainerService;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +27,13 @@ import java.io.OutputStream;
 
 @WebServlet(urlPatterns = "/auth/userview/chart")
 public class ChartServlet extends HttpServlet {
+
+    @Inject
+    private IModelContainerService container;
+
+
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChartServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,14 +54,19 @@ public class ChartServlet extends HttpServlet {
 
         // application reads data from form, evaluates data, saves result as chart to session Object
 
+        try{
         String userTitle = req.getParameter("chartTitle");
 
-        final ChartGenerator chartGenerator = new ChartGenerator(userTitle.concat(req.getSession().getId()));
+        final ChartGenerator chartGenerator = new ChartGenerator("test chart", mainContainer);
         JFreeChart chart = chartGenerator.renderChart(); // generate chart
 
         req.getSession().setAttribute("chart", chart);
 
         req.getRequestDispatcher("../userview/chart.jsp").forward(req, resp);
+    }
+    catch (NoDataForCriteria ex){
+        LOGGER.error("Failed to render chart.");
+        }
     }
 }
 

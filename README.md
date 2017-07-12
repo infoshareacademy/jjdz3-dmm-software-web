@@ -27,7 +27,6 @@ welcome page:
  
 http://localhost:8080/financial-app/login.jsp   (Google+ auth)
 
-
 ------------------------------------------------------------------------------------
 Note! 
 Application default timezone is set to UTC.
@@ -73,6 +72,3 @@ Add smtpconfig.json file to location: "/home/<user_name>/dmmfinance/smtpconfig.j
 }
 
 ------------------------------------------------------------------------------------
-
-
-
