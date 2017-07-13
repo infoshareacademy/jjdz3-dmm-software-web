@@ -4,26 +4,18 @@ import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.trend.QuotationSeries;
 import com.dmmsoft.app.analyzer.analyses.trend.QuotationSeriesCriteria;
 import com.dmmsoft.app.analyzer.analyses.trend.QuotationSeriesResult;
-import com.dmmsoft.app.model.MainContainer;
 import com.dmmsoft.app.model.Quotation;
 import com.dmmsoft.container.IModelContainerService;
 import org.jfree.chart.ChartFactory;
 
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.DefaultKeyedValues;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.SeriesException;
 import org.jfree.data.time.*;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.date.DayAndMonthRule;
-import org.jfree.date.SerialDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -36,85 +28,72 @@ public class ChartGenerator {
 
     private String chartTitle;
     private IModelContainerService mainContainer;
+    private QuotationSeriesCriteria criteria;
 
-    public ChartGenerator(String chartTitle, IModelContainerService mainContainer) {
+    public ChartGenerator(IModelContainerService mainContainer, QuotationSeriesCriteria criteria) {
         this.mainContainer = mainContainer;
-        this.chartTitle = chartTitle;
+        this.criteria = criteria;
     }
-
 
     public JFreeChart renderChart() throws NoDataForCriteria {
-/*        final XYDataset dataset = createRandomDataset();
-        final JFreeChart chart = createChart(dataset);*/
 
         final XYDataset dataset = createDataset();
-        final JFreeChart chart = createDayChart(dataset);
-
-        return chart;
-    }
-
-    private XYDataset createRandomDataset() {
-        final TimeSeries series = new TimeSeries("Random Data");
-        Second current = new Second();
-        double value = 100.0;
-
-        for (int i = 0; i < 4000; i++) {
-
-            try {
-                value = value + Math.random() - 0.5;
-                series.add(current, new Double(value));
-                current = (Second) current.next();
-            } catch (SeriesException e) {
-                LOGGER.error("Failed to generate series");
-            }
-        }
-        return new TimeSeriesCollection(series);
+        return createXYChart(dataset, chartTitle);
     }
 
     private XYDataset createDataset() throws NoDataForCriteria {
 
-        BigDecimal value = new BigDecimal("100");
-        String name = "CHF";
+        QuotationSeries quotationSeries = new QuotationSeries(mainContainer.getMainContainer(), criteria);
+        QuotationSeriesResult quotationSeriesResult = (QuotationSeriesResult) quotationSeries.getResult();
+        List<Quotation> quotations = quotationSeriesResult.getQuotationList();
 
-        DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
-        LocalDate startDATE = LocalDate.parse("20090910", formatter);
-        LocalDate endDATE = LocalDate.parse("20170404", formatter);
+        this.chartTitle = getChartTitle(criteria);
+        BigDecimal value;
+        final TimeSeries series = new TimeSeries("InvestmentQuotations");
+        /*Day current = new Day(criteria.getStartDate().getDayOfMonth(),
+                              criteria.getStartDate().getMonthValue(),
+                              criteria.getStartDate().getYear());*/
 
-
-        QuotationSeriesCriteria criteria = new QuotationSeriesCriteria(name, startDATE, endDATE);
-
-
-        List<Quotation> quotations = (List<Quotation>) new QuotationSeries(mainContainer, criteria).getResult();
-
-
-        final TimeSeries series = new TimeSeries("Random Data");
-        Day current = new Day();
+      //  LOGGER.info("current start date to series{}", current.getSerialDate());
 
         for (Quotation item : quotations) {
             try {
                 value = item.getClose();
+                               // current = (Day) current.next();
+                Day current = new Day(item.getDate().getDayOfMonth(),
+                        item.getDate().getMonthValue(),
+                        item.getDate().getYear());
                 series.add(current, value);
-                current = (Day) current.next();
+
+
+
+
+
+
+                LOGGER.info("adding current date to series {}-{}-{} {}", current.getDayOfMonth()
+                        , current.getMonth()
+                        , current.getYear(), value);
 
             } catch (SeriesException e) {
                 LOGGER.error("Failed to generate series");
             }
-
-
-
         }
         return new TimeSeriesCollection(series);
     }
-    private JFreeChart createDayChart(final XYDataset dataset){
-        return ChartFactory.createTimeSeriesChart(
-                this.chartTitle, "time", "value",
-                dataset, false, false, false);
 
+    private String getChartTitle(QuotationSeriesCriteria criteria){
+        StringBuilder sb = new StringBuilder();
+        sb.append(criteria.getInvestmentName());
+        sb.append(" ");
+        sb.append(criteria.getStartDate());
+        sb.append(" - ");
+        sb.append(criteria.getEndDate());
+        return sb.toString();
     }
 
-    private JFreeChart createChart(final XYDataset dataset) {
+    private JFreeChart createXYChart(final XYDataset dataset, String title){
         return ChartFactory.createTimeSeriesChart(
-                this.chartTitle, "time", "value",
+                this.chartTitle, "", "PLN",
                 dataset, false, false, false);
     }
 }

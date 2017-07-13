@@ -2,6 +2,7 @@ package com.dmmsoft.charts;
 
 import com.dmmsoft.adminpanel.AppSettingsServlet;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
+import com.dmmsoft.app.analyzer.analyses.trend.QuotationSeriesCriteria;
 import com.dmmsoft.app.model.MainContainer;
 import com.dmmsoft.container.IModelContainerService;
 import org.jfree.chart.ChartUtilities;
@@ -20,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by milo on 10.07.17.
@@ -32,40 +36,40 @@ public class ChartServlet extends HttpServlet {
     private IModelContainerService container;
 
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ChartServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // application reads chart object from session, saves chart as png, and serves as outputstream
-
         JFreeChart chart = (JFreeChart) req.getSession().getAttribute("chart");
-
-        OutputStream out = resp.getOutputStream(); // output stream from response object
+        OutputStream out = resp.getOutputStream();
         resp.setContentType("image/png");
 
-        ChartUtilities.writeChartAsPNG(out, chart, 400, 300);// write data to output stream
+        ChartUtilities.writeChartAsPNG(out, chart, 800, 300);// write data to output stream
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            //String userTitle = req.getParameter("chartTitle");
+            // TODO criteria Form
 
-        // application reads data from form, evaluates data, saves result as chart to session Object
+            String name = "CHF";
 
-        try{
-        String userTitle = req.getParameter("chartTitle");
+            DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+            LocalDate startDATE = LocalDate.parse("20141201", formatter);
+            LocalDate endDATE = LocalDate.now();
 
-        final ChartGenerator chartGenerator = new ChartGenerator("test chart", mainContainer);
-        JFreeChart chart = chartGenerator.renderChart(); // generate chart
+            QuotationSeriesCriteria criteria = new QuotationSeriesCriteria(name, startDATE, endDATE);
 
-        req.getSession().setAttribute("chart", chart);
+            ChartGenerator chartGenerator = new ChartGenerator(container, criteria);
+            JFreeChart chart = chartGenerator.renderChart();
+            req.getSession().setAttribute("chart", chart);
 
-        req.getRequestDispatcher("../userview/chart.jsp").forward(req, resp);
-    }
-    catch (NoDataForCriteria ex){
-        LOGGER.error("Failed to render chart.");
+            req.getRequestDispatcher("../userview/chartResult.jsp").forward(req, resp);
+        } catch (NoDataForCriteria ex) {
+            LOGGER.error("Failed to render chart.");
         }
     }
 }

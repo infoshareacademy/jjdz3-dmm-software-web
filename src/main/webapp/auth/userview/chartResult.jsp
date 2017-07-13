@@ -11,14 +11,8 @@
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 <p>Chart</p>
-<p>Enter comparison data</p>
 
-<form method="post" action="../userview/chart">
-    <p><b>TODO form:</b></p>
-    <p>
-        <button type="submit">Submit!</button>
-    </p>
-</form>
+<img src="../userview/chart" />
 
 <br>
 <jsp:include page="../../partials/footer.jsp"/>
