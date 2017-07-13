@@ -24,6 +24,10 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.dmmsoft.ConstantsProvider.*;
 
 /**
  * Created by milo on 10.07.17.
@@ -52,6 +56,16 @@ public class ChartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+
+            String nameA = req.getParameter(INVESTMENT_NAME_A);
+            String nameB = req.getParameter(INVESTMENT_NAME_B);
+            boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
+            String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
+
+            List<String> names = new ArrayList<>();
+            names.add(nameA);
+            names.add(nameB);
+
             //String userTitle = req.getParameter("chartTitle");
             // TODO criteria Form
 
