@@ -17,5 +17,4 @@ public interface IFavouriteService {
     List<PersistedInvestmentRevenueCriteria> getAllRevenueCriteria();
 
     List<AnalysisComparisonContainer> getAllUserFavouriteAnalysisContainers(long UserId);
-
 }

@@ -48,53 +48,56 @@ public class Agent implements ITriggerable {
         LOGGER.info("number of tasks {}", userTasks.size());
 
         if (!triggeredTasks.isEmpty()) {
-            LOGGER.info("Triggered tasks size: {} ",triggeredTasks.size());
+            LOGGER.info("Triggered tasks size: {} ", triggeredTasks.size());
         }
-
 
         for (Task item : userTasks) {
             if (item.isActive() && !hasTriggeredStatus(item) && isActualTask(item)) {
                 this.startTask(item);
             } else {
+
+                List<Task> toRemoveFromTriggeredTasks = new ArrayList<>();
+                List<ITerminable> toRemoveFromTriggeredProviders = new ArrayList<>();
+
                 if (!triggeredTasks.isEmpty()) {
                     for (Task task : triggeredTasks) {
                         LOGGER.info("Evautated Task Id:{}, Name:{}, isTaskToKill:{} ",
-                                task.getId(), task.getTaskName(),  isTaskToKill(task));
+                                task.getId(), task.getTaskName(), isTaskToKill(task));
 
-                        if(isTaskToKill(task))
-                        {
+                        if (isTaskToKill(task)) {
                             if (!triggerProviders.isEmpty())
-                                for(ITerminable triggerProvider : triggerProviders)
-                                {
-                                    if(triggerProvider.getTaskId()==task.getId()){
+                                for (ITerminable triggerProvider : triggerProviders) {
+                                    if (triggerProvider.getTaskId() == task.getId()) {
                                         triggerProvider.killAction();
                                         LOGGER.info("Killing Task Id:{}, Name:{} ",
                                                 task.getId(),
                                                 task.getTaskName());
-                                        triggeredTasks.remove(task);
-                                        triggerProviders.remove(triggerProvider);
-                                        if(triggeredTasks.isEmpty() || triggerProviders.isEmpty()){
-                                            break;
-                                        }
+                                        toRemoveFromTriggeredTasks.add(task);
+                                        toRemoveFromTriggeredProviders.add(triggerProvider);
                                     }
                                 }
                         }
-                        if(triggeredTasks.isEmpty() || triggerProviders.isEmpty()){
-                            break;
-                        }
                     }
+                    doCleanLists(toRemoveFromTriggeredProviders, toRemoveFromTriggeredTasks);
                 }
             }
         }
         LOGGER.info("Agent job execution - END");
     }
 
+
+    private void doCleanLists(List<ITerminable> terminableList, List<Task> taskList) {
+        for (Task task : taskList) triggeredTasks.remove(task);
+        for (ITerminable item : terminableList) triggerProviders.remove(item);
+    }
+
+
     private LocalDate checkActualTime() {
         return LocalDate.now();
     }
 
     private boolean isTaskToKill(Task task) {
-       Task actualTask = taskService.getTaskbyId(task.getId());
+        Task actualTask = taskService.getTaskbyId(task.getId());
         if (!actualTask.isActive() || !isActualTask(actualTask)) {
             return true;
         } else {

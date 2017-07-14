@@ -31,7 +31,6 @@ import static com.dmmsoft.ConstantsProvider.UPDATE_ACTION;
 import static com.dmmsoft.ConstantsProvider.DELETE_ACTION;
 import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
 
-
 /**
  * Created by milo on 24.05.17.
  */
@@ -53,7 +52,6 @@ public class FavouriteRevenueServlet extends HttpServlet {
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
                 .getAllFavouriteRevenueCriteria(((User) req.getSession()
                         .getAttribute(AUTH_USER)).getId());
-
 
         req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getAllWrapperedContent(criteriaList));
         req.getRequestDispatcher("../userview/favouriteRevenue.jsp").forward(req, resp);
@@ -80,10 +78,6 @@ public class FavouriteRevenueServlet extends HttpServlet {
         }
         return contentWrappers;
     }
-
-
-
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -25,7 +25,6 @@ public final class WebAppDeployListener implements ServletContextListener {
     @Inject
     private IModelContainerService container;
 
-
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         LOGGER.info("Application context Initialized.");
@@ -51,8 +50,6 @@ public final class WebAppDeployListener implements ServletContextListener {
             LOGGER.error("FATAL ERROR: Failed to load data model CSV files! {}", ex.getMessage());
         }
     }
-
-
 
     private void setApplicationDefaultTimeZone(String timeZone) {
         TimeZone.setDefault(TimeZone.getTimeZone(timeZone));

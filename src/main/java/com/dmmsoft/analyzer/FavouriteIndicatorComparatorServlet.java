@@ -19,7 +19,6 @@ import java.util.*;
 
 import static com.dmmsoft.ConstantsProvider.*;
 
-
 /**
  * Created by milo on 24.05.17.
  */

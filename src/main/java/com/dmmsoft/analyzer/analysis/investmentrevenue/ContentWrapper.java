@@ -37,32 +37,5 @@ public class ContentWrapper {
     public void setMessage(String message) {
         this.message = message;
     }
-     /*  private InvestmentRevenueCriteria criteria;
-        private InvestmentRevenueResult result;
-        private String message;
 
-        public InvestmentRevenueCriteria getCriteria() {
-            return criteria;
-        }
-
-        public void setCriteria(InvestmentRevenueCriteria criteria) {
-            this.criteria = criteria;
-        }
-
-        public InvestmentRevenueResult getResult() {
-            return result;
-        }
-
-        public void setResult(InvestmentRevenueResult result) {
-            this.result = result;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-*/
 }
