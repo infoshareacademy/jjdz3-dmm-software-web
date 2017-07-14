@@ -1,11 +1,8 @@
 package com.dmmsoft.charts;
 
-import com.dmmsoft.adminpanel.AppSettingsServlet;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.trend.QuotationSeriesCriteria;
-import com.dmmsoft.app.model.MainContainer;
 import com.dmmsoft.container.IModelContainerService;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,49 +27,24 @@ import static com.dmmsoft.ConstantsProvider.*;
  */
 
 @WebServlet(urlPatterns = "/auth/userview/chart")
-public class ChartServlet extends HttpServlet {
+public class ChartFormServlet extends HttpServlet {
 
     @Inject
     private IModelContainerService container;
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChartServlet.class);
-
-/*
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        List<JFreeChart> charts = (List<JFreeChart>) req.getSession().getAttribute("charts");
-
-        JFreeChart chartA = charts.get(0);
-        JFreeChart chartB = charts.get(1);
-
-        req.getSession().setAttribute("chartA", chartA);
-        req.getSession().setAttribute("chartB", chartB);
-
-        req.getRequestDispatcher("../auth/userview/chartA").forward(req, resp);
-    }
-*/
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChartFormServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String nameA = req.getParameter(INVESTMENT_NAME_A);
             String nameB = req.getParameter(INVESTMENT_NAME_B);
-            String endDate = req.getParameter("endDate");
-            String startDate = req.getParameter("startDate");
+            String startDate = req.getParameter(START_DATE);
+            String endDate = req.getParameter(END_DATE);
 
-            /* // TODO Chart Comparison persistence
-            boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
-            String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
-
-            List<String> names = new ArrayList<>();
-            names.add(nameA);
-            names.add(nameB);*/
 
             DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-            List<JFreeChart> charts = new ArrayList<>();
 
             LocalDate startDATE = LocalDate.parse(startDate, formatter);
             LocalDate endDATE = LocalDate.parse(endDate, formatter);
@@ -94,7 +62,7 @@ public class ChartServlet extends HttpServlet {
 
             req.getRequestDispatcher("../userview/chartResult.jsp").forward(req, resp);
         } catch (NoDataForCriteria ex) {
-            LOGGER.error("Failed to render chart.");
+            LOGGER.error("Failed to render chart.{}{}", ex.getMessage(), ex.getStackTrace());
         }
     }
 }

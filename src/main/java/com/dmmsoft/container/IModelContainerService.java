@@ -14,5 +14,4 @@ public interface IModelContainerService {
     MainContainer getMainContainer();
 
     void reload();
-
 }

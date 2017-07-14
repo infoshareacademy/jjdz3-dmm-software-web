@@ -17,8 +17,8 @@ import java.util.Optional;
 import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
 import static com.dmmsoft.ConstantsProvider.DATE_PATTERN;
 import static com.dmmsoft.ConstantsProvider.TASK_NAME;
-import static com.dmmsoft.ConstantsProvider.TASK_START_DATE;
-import static com.dmmsoft.ConstantsProvider.TASK_END_DATE;
+import static com.dmmsoft.ConstantsProvider.START_DATE;
+import static com.dmmsoft.ConstantsProvider.END_DATE;
 import static com.dmmsoft.ConstantsProvider.TASK_START_DELAY;
 import static com.dmmsoft.ConstantsProvider.TASK_TIMESPAN;
 import static com.dmmsoft.ConstantsProvider.TASK_ISACTIVE;
@@ -54,8 +54,8 @@ public class TaskServlet extends HttpServlet {
 
         String taskName = req.getParameter(TASK_NAME);
 
-        String startDate = req.getParameter(TASK_START_DATE);
-        String endDate = req.getParameter(TASK_END_DATE);
+        String startDate = req.getParameter(START_DATE);
+        String endDate = req.getParameter(END_DATE);
         String startDelay = req.getParameter(TASK_START_DELAY);
         String timeSpan = req.getParameter(TASK_TIMESPAN);
         boolean isActive = req.getParameter(TASK_ISACTIVE) != null;

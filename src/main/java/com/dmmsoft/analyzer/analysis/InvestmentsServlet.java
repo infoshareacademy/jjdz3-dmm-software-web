@@ -32,6 +32,5 @@ public class InvestmentsServlet extends HttpServlet {
         req.setAttribute(ALL_INVESTMENTS, container.getMainContainer().getInvestments());
 
         req.getRequestDispatcher("../userview/investments.jsp").forward(req, resp);
-
     }
 }

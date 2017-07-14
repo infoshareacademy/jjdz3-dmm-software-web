@@ -22,8 +22,6 @@ public class PersistedInvestmentRevenueCriteria extends InvestmentRevenueCriteri
     private LocalDateTime lastUpdateDateTime;
     private LocalDate testLocalDate;
 
-
-
     @PrePersist
     private void onCreate(){
         creationDateTime=LocalDateTime.now();

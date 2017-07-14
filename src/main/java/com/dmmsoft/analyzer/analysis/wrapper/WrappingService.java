@@ -19,7 +19,6 @@ import java.util.List;
  * Created by milo on 30.06.17.
  */
 
-
 public class WrappingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WrappingService.class);

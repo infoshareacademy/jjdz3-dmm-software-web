@@ -65,7 +65,6 @@ public class ModelContainer implements IModelContainerService {
         } catch (IOException e) {
             LOGGER.error("Failed to download CSV Zip files from remote location. Model cannot be actualized! {}", e.getMessage());
         }
-
     }
 
     public List<Investment> getInvestments() {

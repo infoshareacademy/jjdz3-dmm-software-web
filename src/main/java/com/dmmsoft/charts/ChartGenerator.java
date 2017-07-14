@@ -50,25 +50,14 @@ public class ChartGenerator {
         this.chartTitle = getChartTitle(criteria);
         BigDecimal value;
         final TimeSeries series = new TimeSeries("InvestmentQuotations");
-        /*Day current = new Day(criteria.getStartDate().getDayOfMonth(),
-                              criteria.getStartDate().getMonthValue(),
-                              criteria.getStartDate().getYear());*/
-
-      //  LOGGER.info("current start date to series{}", current.getSerialDate());
 
         for (Quotation item : quotations) {
             try {
                 value = item.getClose();
-                               // current = (Day) current.next();
                 Day current = new Day(item.getDate().getDayOfMonth(),
                         item.getDate().getMonthValue(),
                         item.getDate().getYear());
                 series.add(current, value);
-
-
-
-
-
 
                 LOGGER.info("adding current date to series {}-{}-{} {}", current.getDayOfMonth()
                         , current.getMonth()

@@ -30,7 +30,6 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
     public PersistedIndicatorCriteria(String investmentName, String userCustomName, boolean isFavouriteChecked) {
             this.setInvestmentName(investmentName);
             this.setFavourite(isFavouriteChecked);
-          //  this.setModifiedBySuggester(false);
             this.setUserCustomName(userCustomName);
     }
 
@@ -56,15 +55,9 @@ public class PersistedIndicatorCriteria extends IndicatorCriteria {
         return creationDateTime;
     }
 
-
     public LocalDateTime getLastUpdateDateTime() {
         return lastUpdateDateTime;
     }
-
-
-
-
-
 
     @PrePersist
     private void onCreate() {

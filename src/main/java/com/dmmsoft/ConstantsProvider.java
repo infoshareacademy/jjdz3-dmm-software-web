@@ -54,8 +54,8 @@ public class ConstantsProvider {
     public static final String TMP_FILE_NAME = "tmp/reportComponents.csv";
 
     public static final String TASK_NAME="taskName";
-    public static final String TASK_START_DATE="startDate";
-    public static final String TASK_END_DATE="endDate";
+    public static final String START_DATE ="startDate";
+    public static final String END_DATE ="endDate";
     public static final String TASK_START_DELAY="startDelay";
     public static final String TASK_TIMESPAN="timeSpan";
     public static final String TASK_ISACTIVE="isActive";
