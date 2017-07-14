@@ -32,8 +32,8 @@
     <p><b>Form:</b></p>
     <p>Investment A<input type="text" name="investmentNameA" value="${investmentNameA}" required/></p>
     <p>Investment B<input type="text" name="investmentNameB" value="${investmentNameB}" required/></p>
-    <p>Start Date:<input type="text" class="datePicker" name="startDate" value="${startDate}"/></p>
-    <p>End Date:<input type="text" class="datePicker" name="endDate" value="${endDate}"/></p>
+    <p>Start Date:<input type="text" class="datePicker" name="startDate" value="${startDate}" required/></p>
+    <p>End Date:<input type="text" class="datePicker" name="endDate" value="${endDate}" required/></p>
     <jsp:include page="/partials/addFavourite.jsp"></jsp:include>
     <p>
         <button type="submit">Submit!</button>

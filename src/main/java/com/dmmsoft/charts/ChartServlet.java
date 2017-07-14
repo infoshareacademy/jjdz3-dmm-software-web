@@ -42,44 +42,55 @@ public class ChartServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChartServlet.class);
 
+/*
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        JFreeChart chart = (JFreeChart) req.getSession().getAttribute("chart");
-        OutputStream out = resp.getOutputStream();
-        resp.setContentType("image/png");
+        List<JFreeChart> charts = (List<JFreeChart>) req.getSession().getAttribute("charts");
 
-        ChartUtilities.writeChartAsPNG(out, chart, 800, 300);// write data to output stream
+        JFreeChart chartA = charts.get(0);
+        JFreeChart chartB = charts.get(1);
+
+        req.getSession().setAttribute("chartA", chartA);
+        req.getSession().setAttribute("chartB", chartB);
+
+        req.getRequestDispatcher("../auth/userview/chartA").forward(req, resp);
     }
+*/
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-
             String nameA = req.getParameter(INVESTMENT_NAME_A);
             String nameB = req.getParameter(INVESTMENT_NAME_B);
+            String endDate = req.getParameter("endDate");
+            String startDate = req.getParameter("startDate");
+
+            /* // TODO Chart Comparison persistence
             boolean isFavouriteChecked = req.getParameter(IS_FAVOURITE) != null;
             String userCustomName = req.getParameter(USER_FAVOURITE_CUSTOM_NAME);
 
             List<String> names = new ArrayList<>();
             names.add(nameA);
-            names.add(nameB);
+            names.add(nameB);*/
 
-            //String userTitle = req.getParameter("chartTitle");
-            // TODO criteria Form
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+            List<JFreeChart> charts = new ArrayList<>();
 
-            String name = "CHF";
+            LocalDate startDATE = LocalDate.parse(startDate, formatter);
+            LocalDate endDATE = LocalDate.parse(endDate, formatter);
 
-            DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
-            LocalDate startDATE = LocalDate.parse("20141201", formatter);
-            LocalDate endDATE = LocalDate.now();
+            QuotationSeriesCriteria criteriaA = new QuotationSeriesCriteria(nameA, startDATE, endDATE);
+            QuotationSeriesCriteria criteriaB = new QuotationSeriesCriteria(nameB, startDATE, endDATE);
 
-            QuotationSeriesCriteria criteria = new QuotationSeriesCriteria(name, startDATE, endDATE);
+            ChartGenerator chartGeneratorA = new ChartGenerator(container, criteriaA);
+            JFreeChart chartA = chartGeneratorA.renderChart();
+            ChartGenerator chartGeneratorB = new ChartGenerator(container, criteriaB);
+            JFreeChart chartB = chartGeneratorB.renderChart();
 
-            ChartGenerator chartGenerator = new ChartGenerator(container, criteria);
-            JFreeChart chart = chartGenerator.renderChart();
-            req.getSession().setAttribute("chart", chart);
+            req.getSession().setAttribute("chartA", chartA);
+            req.getSession().setAttribute("chartB", chartB);
 
             req.getRequestDispatcher("../userview/chartResult.jsp").forward(req, resp);
         } catch (NoDataForCriteria ex) {

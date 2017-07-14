@@ -7,12 +7,13 @@
     <title>Chart</title>
 </head>
 <body>
-<p><b>Chart</b></p>
+<p><b>Chart comparison</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
-<p>Chart</p>
+<p>Chart comparison</p>
 
-<img src="../userview/chart" />
+<p><img src="../userview/chartA" /></p>
+<p><img src="../userview/chartB" /></p>
 
 <br>
 <jsp:include page="../../partials/footer.jsp"/>
