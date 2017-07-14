@@ -13,7 +13,6 @@
 <p>Choose Your collection:</p>
 <a href="../userview/favouriterevenue">Investment Revenues</a><br>
 <a href="../userview/favouriteindicatorcomparator">Indicator Comparators</a><br>
-<a href="../userview/chart.jsp">Charts</a><br>
 <br>
 <jsp:include page="../../partials/footer.jsp" />
 </body>

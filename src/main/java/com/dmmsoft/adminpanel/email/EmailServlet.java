@@ -53,6 +53,7 @@ public class EmailServlet extends HttpServlet {
 
             LOGGER.error("Failed to send Email: {}", ex.getStackTrace());
         }
+        req.setAttribute(CONTENT_WRAPPER, taskService.getAllTasks());
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }
 }
