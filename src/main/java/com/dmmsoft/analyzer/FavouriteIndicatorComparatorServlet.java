@@ -5,6 +5,8 @@ import com.dmmsoft.analyzer.analysis.wrapper.WrappingService;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import static com.dmmsoft.ConstantsProvider.*;
 @WebServlet(urlPatterns = "/auth/userview/favouriteindicatorcomparator")
 public class FavouriteIndicatorComparatorServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteIndicatorComparatorServlet.class);
+    private final String USER_ACTIVITY_FAVOURITES_DISPLAY = "User displayed Favourites: IndicatorComparator analysis.";
 
     @Inject
     IUserService userService;
@@ -33,13 +36,20 @@ public class FavouriteIndicatorComparatorServlet extends HttpServlet {
     IFavouriteService favouriteService;
     @Inject
     WrappingService wrappingService;
+    @Inject
+    IUserActivityService userActivityService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            User user = ((User) req.getSession().getAttribute(AUTH_USER));
+
             List<AnalysisComparisonContainer> comparisonContainers =
-                    favouriteService.getAllUserFavouriteAnalysisContainers(((User) req.getSession()
-                            .getAttribute(AUTH_USER)).getId());
+                    favouriteService.getAllUserFavouriteAnalysisContainers(user.getId());
+
+            userActivityService.saveActivity(new UserActivity(user.getLogin(),
+                    USER_ACTIVITY_FAVOURITES_DISPLAY,
+                    req.getSession().getId()));
 
             req.setAttribute(CONTENT_WRAPPER_COLLECTION, wrappingService.getWrapperedContentList(comparisonContainers));
             req.getRequestDispatcher("../userview/favouriteIndicatorComparator.jsp").forward(req, resp);

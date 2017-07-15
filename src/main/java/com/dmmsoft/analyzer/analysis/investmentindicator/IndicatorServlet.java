@@ -15,6 +15,8 @@ import com.dmmsoft.app.analyzer.analyses.indicator.IndicatorResult;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,9 +35,13 @@ import static com.dmmsoft.ConstantsProvider.*;
 public class IndicatorServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndicatorServlet.class);
+    private final String USER_ACTIVITY_ANALYSIS_SUBMMIT = "user subbmited: IndicatorComparator analysis";
 
     @Inject
     IModelContainerService container;
+
+    @Inject
+    IUserActivityService userActivityService;
 
     @Inject
     IUserService userService;
@@ -83,6 +89,8 @@ public class IndicatorServlet extends HttpServlet {
             User user = (User) req.getSession().getAttribute(AUTH_USER);
             user.getComparisonContainers().add(comparisonContainer);
             userService.update(user);
+            userActivityService.saveActivity(new UserActivity(user.getLogin() , USER_ACTIVITY_ANALYSIS_SUBMMIT, req.getSession().getId()));
+
             req.setAttribute(CONTENT_WRAPPER, wrapper);
             req.getRequestDispatcher("../userview/comparatorResult.jsp").forward(req, resp);
 

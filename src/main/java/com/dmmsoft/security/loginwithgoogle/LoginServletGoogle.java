@@ -2,6 +2,8 @@ package com.dmmsoft.security.loginwithgoogle;
 
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +30,12 @@ public class LoginServletGoogle extends HttpServlet {
     private final String AUTH_USER = "authenticatedUser";
     private final String ID_TOKEN = "id_token";
     private final String GOOGLE_USER_NAME = "name";
+    private final String USER_ACTIVITY_LOGIN = "user logged into system";
+
     @Inject
     IUserService userService;
+    @Inject
+    IUserActivityService userActivityService;
 
     @Override
     protected void doPost(HttpServletRequest req,
@@ -49,7 +55,8 @@ public class LoginServletGoogle extends HttpServlet {
             userService.update(user);
             HttpSession session = req.getSession(true);
             session.setAttribute(AUTH_USER, user);
-            //req.getServletContext();
+
+            userActivityService.saveActivity(new UserActivity(user.getLogin() , USER_ACTIVITY_LOGIN, req.getSession().getId()));
 
             LOGGER.info("UserAuthenticated: Id:{} login:{} role isAdmin:{}", user.getId(), user.getLogin(), user.getAdmin());
 

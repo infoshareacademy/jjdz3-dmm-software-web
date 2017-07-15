@@ -82,7 +82,7 @@ public class MessageGenerator {
 
         DataSource source = new FileDataSource(absolutePath);
         messageBodyPart.setDataHandler(new DataHandler(source));
-        messageBodyPart.setFileName(TMP_FILE_NAME);
+        messageBodyPart.setFileName("report.csv");
         return messageBodyPart;
     }
 

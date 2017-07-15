@@ -8,6 +8,8 @@ import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueResult;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,14 +49,17 @@ import static com.dmmsoft.ConstantsProvider.AUTH_USER;
 public class InvestmentRevenueServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestmentRevenueServlet.class);
-
+    private final String USER_ACTIVITY_ANALYSIS_SUBMMIT = "user subbmited: InvestmentRevenue analysis";
     private ContentWrapper wrapper = new ContentWrapper();
+
     @Inject
     private IModelContainerService container;
     @Inject
     private IFavouriteService favouriteService;
     @Inject
     private IUserService userService;
+    @Inject
+    private IUserActivityService userActivityService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -65,7 +70,6 @@ public class InvestmentRevenueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            //TODO form validation
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
             String investmentName = req.getParameter(INVESTMENT_NAME);
             String capital = req.getParameter(CAPITAL);
@@ -83,7 +87,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
             Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
             Set<ConstraintViolation<CriteriaForm>> violations = validator.validate(form);
 
-            if(violations.size()>0){
+            if(!violations.isEmpty()){
                 req.setAttribute(INVESTMENT_NAME, investmentName);
                 req.setAttribute(CAPITAL, capital);
                 req.setAttribute(BUY_DATE, buyDate);
@@ -112,6 +116,7 @@ public class InvestmentRevenueServlet extends HttpServlet {
             dbUser.getFavourites().add(new PersistedInvestmentRevenueCriteria()
                     .getCriteria(criteria, userCustomName));
             userService.update(dbUser);
+            userActivityService.saveActivity(new UserActivity(dbUser.getLogin() , USER_ACTIVITY_ANALYSIS_SUBMMIT, req.getSession().getId()));
 
             req.setAttribute(CONTENT_WRAPPER, this.getContent(criteria, result));
             req.getRequestDispatcher("../userview/investmentRevenueResult.jsp").forward(req, resp);

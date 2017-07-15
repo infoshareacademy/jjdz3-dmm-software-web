@@ -9,6 +9,8 @@ import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
 @WebServlet(urlPatterns = "/auth/userview/favouriterevenue")
 public class FavouriteRevenueServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(FavouriteRevenueServlet.class);
+    private final String USER_ACTIVITY_FAVOURITES_DISPLAY = "user displayed Favourites: InvestmentRevenue analysis.";
 
     @Inject
     IModelContainerService container;
@@ -45,13 +48,21 @@ public class FavouriteRevenueServlet extends HttpServlet {
     IUserService userService;
     @Inject
     IFavouriteService favouriteService;
+    @Inject
+    IUserActivityService userActivityService;
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        User user = (User) req.getSession().getAttribute(AUTH_USER);
+
         List<PersistedInvestmentRevenueCriteria> criteriaList = favouriteService
-                .getAllFavouriteRevenueCriteria(((User) req.getSession()
-                        .getAttribute(AUTH_USER)).getId());
+                .getAllFavouriteRevenueCriteria(user.getId());
+
+        userActivityService.saveActivity(new UserActivity(user.getLogin(),
+                USER_ACTIVITY_FAVOURITES_DISPLAY,
+                req.getSession().getId()));
 
         req.setAttribute(CONTENT_WRAPPER_COLLECTION, this.getAllWrapperedContent(criteriaList));
         req.getRequestDispatcher("../userview/favouriteRevenue.jsp").forward(req, resp);
@@ -112,6 +123,7 @@ public class FavouriteRevenueServlet extends HttpServlet {
             userService.update(dbUser);
             LOGGER.info("Criteria upadted. User Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
         }
+
         resp.sendRedirect("../userview/favourite");
     }
 
