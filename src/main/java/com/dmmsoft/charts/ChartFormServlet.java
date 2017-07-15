@@ -3,6 +3,9 @@ package com.dmmsoft.charts;
 import com.dmmsoft.app.analyzer.analyses.exception.NoDataForCriteria;
 import com.dmmsoft.app.analyzer.analyses.trend.QuotationSeriesCriteria;
 import com.dmmsoft.container.IModelContainerService;
+import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
 import org.jfree.chart.JFreeChart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +32,12 @@ import static com.dmmsoft.ConstantsProvider.*;
 @WebServlet(urlPatterns = "/auth/userview/chart")
 public class ChartFormServlet extends HttpServlet {
 
+    private final String USER_ACTIVITY_ANALYSIS_SUBMMIT = "user subbmited: ChartComparison analysis";
     @Inject
     private IModelContainerService container;
 
+    @Inject
+    IUserActivityService userActivityService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChartFormServlet.class);
 
@@ -56,6 +62,9 @@ public class ChartFormServlet extends HttpServlet {
             JFreeChart chartA = chartGeneratorA.renderChart();
             ChartGenerator chartGeneratorB = new ChartGenerator(container, criteriaB);
             JFreeChart chartB = chartGeneratorB.renderChart();
+
+            User user = (User) req.getSession().getAttribute(AUTH_USER);
+            userActivityService.saveActivity(new UserActivity(user.getLogin() , USER_ACTIVITY_ANALYSIS_SUBMMIT, req.getSession().getId()));
 
             req.getSession().setAttribute("chartA", chartA);
             req.getSession().setAttribute("chartB", chartB);

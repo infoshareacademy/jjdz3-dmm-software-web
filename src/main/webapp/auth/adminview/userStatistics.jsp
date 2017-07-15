@@ -13,7 +13,14 @@
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 
 <tags:invRevCritTable allInvRevCrit="${allInvRevCrit}"/>
+<br>
+<br>
 
+<p><b>User activity report csv</b></p>
+<a href="../adminview/userstatistics/csv">Download</a>
+<br>
+<br>
+<br>
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>
