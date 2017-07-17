@@ -1,0 +1,22 @@
+version: '2'
+services:
+  sql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: infoshare
+    networks:
+      - infoshare_network
+  jboss:
+    build: ./jboss
+    ports:
+      - 8080:8080
+      - 9990:9990
+    networks:
+      - infoshare_network
+    volumes:
+      - ../jee/ear/target/ear-1.0-SNAPSHOT.ear:/opt/jboss/wildfly/standalone/deployments/ear-1.0-SNAPSHOT.ear
+
+networks:
+  infoshare_network:
+    driver: bridge
