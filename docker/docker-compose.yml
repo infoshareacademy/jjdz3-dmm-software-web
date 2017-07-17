@@ -4,7 +4,7 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: infoshare
+      MYSQL_DATABASE: dmm_finance_db
     networks:
       - infoshare_network
   jboss:
@@ -15,8 +15,9 @@ services:
     networks:
       - infoshare_network
     volumes:
-      - ../jee/ear/target/ear-1.0-SNAPSHOT.ear:/opt/jboss/wildfly/standalone/deployments/ear-1.0-SNAPSHOT.ear
+      - ../financial-app.war:/opt/jboss/wildfly/standalone/deployments/financial-app.war
 
 networks:
   infoshare_network:
     driver: bridge
+

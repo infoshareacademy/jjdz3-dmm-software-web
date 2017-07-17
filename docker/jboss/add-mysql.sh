@@ -19,12 +19,12 @@ module add --name=com.mysql --resources=/mysql-connector-java.jar --dependencies
 /subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
 
 data-source add \
-        --name=infoshareDatasource \
-        --connection-url="jdbc:mysql://sql:3306/infoshare?characterEncoding=utf8" \
+        --name=datasources/isaDB \
+        --connection-url="jdbc:mysql://sql:3306/dmm_finance_db?characterEncoding=utf8" \
         --driver-name="mysql" \
-        --jndi-name="java:/infoshareDatasource" \
-        --password="root" \
-        --user-name="root"
+        --jndi-name="java:/datasources/isaDB" \
+        --password="admin" \
+        --user-name="isa_user"
 
 run-batch
 EOF
