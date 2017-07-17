@@ -2,6 +2,8 @@ package com.dmmsoft.user.report;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 
@@ -21,15 +23,16 @@ import java.io.*;
 public class UserActivityReportServlet extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserActivityReportServlet.class);
-    private CSVGenerator csvGenerator = new CSVGenerator();
 
+    @EJB
+    private CSVGenerator csvGenerator;
     @Inject
     IUserActivityService userActivityService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        for(String line : csvGenerator.generateCSVLines(userActivityService)){
+        for(String line : csvGenerator.generateCSVLines()){
             resp.getWriter().write(line);
         }
 

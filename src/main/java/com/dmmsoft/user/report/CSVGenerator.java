@@ -1,5 +1,7 @@
 package com.dmmsoft.user.report;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +10,14 @@ import static com.dmmsoft.ConstantsProvider.LINE_SEPARATOR;
 /**
  * Created by milo on 15.07.17.
  */
+
+@Stateless
 public class CSVGenerator {
 
+    @Inject
+    private IUserActivityService userActivityService;
 
-    public List<String> generateCSVLines(IUserActivityService userActivityService){
+    public List<String> generateCSVLines(){
 
         List<UserActivity> userActivities = userActivityService.getAllUserActivity();
         List<String> lines = new ArrayList<>();
@@ -37,33 +43,6 @@ public class CSVGenerator {
 
 
 
-/*
-    private List<String> generateCSVLines(ReportComponents reportComponents) {
-
-        List<String> lines = new ArrayList<>();
-
-        List<PersistedInvestmentRevenueCriteria> criteria = reportComponents
-                .getFavouriteService()
-                .getAllRevenueCriteria();
-
-        lines.add("InvestmentName,InvestedCapital,BuyDate,SellDate"
-                .concat(System.getProperty(LINE_SEPARATOR)));
-
-        for (InvestmentRevenueCriteria item : criteria) {
-
-            String separator = ",";
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(item.getInvestmentName()).append(separator);
-            sb.append(item.getInvestedCapital()).append(separator);
-            sb.append(item.getBuyDate().toString()).append(separator);
-            sb.append(item.getSellDate().toString());
-            sb.append(System.getProperty(LINE_SEPARATOR));
-            lines.add(sb.toString());
-            LOGGER.info("Adding Line to CSV: {}", sb.toString());
-        }
-        return lines;
-    }*/
 
 
 }

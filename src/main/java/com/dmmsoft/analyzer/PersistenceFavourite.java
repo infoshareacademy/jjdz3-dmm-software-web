@@ -34,7 +34,6 @@ public class PersistenceFavourite implements IFavouriteService {
     }
 
     @Override
-    @Transactional
     public List<PersistedInvestmentRevenueCriteria> getAllRevenueCriteria() {
         List<PersistedInvestmentRevenueCriteria> list = em
                 .createQuery("select m from PersistedInvestmentRevenueCriteria m left join fetch m.user", PersistedInvestmentRevenueCriteria.class)
