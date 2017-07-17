@@ -78,6 +78,7 @@
         </dependency>
 
 
+
     </dependencies>
     <repositories>
         <repository>
@@ -89,6 +90,10 @@
             <url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
         </repository>
     </repositories>
+
+
+
+
     <build>
         <finalName>financial-app</finalName>
         <pluginManagement>
