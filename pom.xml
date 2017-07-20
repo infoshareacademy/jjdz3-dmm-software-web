@@ -76,9 +76,6 @@
             <artifactId>google-api-client</artifactId>
             <version>1.22.0</version>
         </dependency>
-
-
-
     </dependencies>
     <repositories>
         <repository>
@@ -144,6 +141,9 @@
                             -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
                         </java-opt>
                     </java-opts>
+                    <server-args>
+                        <server-arg>-b=192.168.1.100</server-arg>
+                    </server-args>
                 </configuration>
                 <executions>
                     <execution>
