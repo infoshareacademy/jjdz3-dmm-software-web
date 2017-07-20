@@ -22,6 +22,7 @@ public class Login implements Filter {
             "/financial-app/login",
             "/financial-app/login.jsp",
             "/financial-app/auth",
+            "/financial-app/api",
             "/financial-app/res"};
 
     @Override
