@@ -1,6 +1,7 @@
 package com.dmmsoft;
 
 
+import com.dmmsoft.configuration.AppMode;
 import com.dmmsoft.container.IModelContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +26,14 @@ public final class WebAppDeployListener implements ServletContextListener {
     @Inject
     private IModelContainerService container;
 
+    @Inject
+    AppMode appMode;
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         LOGGER.info("Application context Initialized.");
         this.setApplicationDefaultTimeZone(DEFAULT_TIMEZONE);
-        this.loadModelData();
+      if (!appMode.isSlave()){this.loadModelData();};
     }
 
     @Override

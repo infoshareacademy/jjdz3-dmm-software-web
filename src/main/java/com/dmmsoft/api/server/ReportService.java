@@ -1,8 +1,14 @@
 package com.dmmsoft.api.server;
 
+import com.dmmsoft.user.User;
+import com.dmmsoft.user.report.IUserActivityService;
+import com.dmmsoft.user.report.UserActivity;
+
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 
 /**
@@ -10,13 +16,17 @@ import javax.ws.rs.core.Response;
  */
 @Path("/")
 public class ReportService {
-    @GET
-    @Path("/test")
-    @Produces(MediaType.TEXT_HTML)
-    public Response getLoginForm() {
-        final String s = "api welcome content";
-        return Response.ok(s).build();
-    }
 
+@Inject
+private IUserActivityService userActivityService;
+
+    @GET
+    @Path("/users/activity")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLoginForm() {
+
+       List<UserActivity> userActivityList= userActivityService.getAllUserActivity();
+       return Response.ok(userActivityList).build();
+    }
 
 }

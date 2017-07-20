@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: daniel
@@ -25,6 +26,13 @@
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" type="text/css" rel="stylesheet">
 </head>
 <body>
+<c:choose>
+    <c:when test="${appSlaveMode}">
+        <P><b>WARNING! APP SLAVE MODE!</b></P><br>
+        <P><b>Customers Service Disabled.</b></P><br>
+    </c:when>
+</c:choose>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <a href="#" class="navbar-brand">DMM-finance Welcome page</a>
@@ -44,14 +52,14 @@
 </div>
 <div class="container">
     <div class="col-sm-6 col-md-4 col-md-offset-4">
-               <%-- <form action="" method="post">
-                    <h2 class="form-signin-heading">Zaloguj się</h2>
-                    <input name="username" type="text" class="form-control" placeholder="Nazwa uzytkownika" required autofocus>
-                    <input name="password" type="password" class="form-control" placeholder="Hasło" required>
+        <%-- <form action="" method="post">
+             <h2 class="form-signin-heading">Zaloguj się</h2>
+             <input name="username" type="text" class="form-control" placeholder="Nazwa uzytkownika" required autofocus>
+             <input name="password" type="password" class="form-control" placeholder="Hasło" required>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
-                </form>
-                    <button type="button" class="btn btn-success btn-block">Zarejestruj się</button>--%>
+             <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
+         </form>
+             <button type="button" class="btn btn-success btn-block">Zarejestruj się</button>--%>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 </div>

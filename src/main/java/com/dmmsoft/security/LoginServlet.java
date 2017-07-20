@@ -1,5 +1,8 @@
 package com.dmmsoft.security;
 
+import com.dmmsoft.configuration.AppMode;
+
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +17,14 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "login")
 public class LoginServlet extends HttpServlet {
 
+    @Inject
+    AppMode appMode;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("login.jsp");
+
+        req.setAttribute("appSlaveMode", appMode.isSlave());
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
+        //resp.sendRedirect("login.jsp");
     }
 }
