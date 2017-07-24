@@ -21,14 +21,20 @@ public class AppMode {
         isSlave = slave;
     }
 
-    public AppMode() {
+    WebConfiguration webConfiguration;
 
+    public WebConfiguration getWebConfiguration() {
+        return webConfiguration;
+    }
+
+    public AppMode() {
     }
 
     @PostConstruct
-    public void onPostConstruct(){
+    public void onPostConstruct() {
 
         // TODO Get application mode from config file
+        webConfiguration = new WebConfiguration().getWebConfiguration();
         this.isSlave = false;
     }
 

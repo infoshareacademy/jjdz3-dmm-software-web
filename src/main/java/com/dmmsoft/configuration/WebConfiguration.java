@@ -2,40 +2,27 @@ package com.dmmsoft.configuration;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
+import java.net.URI;
 
 /**
  * Created by milo on 25.07.17.
  */
 
-@Singleton
+
 public class WebConfiguration {
 
-    public class AppMode {
+    private String masterModeAPIServiceURI;
+    private String slaveModeAPIServiceURI;
 
+    public WebConfiguration getWebConfiguration() {
 
-        private boolean isSlave;
+        // TODO Get config from file
 
-        public boolean isSlave() {
-            return isSlave;
-        }
-
-        public void setSlave(boolean slave) {
-            isSlave = slave;
-        }
-
-        public AppMode() {
-
-        }
-
-        @PostConstruct
-        public void onPostConstruct(){
-
-            // TODO Get application mode from config file
-            this.isSlave = false;
-        }
-
-
+        this.masterModeAPIServiceURI = "http://localhost:8080/financial-app/api";
+        this.slaveModeAPIServiceURI = "http://192.168.1.100:8080/financial-app/api";
+        return this;
     }
-
-
 }
+
+
+
