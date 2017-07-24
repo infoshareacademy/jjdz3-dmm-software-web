@@ -1,7 +1,7 @@
 package com.dmmsoft.configuration;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
+import javax.inject.Singleton;
 
 /**
  * Created by milo on 20.07.17.
@@ -29,12 +29,8 @@ public class AppMode {
     public void onPostConstruct(){
 
         // TODO Get application mode from config file
-        this.isSlave = true;
+        this.isSlave = false;
     }
-
-
-
-
 
 
 }

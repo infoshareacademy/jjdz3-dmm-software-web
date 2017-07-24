@@ -1,6 +1,7 @@
 package com.dmmsoft.container;
 
 import com.dmmsoft.WebAppDeployListener;
+import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
 import com.dmmsoft.app.file.RemoteDownloader;
 import com.dmmsoft.app.model.loader.MainContainerLoader;
@@ -10,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,14 +20,14 @@ import java.util.List;
  */
 
 
-
 @Singleton
-public class ModelContainer implements IModelContainerService {
+public class ModelContainer implements IModelContainerService, ITriggerable {
 
     private List<Investment> investments;
     private MainContainer mainContainer;
     private RemoteDownloader remoteDownloader = new RemoteDownloader();
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebAppDeployListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModelContainer.class);
+
     @PostConstruct
     private void onPostConstruct() {
 
@@ -43,10 +44,25 @@ public class ModelContainer implements IModelContainerService {
 
     }
 
-    public void reload(){
-      if(!mainContainer.getInvestments().isEmpty()) {
-          mainContainer.getInvestments().clear();
-      }
+    @Override
+    public void executeAction() {
+        try {
+            this.updateModelFileResources();
+            // this.initialize();
+        } catch (Exception e) {
+            LOGGER.error("Failed to execute action realoading model: {}", e.getMessage());
+        }
+    }
+
+    @Override
+    public void reload() {
+        this.initialize();
+    }
+
+    private void initialize() {
+        if (!mainContainer.getInvestments().isEmpty()) {
+            mainContainer.getInvestments().clear();
+        }
 
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
         MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);

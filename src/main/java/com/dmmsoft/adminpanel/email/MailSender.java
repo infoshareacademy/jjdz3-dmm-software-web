@@ -28,6 +28,8 @@ import static com.dmmsoft.ConstantsProvider.SMTP_CONFIG_FILE_NAME;
 /**
  * Created by milo on 07.07.17.
  */
+
+
 public class MailSender implements ITriggerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailSender.class);

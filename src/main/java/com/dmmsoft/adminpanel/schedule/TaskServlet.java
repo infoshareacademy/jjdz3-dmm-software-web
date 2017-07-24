@@ -1,6 +1,10 @@
 package com.dmmsoft.adminpanel.schedule;
 
+import com.dmmsoft.adminpanel.email.MailSender;
+import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.AgentController;
+import com.dmmsoft.adminpanel.trigger.ITriggerable;
+import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +39,11 @@ public class TaskServlet extends HttpServlet {
     @Inject
     private ITaskService taskService;
     @Inject
+    IFavouriteService favouriteService;
+
+    @Inject
     private AgentController agentController;
-    private static final String AGENT_IS_STARTED="agentIsStarted";
+    private static final String AGENT_IS_STARTED = "agentIsStarted";
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskServlet.class);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -48,6 +55,7 @@ public class TaskServlet extends HttpServlet {
         long Id = Long.parseLong(editId);
         Task task = taskService.getTaskbyId(Id);
 
+        req.setAttribute("taskNames", taskService.getAllAvaliableTaskTypeNames());
         req.setAttribute(CONTENT_WRAPPER, task);
         req.setAttribute(AGENT_IS_STARTED, agentController.isStarted());
         req.getRequestDispatcher("../adminview/taskview.jsp").forward(req, resp);
@@ -58,7 +66,7 @@ public class TaskServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String taskName = req.getParameter(TASK_NAME);
-        String taskTypeName = req.getParameter("typeTaskName");
+        String taskTypeName = req.getParameter("taskTypeName");
 
         String startDate = req.getParameter(START_DATE);
         String endDate = req.getParameter(END_DATE);
@@ -80,6 +88,8 @@ public class TaskServlet extends HttpServlet {
         task.setStartDelay(Long.parseLong(startDelay));
         task.setTimeSpan(Long.parseLong(timeSpan));
         task.setActive(isActive);
+        task.setTaskTypeName(taskTypeName);
+
 
         if (id.isPresent()) {
             taskService.updateTask(task);

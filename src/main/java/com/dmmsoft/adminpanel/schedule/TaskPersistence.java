@@ -39,6 +39,7 @@ public class TaskPersistence implements ITaskService  {
              t.setStartDelay(task.getStartDelay());
              t.setTimeSpan(task.getTimeSpan());
              t.setActive(task.isActive());
+             t.setTaskTypeName(task.getTaskTypeName());
              em.merge(t);
     }
 
@@ -53,7 +54,7 @@ public class TaskPersistence implements ITaskService  {
         List<String> avliableTasks = new ArrayList<>();
         avliableTasks.add("EMAIL_SENDING");
         avliableTasks.add("MAIN_CONTAINER_UPDATING");
-        avliableTasks.add("API_CONTAINER_UPDATING");
+        avliableTasks.add("API_REPORT_DATA_UPDATING");
         return avliableTasks;
     }
 }

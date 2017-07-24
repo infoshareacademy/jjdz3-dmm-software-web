@@ -7,6 +7,7 @@
     <tr>
         <th>Id</th>
         <th>Task name</th>
+        <th>Type</th>
         <th>Start date</th>
         <th>End date</th>
         <th>Delay</th>
@@ -18,6 +19,7 @@
         <tr>
             <th>${task.id}</th>
             <th>${task.taskName}</th>
+            <th>${task.taskTypeName}</th>
             <th>${task.startDate}</th>
             <th>${task.endDate}</th>
             <th>${task.startDelay}</th>

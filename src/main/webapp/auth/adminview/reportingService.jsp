@@ -24,7 +24,7 @@
     </script>
 </head>
 <body>
-<tags:appMode  appMode="${applicationScope.appMode}"/>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 <p><b>Task Agent Service</b></p>
@@ -80,8 +80,9 @@
             <th><input type="text" pattern="[0-9]*" required name="timeSpan" value="${timeSpan}"/></th>
             <th><input type="checkbox" name="isActive" value="${isActive}"/></th>
 
-
-            <th><button type="submit">Add Task</button></th>
+            <th>
+                <button type="submit">Add Task</button>
+            </th>
         </tr>
     </Table>
 

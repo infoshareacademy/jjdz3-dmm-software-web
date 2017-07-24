@@ -6,9 +6,13 @@ import com.dmmsoft.adminpanel.trigger.ITerminable;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.adminpanel.trigger.TaskTrigger;
 import com.dmmsoft.analyzer.IFavouriteService;
+import com.dmmsoft.app.model.MainContainer;
+import com.dmmsoft.container.IModelContainerService;
+import com.dmmsoft.container.ModelContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,9 @@ public class Agent implements ITriggerable {
     private IFavouriteService favouriteService;
     private List<Task> triggeredTasks = new ArrayList<>();
     private List<ITerminable> triggerProviders = new ArrayList<>();
+
+    @Inject
+    IModelContainerService container;
 
     public Agent(ITaskService taskService, IFavouriteService favouriteService) {
         this.taskService = taskService;
@@ -126,9 +133,12 @@ public class Agent implements ITriggerable {
     }
 
     private void startTask(Task task) {
-        ReportComponents reportComponents = new ReportComponents(favouriteService);
+     /*   ReportComponents reportComponents = new ReportComponents(favouriteService);
         MailSender actionPovider = new MailSender(reportComponents);
         TaskTrigger taskTrigger = new TaskTrigger(actionPovider, task.getStartDelay(), task.getTimeSpan(), TimeUnit.SECONDS);
+      */
+
+        TaskTrigger taskTrigger = new TaskTrigger(getActionProvider(task), task.getStartDelay(), task.getTimeSpan(), TimeUnit.SECONDS);
         triggeredTasks.add(task);
         taskTrigger.setTriggeredTask(task);
         taskTrigger.startAction();
@@ -138,6 +148,23 @@ public class Agent implements ITriggerable {
         LOGGER.info("Agent started Task: {} {}", task.getId(), task.getTaskName());
     }
 
+    private ITriggerable getActionProvider(Task task) {
+        switch (task.getTaskTypeName()) {
+            case "EMAIL_SENDING": {
+                ReportComponents reportComponents = new ReportComponents(favouriteService);
+                return new MailSender(reportComponents);
+            }
+            case "MAIN_CONTAINER_UPDATING": {
+                return new ModelContainer();
+            }
+            case "API_REPORT_DATA_UPDATING": {
+                return new UnsupportedActionProvider();
+            }
+            default: {
+                return new UnsupportedActionProvider();
+            }
+        }
+    }
 
     private boolean hasTriggeredStatus(Task task) {
         LOGGER.info("Number of triggered tasks:{} ", triggeredTasks.size());
