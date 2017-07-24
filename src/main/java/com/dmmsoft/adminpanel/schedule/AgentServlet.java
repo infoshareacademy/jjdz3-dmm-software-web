@@ -1,11 +1,7 @@
-package com.dmmsoft.adminpanel.email;
+package com.dmmsoft.adminpanel.schedule;
 
 
-import com.dmmsoft.adminpanel.schedule.Agent;
-import com.dmmsoft.adminpanel.schedule.ITaskService;
 import com.dmmsoft.adminpanel.trigger.AgentController;
-import com.dmmsoft.adminpanel.trigger.AgentTrigger;
-import com.dmmsoft.adminpanel.trigger.TaskTrigger;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
 
@@ -26,7 +21,7 @@ import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
  * Created by milo on 07.07.17.
  */
 @WebServlet(urlPatterns = "/auth/adminview/emailsender")
-public class EmailServlet extends HttpServlet {
+public class AgentServlet extends HttpServlet {
 
     @Inject
     private IFavouriteService favouriteService;
@@ -36,10 +31,7 @@ public class EmailServlet extends HttpServlet {
     private AgentController agentController;
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailServlet.class);
-    private static final long TRIGGER_DELAY = 0;
-    private static final long TRIGGER_TIMESPAN = 5;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AgentServlet.class);
     private static final String AGENT_IS_STARTED="agentIsStarted";
 
     @Override
@@ -55,10 +47,6 @@ public class EmailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-
-/*            Agent actionPovider = new Agent(taskService, favouriteService);
-            //new AgentTrigger().startAction(actionPovider, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS);
-            new TaskTrigger(actionPovider, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS).startAction();*/
 
         agentController.switchAgent();
 

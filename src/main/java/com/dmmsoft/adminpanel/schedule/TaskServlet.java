@@ -58,6 +58,7 @@ public class TaskServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String taskName = req.getParameter(TASK_NAME);
+        String taskTypeName = req.getParameter("typeTaskName");
 
         String startDate = req.getParameter(START_DATE);
         String endDate = req.getParameter(END_DATE);

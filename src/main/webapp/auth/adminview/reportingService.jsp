@@ -50,6 +50,7 @@
     <table style="width:100%">
         <tr>
             <th>Task name</th>
+            <th>Type</th>
             <th>Start date</th>
             <th>End date</th>
             <th>Delay</th>
@@ -59,26 +60,27 @@
         </tr>
         <tr>
             <th><input type="text" name="taskName" required value="${taskName}"/></th>
+            <th>
+                <select name="taskTypeName">
+                    <c:forEach items="${taskNames}" var="task">
+                        <c:choose>
+                            <c:when test="${task == selectedFrom}">
+                                <option value="<c:out value="${task}"/>" SELECTED><c:out value="${task}"/></option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="<c:out value="${task}"/>"><c:out value="${task}"/></option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
+            </th>
             <th><input type="text" class="datePicker" required name="startDate" value="${startDate}"/></th>
             <th><input type="text" class="datePicker" required name="endDate" value="${endDate}"/></th>
             <th><input type="text" pattern="[0-9]*" required name="startDelay" value="${startDelay}"/></th>
             <th><input type="text" pattern="[0-9]*" required name="timeSpan" value="${timeSpan}"/></th>
             <th><input type="checkbox" name="isActive" value="${isActive}"/></th>
 
-            <th>
-            <select name="taskTypeName">
-                <c:forEach items="${taskNames}" var="task">
-                    <c:choose>
-                        <c:when test="${task == selectedFrom}">
-                            <option value="<c:out value="${task}"/>" SELECTED><c:out value="${task}"/></option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="<c:out value="${task}"/>"><c:out value="${task}"/></option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select>
-            </th>
+
             <th><button type="submit">Add Task</button></th>
         </tr>
     </Table>
