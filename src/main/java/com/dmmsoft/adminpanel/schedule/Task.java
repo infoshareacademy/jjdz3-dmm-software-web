@@ -1,5 +1,8 @@
 package com.dmmsoft.adminpanel.schedule;
 
+import com.dmmsoft.adminpanel.trigger.ITriggerable;
+
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +23,9 @@ public class Task {
     private boolean isActive;
     private long startDelay;
     private long timeSpan;
+
+    @Embedded
+    private ITriggerable taskType;
 
 
     public String getTaskName() {

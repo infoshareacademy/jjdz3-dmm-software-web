@@ -10,6 +10,7 @@ public interface ITaskService {
     List<Task> getAllTasks();
 
     void AddTask(Task task);
+    List<String> getAllAvaliableTaskTypeNames();
 
     Task getTaskbyId(long id);
 

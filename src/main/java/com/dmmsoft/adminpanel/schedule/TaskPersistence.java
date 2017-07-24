@@ -48,4 +48,12 @@ public class TaskPersistence implements ITaskService  {
         em.persist(task);
     }
 
+    @Override
+    public List<String> getAllAvaliableTaskTypeNames() {
+        List<String> avliableTasks = new ArrayList<>();
+        avliableTasks.add("EMAIL_SENDING");
+        avliableTasks.add("MAIN_CONTAINER_UPDATING");
+        avliableTasks.add("API_CONTAINER_UPDATING");
+        return avliableTasks;
+    }
 }

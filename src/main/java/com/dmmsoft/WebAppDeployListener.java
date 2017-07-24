@@ -33,6 +33,8 @@ public final class WebAppDeployListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         LOGGER.info("Application context Initialized.");
         this.setApplicationDefaultTimeZone(DEFAULT_TIMEZONE);
+        servletContextEvent.getServletContext().setAttribute("appMode", appMode);
+
       if (!appMode.isSlave()){this.loadModelData();};
     }
 

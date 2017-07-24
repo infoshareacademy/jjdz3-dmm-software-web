@@ -1,5 +1,6 @@
 package com.dmmsoft.adminpanel.schedule;
 
+import com.dmmsoft.adminpanel.trigger.AgentController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,9 @@ public class TaskServlet extends HttpServlet {
 
     @Inject
     private ITaskService taskService;
+    @Inject
+    private AgentController agentController;
+    private static final String AGENT_IS_STARTED="agentIsStarted";
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskServlet.class);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -45,6 +49,7 @@ public class TaskServlet extends HttpServlet {
         Task task = taskService.getTaskbyId(Id);
 
         req.setAttribute(CONTENT_WRAPPER, task);
+        req.setAttribute(AGENT_IS_STARTED, agentController.isStarted());
         req.getRequestDispatcher("../adminview/taskview.jsp").forward(req, resp);
     }
 
@@ -81,7 +86,9 @@ public class TaskServlet extends HttpServlet {
             taskService.AddTask(task);
         }
 
+        req.setAttribute(AGENT_IS_STARTED, agentController.isStarted());
         req.setAttribute(CONTENT_WRAPPER, taskService.getAllTasks());
+        req.setAttribute("taskNames", taskService.getAllAvaliableTaskTypeNames());
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }
 }

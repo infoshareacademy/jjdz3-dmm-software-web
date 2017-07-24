@@ -46,6 +46,8 @@ public class EmailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.setAttribute(CONTENT_WRAPPER, taskService.getAllTasks());
+        req.setAttribute(AGENT_IS_STARTED, agentController.isStarted());
+        req.setAttribute("taskNames", taskService.getAllAvaliableTaskTypeNames());
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }
 
@@ -66,8 +68,8 @@ public class EmailServlet extends HttpServlet {
         }
 
         req.setAttribute(AGENT_IS_STARTED, agentController.isStarted());
-
         req.setAttribute(CONTENT_WRAPPER, taskService.getAllTasks());
+        req.setAttribute("taskNames", taskService.getAllAvaliableTaskTypeNames());
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }
 }

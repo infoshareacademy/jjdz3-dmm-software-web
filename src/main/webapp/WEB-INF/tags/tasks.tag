@@ -2,7 +2,7 @@
 <%@ attribute name="contentWrapper" type="java.util.List"
               required="true" %>
 
-<p><b>Tasks</b></p>
+<p><b>Agent Tasks</b></p>
 <table style="width:100%">
     <tr>
         <th>Id</th>

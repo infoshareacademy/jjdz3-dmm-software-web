@@ -8,10 +8,11 @@
     <title>User Statistics</title>
 </head>
 <body>
-<p><b>User Statistics</b></p>
+<tags:appMode  appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 
+<p><b>User Statistics</b></p>
 <tags:invRevCritTable allInvRevCrit="${allInvRevCrit}"/>
 <br>
 <br>

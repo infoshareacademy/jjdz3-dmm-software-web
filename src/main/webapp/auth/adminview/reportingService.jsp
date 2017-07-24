@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><b>Reporting Service</b></title>
+    <title><b>Task Agent Service</b></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,11 +24,25 @@
     </script>
 </head>
 <body>
-<p><b>Reporting Agent Service</b></p>
+<tags:appMode  appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
-<img src="../webapp/resources/icons/taskAgentSmall.jpg">
-<p>Agent tasks (sending e-mail report):</p>
+<p><b>Task Agent Service</b></p>
+<br>
+<img src="../../resources/icons/taskAgentSmallest.jpg">
+<form action="../adminview/emailsender" method="post">
+    <button type="submit">
+        <c:choose>
+            <c:when test="${agentIsStarted}">
+                <b><font color="red">STOP</font></b> Agent job
+            </c:when>
+            <c:otherwise>
+                <b><font color="green">START</font></b> Agent job
+            </c:otherwise>
+        </c:choose>
+    </button>
+</form>
+</br>
 <br>
 <tags:tasks contentWrapper="${contentWrapper}"/>
 <br>
@@ -50,6 +64,21 @@
             <th><input type="text" pattern="[0-9]*" required name="startDelay" value="${startDelay}"/></th>
             <th><input type="text" pattern="[0-9]*" required name="timeSpan" value="${timeSpan}"/></th>
             <th><input type="checkbox" name="isActive" value="${isActive}"/></th>
+
+            <th>
+            <select name="taskTypeName">
+                <c:forEach items="${taskNames}" var="task">
+                    <c:choose>
+                        <c:when test="${task == selectedFrom}">
+                            <option value="<c:out value="${task}"/>" SELECTED><c:out value="${task}"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="<c:out value="${task}"/>"><c:out value="${task}"/></option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </select>
+            </th>
             <th><button type="submit">Add Task</button></th>
         </tr>
     </Table>
@@ -57,19 +86,7 @@
 </form>
 </br>
 <br>
-<form action="../adminview/emailsender" method="post">
-    <button type="submit">
-    <c:choose>
-        <c:when test="${agentIsStarted}">
-            STOP Agent job
-        </c:when>
-        <c:otherwise>
-            START Agent job
-        </c:otherwise>
-    </c:choose>
-    </button>
-</form>
-</br>
+
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

@@ -9,14 +9,14 @@
     <jsp:include page="../../partials/meta.jsp" />
 </head>
 <body>
-<p><b>Administrator panel menu</b></p>
+<tags:appMode  appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-<p>Application:</p>
-<a href="../adminview/appsettings">Settings</a><br>
-<a href="../adminview/emailsender">Reporting Agent</a><br>
+<hr>
 <br>
-<p>User:</p>
-<a href="../adminview/usermanagement">Management</a><br>
+<p><b>Administrator panel menu</b></p>
+<a href="../adminview/appsettings">Application Settings</a><br>
+<a href="../adminview/emailsender">Task Agent Service</a><br>
+<a href="../adminview/usermanagement">User Management</a><br>
 <a href="../adminview/userstatistics">Statistics</a><br>
 <br>
 <jsp:include page="../../partials/footer.jsp" />

@@ -24,11 +24,11 @@
     </script>
 </head>
 <body>
-<p><b>Task Form</b></p>
+<tags:appMode  appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 
-
+<p><b>Task Form</b></p>
 <form method="post" action="../adminview/task">
     <p><b>Task form:</b></p>
     <p>id:${contentWrapper.id}</p>
