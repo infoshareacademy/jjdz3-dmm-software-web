@@ -91,6 +91,26 @@ public class Agent implements ITriggerable {
         for (ITerminable item : terminableList) triggerProviders.remove(item);
     }
 
+    public void forceShutDownAllTriggeredTasks() {
+        if (!triggeredTasks.isEmpty()) {
+            for (Task task : triggeredTasks) {
+                LOGGER.info("Evautated Task Id:{}, Name:{}, isTaskToKill:{} ",
+                        task.getId(), task.getTaskName(), isTaskToKill(task));
+                if (!triggerProviders.isEmpty())
+                    for (ITerminable triggerProvider : triggerProviders) {
+                        if (triggerProvider.getTaskId() == task.getId()) {
+                            triggerProvider.killAction();
+                            LOGGER.info("Forced ShutDown Task Id:{}, Name:{} ",
+                                    task.getId(),
+                                    task.getTaskName());
+                        }
+                    }
+            }
+            this.triggeredTasks.clear();
+            this.triggerProviders.clear();
+        }
+    }
+
 
     private LocalDate checkActualTime() {
         return LocalDate.now();

@@ -3,7 +3,9 @@ package com.dmmsoft.adminpanel.email;
 
 import com.dmmsoft.adminpanel.schedule.Agent;
 import com.dmmsoft.adminpanel.schedule.ITaskService;
+import com.dmmsoft.adminpanel.trigger.AgentController;
 import com.dmmsoft.adminpanel.trigger.AgentTrigger;
+import com.dmmsoft.adminpanel.trigger.TaskTrigger;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +32,15 @@ public class EmailServlet extends HttpServlet {
     private IFavouriteService favouriteService;
     @Inject
     private ITaskService taskService;
+    @Inject
+    private AgentController agentController;
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServlet.class);
     private static final long TRIGGER_DELAY = 0;
     private static final long TRIGGER_TIMESPAN = 5;
+
+    private static final String AGENT_IS_STARTED="agentIsStarted";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,13 +53,20 @@ public class EmailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            Agent actionPovider = new Agent(taskService, favouriteService);
-            new AgentTrigger().startAction(actionPovider, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS);
+
+/*            Agent actionPovider = new Agent(taskService, favouriteService);
+            //new AgentTrigger().startAction(actionPovider, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS);
+            new TaskTrigger(actionPovider, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS).startAction();*/
+
+        agentController.switchAgent();
 
         } catch (RuntimeException ex) {
 
             LOGGER.error("Failed to send Email: {}", ex.getStackTrace());
         }
+
+        req.setAttribute(AGENT_IS_STARTED, agentController.isStarted());
+
         req.setAttribute(CONTENT_WRAPPER, taskService.getAllTasks());
         req.getRequestDispatcher("../adminview/reportingService.jsp").forward(req, resp);
     }

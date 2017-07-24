@@ -27,6 +27,7 @@
 <p><b>Reporting Agent Service</b></p>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
+<img src="../webapp/resources/icons/taskAgentSmall.jpg">
 <p>Agent tasks (sending e-mail report):</p>
 <br>
 <tags:tasks contentWrapper="${contentWrapper}"/>
@@ -57,7 +58,16 @@
 </br>
 <br>
 <form action="../adminview/emailsender" method="post">
-    <button type="submit">Start Agent job</button>
+    <button type="submit">
+    <c:choose>
+        <c:when test="${agentIsStarted}">
+            STOP Agent job
+        </c:when>
+        <c:otherwise>
+            START Agent job
+        </c:otherwise>
+    </c:choose>
+    </button>
 </form>
 </br>
 <jsp:include page="../../partials/footer.jsp"/>
