@@ -1,6 +1,5 @@
 package com.dmmsoft.adminpanel.email;
 
-import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.analyzer.analysis.investmentrevenue.PersistedInvestmentRevenueCriteria;
 import com.dmmsoft.app.analyzer.analyses.revenue.InvestmentRevenueCriteria;
 import org.slf4j.Logger;

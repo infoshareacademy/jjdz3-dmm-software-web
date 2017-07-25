@@ -1,17 +1,21 @@
 package com.dmmsoft.adminpanel.schedule;
 
 import com.dmmsoft.adminpanel.email.MailSender;
-import com.dmmsoft.adminpanel.report.ReportComponents;
+import com.dmmsoft.adminpanel.email.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.ITerminable;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.adminpanel.trigger.TaskTrigger;
 import com.dmmsoft.analyzer.IFavouriteService;
-import com.dmmsoft.app.model.MainContainer;
+import com.dmmsoft.api.client.ReportClient;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.container.ModelContainer;
+import com.dmmsoft.user.report.IUserActivityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,21 +29,27 @@ import java.util.function.Predicate;
  * Created by milo on 09.07.17.
  */
 
+
 public class Agent implements ITriggerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Agent.class);
 
     private ITaskService taskService;
     private IFavouriteService favouriteService;
+    private IUserActivityService userActivityService;
     private List<Task> triggeredTasks = new ArrayList<>();
     private List<ITerminable> triggerProviders = new ArrayList<>();
 
-    @Inject
-    IModelContainerService container;
+/*    @Inject
+    IModelContainerService container;*/
 
-    public Agent(ITaskService taskService, IFavouriteService favouriteService) {
+    public Agent(ITaskService taskService, IFavouriteService favouriteService, IUserActivityService userActivityService) {
         this.taskService = taskService;
         this.favouriteService = favouriteService;
+        this.userActivityService = userActivityService;
+    }
+
+    public Agent() {
     }
 
     @Override
@@ -133,10 +143,6 @@ public class Agent implements ITriggerable {
     }
 
     private void startTask(Task task) {
-     /*   ReportComponents reportComponents = new ReportComponents(favouriteService);
-        MailSender actionPovider = new MailSender(reportComponents);
-        TaskTrigger taskTrigger = new TaskTrigger(actionPovider, task.getStartDelay(), task.getTimeSpan(), TimeUnit.SECONDS);
-      */
 
         TaskTrigger taskTrigger = new TaskTrigger(getActionProvider(task), task.getStartDelay(), task.getTimeSpan(), TimeUnit.SECONDS);
         triggeredTasks.add(task);
@@ -158,7 +164,7 @@ public class Agent implements ITriggerable {
                 return new ModelContainer();
             }
             case "API_REPORT_DATA_UPDATING": {
-                return new UnsupportedActionProvider();
+                return new ReportClient(userActivityService);
             }
             default: {
                 return new UnsupportedActionProvider();
@@ -192,7 +198,6 @@ public class Agent implements ITriggerable {
         LOGGER.info("Is task actual:{}, TaskId:{}", isActual, task.getId());
         return isActual;
     }
-
 
 }
 

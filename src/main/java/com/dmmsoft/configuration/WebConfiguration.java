@@ -25,7 +25,7 @@ public class WebConfiguration {
         // TODO Get config from file
 
         this.masterModeAPIServiceURI = "http://localhost:8080/financial-app/api";
-        this.slaveModeAPIServiceTargetURI = "http://192.168.1.100:8080/financial-app/api";
+        this.slaveModeAPIServiceTargetURI = "http://192.168.1.104:8080/financial-app/api";
         return this;
     }
 }

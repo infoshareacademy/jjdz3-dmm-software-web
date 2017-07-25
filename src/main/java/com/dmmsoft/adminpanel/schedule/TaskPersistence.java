@@ -1,6 +1,9 @@
 package com.dmmsoft.adminpanel.schedule;
 
+import com.dmmsoft.configuration.AppMode;
+
 import javax.enterprise.inject.Default;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -13,6 +16,9 @@ import java.util.List;
 
 @Default
 public class TaskPersistence implements ITaskService  {
+
+    @Inject
+    AppMode appMode;
 
     @PersistenceContext
     private EntityManager em;
@@ -53,8 +59,8 @@ public class TaskPersistence implements ITaskService  {
     public List<String> getAllAvaliableTaskTypeNames() {
         List<String> avliableTasks = new ArrayList<>();
         avliableTasks.add("EMAIL_SENDING");
-        avliableTasks.add("MAIN_CONTAINER_UPDATING");
-        avliableTasks.add("API_REPORT_DATA_UPDATING");
+        if(!appMode.isSlave()){avliableTasks.add("MAIN_CONTAINER_UPDATING");}
+        if(appMode.isSlave()){avliableTasks.add("API_REPORT_DATA_UPDATING");}
         return avliableTasks;
     }
 }

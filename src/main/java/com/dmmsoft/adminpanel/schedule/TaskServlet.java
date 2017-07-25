@@ -1,9 +1,6 @@
 package com.dmmsoft.adminpanel.schedule;
 
-import com.dmmsoft.adminpanel.email.MailSender;
-import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.AgentController;
-import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.analyzer.IFavouriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -23,7 +23,7 @@
 
 <form method="post" action="../adminview/userstatistics">
     <p>
-        <button type="submit">Submit report from api!</button>
+        <button type="submit">Get data from master API</button>
     </p>
 </form>
 

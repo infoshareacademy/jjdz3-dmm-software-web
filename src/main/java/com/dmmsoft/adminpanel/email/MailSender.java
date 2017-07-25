@@ -3,7 +3,6 @@ package com.dmmsoft.adminpanel.email;
 import com.dmmsoft.adminpanel.email.confing.JsonSerializer;
 import com.dmmsoft.adminpanel.email.confing.ConfigFileReader;
 import com.dmmsoft.adminpanel.email.confing.SmtpProperties;
-import com.dmmsoft.adminpanel.report.ReportComponents;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
 

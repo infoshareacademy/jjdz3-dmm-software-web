@@ -1,6 +1,7 @@
 package com.dmmsoft.configuration;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -12,19 +13,11 @@ public class AppMode {
 
 
     private boolean isSlave;
-
     public boolean isSlave() {
         return isSlave;
     }
-
     public void setSlave(boolean slave) {
         isSlave = slave;
-    }
-
-    WebConfiguration webConfiguration;
-
-    public WebConfiguration getWebConfiguration() {
-        return webConfiguration;
     }
 
     public AppMode() {
@@ -32,11 +25,8 @@ public class AppMode {
 
     @PostConstruct
     public void onPostConstruct() {
-
         // TODO Get application mode from config file
-        webConfiguration = new WebConfiguration().getWebConfiguration();
         this.isSlave = true;
     }
-
 
 }

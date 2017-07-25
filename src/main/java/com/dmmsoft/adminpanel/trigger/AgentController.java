@@ -3,6 +3,7 @@ package com.dmmsoft.adminpanel.trigger;
 import com.dmmsoft.adminpanel.schedule.Agent;
 import com.dmmsoft.adminpanel.schedule.ITaskService;
 import com.dmmsoft.analyzer.IFavouriteService;
+import com.dmmsoft.user.report.IUserActivityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,9 @@ public class AgentController {
     IFavouriteService favouriteService;
     @Inject
     ITaskService taskService;
+    @Inject
+    IUserActivityService userActivityService;
+
 
     private Agent agent;
     private boolean isStarted;
@@ -42,7 +46,7 @@ public class AgentController {
 
     @PostConstruct
     private void onPostConstruct() {
-        agent = new Agent(taskService, favouriteService);
+        agent = new Agent(taskService, favouriteService, userActivityService);
         taskTrigger = new TaskTrigger(agent, TRIGGER_DELAY, TRIGGER_TIMESPAN, TimeUnit.SECONDS);
     }
 

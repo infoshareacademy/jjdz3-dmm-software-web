@@ -1,4 +1,4 @@
-package com.dmmsoft.adminpanel.report;
+package com.dmmsoft.adminpanel.email;
 
 import com.dmmsoft.analyzer.IFavouriteService;
 

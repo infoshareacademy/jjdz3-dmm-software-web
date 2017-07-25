@@ -9,7 +9,7 @@ import java.util.List;
  * Created by milo on 25.07.17.
  */
 
-public class RestResponse {
+public class ResponseContainer {
 
     @JsonProperty("userActivities")
     private List<UserActivity> userActivities;
@@ -21,5 +21,4 @@ public class RestResponse {
     public void setUserActivities(List<UserActivity> userActivities) {
         this.userActivities = userActivities;
     }
-
 }

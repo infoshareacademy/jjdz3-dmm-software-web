@@ -1,10 +1,7 @@
 package com.dmmsoft.api.server;
 
-import com.dmmsoft.api.client.RestResponse;
-import com.dmmsoft.user.User;
 import com.dmmsoft.user.report.IUserActivityService;
 import com.dmmsoft.user.report.UserActivity;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

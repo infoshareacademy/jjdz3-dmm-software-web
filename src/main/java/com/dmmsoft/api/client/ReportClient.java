@@ -1,51 +1,64 @@
 package com.dmmsoft.api.client;
 
+import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.configuration.AppMode;
+import com.dmmsoft.configuration.WebConfiguration;
+import com.dmmsoft.user.report.IUserActivityService;
 import com.dmmsoft.user.report.UserActivity;
-import com.dmmsoft.user.report.UserActivityReportServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by milo on 25.07.17.
  */
-public class ReportClient {
+
+
+public class ReportClient implements ITriggerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportClient.class);
+    private IUserActivityService userActivityService;
+
+    public ReportClient(IUserActivityService userActivityService){
+        this.userActivityService = userActivityService;
+    }
 
     public List<UserActivity> getAllUserActivity() {
+
         Client client = ClientBuilder.newClient();
-
-/*        WebTarget target = client.target(new AppMode()
+        String uri = new WebConfiguration()
                 .getWebConfiguration()
-                .getSlaveModeAPIServiceTargetURI()
-                + "/users/activity");*/
-        WebTarget target = client.target("http://192.168.1.104:8080/financial-app/api/users/activity");
+                .getSlaveModeAPIServiceTargetURI();
+        WebTarget target = client.target(uri.concat("/users/activity"));
 
-
-        LOGGER.info("taret uri: {}",target.getUri());
+        LOGGER.info("Target uri: {}", target.getUri());
 
         Response response = target.request().get();
-
-        //LOGGER.info("target get entity: {}", response.readEntity(String.class));
-
-        RestResponse restResponse = response.readEntity(RestResponse.class);
-
-
-
+        ResponseContainer responseContainer = response.readEntity(ResponseContainer.class);
         response.close();
 
-        return restResponse.getUserActivities();
-       // return new ArrayList<UserActivityDetails>();
-
-
+        return responseContainer.getUserActivities();
     }
+
+    @Override
+    public void executeAction() {
+        try {
+
+            LOGGER.info("UserActivity list size {}",this.getAllUserActivity().size());
+            userActivityService.updateAllUserActivityFromMaserAPI(this.getAllUserActivity());
+        }catch (RuntimeException ex)
+        {
+            LOGGER.error("Failed to update from master API {}",ex.getMessage());
+        }
+
+        }
+
 }
