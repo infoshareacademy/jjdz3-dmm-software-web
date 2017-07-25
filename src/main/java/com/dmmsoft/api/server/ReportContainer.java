@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class ReportContainer {
 
-   private List<UserActivity> userActivities;
+    private List<UserActivity> userActivities;
 
     public List<UserActivity> getUserActivities() {
         return userActivities;

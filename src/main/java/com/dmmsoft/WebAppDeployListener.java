@@ -3,6 +3,7 @@ package com.dmmsoft;
 
 import com.dmmsoft.configuration.AppMode;
 import com.dmmsoft.container.IModelContainerService;
+import com.dmmsoft.container.ModelContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,10 @@ public final class WebAppDeployListener implements ServletContextListener {
         this.setApplicationDefaultTimeZone(DEFAULT_TIMEZONE);
         servletContextEvent.getServletContext().setAttribute("appMode", appMode);
 
-      if (!appMode.isSlave()){this.loadModelData();};
+        if (appMode.isSlave()==false) {
+            this.loadModelData();
+        }
+
     }
 
     @Override
@@ -47,11 +51,13 @@ public final class WebAppDeployListener implements ServletContextListener {
         try {
             LOGGER.info("Data model CSV files loading initialized...");
 
+            new ModelContainer().updateModelFileResources();
+
             container.getMainContainer();
 
             LOGGER.info("Currencies items:{} Funds items:{}",
-            container.getMainContainer().getCurrenciesCount(),
-            container.getMainContainer().getFundsCount());
+                    container.getMainContainer().getCurrenciesCount(),
+                    container.getMainContainer().getFundsCount());
         } catch (RuntimeException ex) {
             LOGGER.error("FATAL ERROR: Failed to load data model CSV files! {}", ex.getMessage());
         }

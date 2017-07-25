@@ -31,7 +31,7 @@ public class ModelContainer implements IModelContainerService, ITriggerable {
     @PostConstruct
     private void onPostConstruct() {
 
-        this.updateModelFileResources();
+        //this.updateModelFileResources();
 
         AppConfigurationProvider appCon = new AppConfigurationProvider().getConfiguration();
         MainContainerLoader mainContainerLoader = new MainContainerLoader(appCon);
@@ -60,6 +60,9 @@ public class ModelContainer implements IModelContainerService, ITriggerable {
     }
 
     private void initialize() {
+
+        this.updateModelFileResources();
+
         if (!mainContainer.getInvestments().isEmpty()) {
             mainContainer.getInvestments().clear();
         }
@@ -74,7 +77,7 @@ public class ModelContainer implements IModelContainerService, ITriggerable {
         this.mainContainer = mainContainer;
     }
 
-    private void updateModelFileResources() {
+    public void updateModelFileResources() {
         try {
             LOGGER.info("Data model CSV Zip files download initialized...");
             remoteDownloader.getModelFilesFromRemoteLocation();

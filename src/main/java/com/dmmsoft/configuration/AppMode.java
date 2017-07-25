@@ -35,7 +35,7 @@ public class AppMode {
 
         // TODO Get application mode from config file
         webConfiguration = new WebConfiguration().getWebConfiguration();
-        this.isSlave = false;
+        this.isSlave = true;
     }
 
 

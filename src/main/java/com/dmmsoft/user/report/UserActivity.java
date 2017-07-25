@@ -1,9 +1,22 @@
 package com.dmmsoft.user.report;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+//import com.dmmsoft.LocalDateTimeDeserializer;
+//import com.dmmsoft.LocalDateTimeSerializer;
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +24,7 @@ import java.time.LocalDateTime;
  */
 
 @Entity
-public class UserActivity {
+public class UserActivity implements Serializable {
 
     @Id
     @GeneratedValue
@@ -19,6 +32,9 @@ public class UserActivity {
     private String login;
     private String activityName;
     private String sessionId;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime activityDateTime;
 
 
@@ -54,5 +70,25 @@ public class UserActivity {
 
     public LocalDateTime getActivityDateTime() {
         return activityDateTime;
+    }
+
+    public void setId(long id) {
+        Id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public void setActivityDateTime(LocalDateTime activityDateTime) {
+        this.activityDateTime = activityDateTime;
     }
 }

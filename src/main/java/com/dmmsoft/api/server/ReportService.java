@@ -36,7 +36,6 @@ private IUserActivityService userActivityService;
        ReportContainer reportContainer= new ReportContainer();
        reportContainer.setUserActivities(userActivityList);
 
-
        String result = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(reportContainer);
 
        return Response.ok(result).build();

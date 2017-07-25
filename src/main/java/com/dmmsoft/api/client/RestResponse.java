@@ -1,25 +1,25 @@
 package com.dmmsoft.api.client;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import com.dmmsoft.user.report.UserActivity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 /**
  * Created by milo on 25.07.17.
  */
+
 public class RestResponse {
 
+    @JsonProperty("userActivities")
+    private List<UserActivity> userActivities;
 
-    private List<UserActivityDetails> userActivityDetails;
-
-    public List<UserActivityDetails> getUserActivityDetails() {
-        return userActivityDetails;
+    public List<UserActivity> getUserActivities() {
+        return userActivities;
     }
 
-    public void setUserActivityDetails(List<UserActivityDetails> userActivityDetails) {
-        this.userActivityDetails = userActivityDetails;
+    public void setUserActivities(List<UserActivity> userActivities) {
+        this.userActivities = userActivities;
     }
-
 
 }
