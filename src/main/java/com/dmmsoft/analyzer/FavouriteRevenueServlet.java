@@ -25,13 +25,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import static com.dmmsoft.ConstantsProvider.AUTH_USER;
-import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER_COLLECTION;
-import static com.dmmsoft.ConstantsProvider.CRITERIA_ID;
-import static com.dmmsoft.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
-import static com.dmmsoft.ConstantsProvider.UPDATE_ACTION;
-import static com.dmmsoft.ConstantsProvider.DELETE_ACTION;
-import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
+import static com.dmmsoft.utils.ConstantsProvider.AUTH_USER;
+import static com.dmmsoft.utils.ConstantsProvider.CONTENT_WRAPPER_COLLECTION;
+import static com.dmmsoft.utils.ConstantsProvider.CRITERIA_ID;
+import static com.dmmsoft.utils.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
+import static com.dmmsoft.utils.ConstantsProvider.UPDATE_ACTION;
+import static com.dmmsoft.utils.ConstantsProvider.DELETE_ACTION;
+import static com.dmmsoft.utils.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
 
 /**
  * Created by milo on 24.05.17.

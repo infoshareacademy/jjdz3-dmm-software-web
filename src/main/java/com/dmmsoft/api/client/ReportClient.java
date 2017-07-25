@@ -1,15 +1,12 @@
 package com.dmmsoft.api.client;
 
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
-import com.dmmsoft.configuration.AppMode;
-import com.dmmsoft.configuration.WebConfiguration;
+import com.dmmsoft.webconfiguration.api.APIProperties;
 import com.dmmsoft.user.report.IUserActivityService;
 import com.dmmsoft.user.report.UserActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -34,7 +31,7 @@ public class ReportClient implements ITriggerable {
     public List<UserActivity> getAllUserActivity() {
 
         Client client = ClientBuilder.newClient();
-        String uri = new WebConfiguration()
+        String uri = new APIProperties()
                 .getWebConfiguration()
                 .getSlaveModeAPIServiceTargetURI();
         WebTarget target = client.target(uri.concat("/users/activity"));

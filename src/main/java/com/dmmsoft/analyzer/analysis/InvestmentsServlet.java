@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.dmmsoft.ConstantsProvider.ALL_INVESTMENTS;
-import static com.dmmsoft.ConstantsProvider.CURRENCY_COUNT;
-import static com.dmmsoft.ConstantsProvider.FUND_COUNT;
+import static com.dmmsoft.utils.ConstantsProvider.ALL_INVESTMENTS;
+import static com.dmmsoft.utils.ConstantsProvider.CURRENCY_COUNT;
+import static com.dmmsoft.utils.ConstantsProvider.FUND_COUNT;
 
 /**
  * Created by milo on 09.06.17.

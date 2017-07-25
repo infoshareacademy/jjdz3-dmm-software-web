@@ -3,7 +3,6 @@ package com.dmmsoft.adminpanel;
 import com.dmmsoft.analyzer.IFavouriteService;
 import com.dmmsoft.api.client.ReportClient;
 import com.dmmsoft.user.report.IUserActivityService;
-import com.dmmsoft.user.report.UserActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
@@ -18,7 +17,7 @@ import java.io.IOException;
  * Created by milo on 08.06.17.
  */
 
-import static com.dmmsoft.ConstantsProvider.ALL_INV_REV_CRIT;
+import static com.dmmsoft.utils.ConstantsProvider.ALL_INV_REV_CRIT;
 
 @WebServlet(urlPatterns = "/auth/adminview/userstatistics")
 public class UserStatisticsServlet extends HttpServlet {

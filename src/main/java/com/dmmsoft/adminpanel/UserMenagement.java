@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.dmmsoft.ConstantsProvider.ALL_USERS;
+import static com.dmmsoft.utils.ConstantsProvider.ALL_USERS;
 
 /**
  * Created by milo on 08.06.17.

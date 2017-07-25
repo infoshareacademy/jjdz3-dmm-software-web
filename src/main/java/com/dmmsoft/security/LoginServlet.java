@@ -1,6 +1,6 @@
 package com.dmmsoft.security;
 
-import com.dmmsoft.configuration.AppMode;
+import com.dmmsoft.webconfiguration.AppMode;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

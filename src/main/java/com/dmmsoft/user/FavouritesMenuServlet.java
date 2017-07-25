@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import static com.dmmsoft.ConstantsProvider.AUTH_USER;
+import static com.dmmsoft.utils.ConstantsProvider.AUTH_USER;
 /**
  * Created by milo on 19.05.17.
  */

@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.dmmsoft.ConstantsProvider.EMAIL;
-import static com.dmmsoft.ConstantsProvider.TARGET_EMAIL;
-import static com.dmmsoft.ConstantsProvider.TMP_FILE_NAME;
-import static com.dmmsoft.ConstantsProvider.LINE_SEPARATOR;
+import static com.dmmsoft.utils.ConstantsProvider.EMAIL;
+import static com.dmmsoft.utils.ConstantsProvider.TARGET_EMAIL;
+import static com.dmmsoft.utils.ConstantsProvider.TMP_FILE_NAME;
+import static com.dmmsoft.utils.ConstantsProvider.LINE_SEPARATOR;
 
 /**
  * Created by milo on 08.07.17.

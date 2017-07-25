@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dmmsoft.ConstantsProvider.LINE_SEPARATOR;
+import static com.dmmsoft.utils.ConstantsProvider.LINE_SEPARATOR;
 
 /**
  * Created by milo on 15.07.17.

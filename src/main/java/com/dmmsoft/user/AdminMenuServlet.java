@@ -1,6 +1,6 @@
 package com.dmmsoft.user;
 
-import com.dmmsoft.ConstantsProvider;
+import com.dmmsoft.utils.ConstantsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

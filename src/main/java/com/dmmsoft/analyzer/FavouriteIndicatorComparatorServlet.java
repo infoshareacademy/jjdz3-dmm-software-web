@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import static com.dmmsoft.ConstantsProvider.*;
+import static com.dmmsoft.utils.ConstantsProvider.*;
 
 /**
  * Created by milo on 24.05.17.

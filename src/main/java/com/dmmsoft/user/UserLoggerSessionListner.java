@@ -10,9 +10,8 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import static com.dmmsoft.ConstantsProvider.AUTH_USER;
+import static com.dmmsoft.utils.ConstantsProvider.AUTH_USER;
 import static java.time.ZoneOffset.UTC;
 
 /**

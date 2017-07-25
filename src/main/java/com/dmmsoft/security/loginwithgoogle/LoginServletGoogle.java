@@ -1,6 +1,6 @@
 package com.dmmsoft.security.loginwithgoogle;
 
-import com.dmmsoft.configuration.AppMode;
+import com.dmmsoft.webconfiguration.AppMode;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import com.dmmsoft.user.report.IUserActivityService;
