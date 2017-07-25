@@ -26,6 +26,7 @@ public class UserActivityReportServlet extends HttpServlet {
 
     @EJB
     private CSVGenerator csvGenerator;
+
     @Inject
     IUserActivityService userActivityService;
 

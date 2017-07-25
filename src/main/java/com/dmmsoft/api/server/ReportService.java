@@ -1,8 +1,12 @@
 package com.dmmsoft.api.server;
 
+import com.dmmsoft.api.client.RestResponse;
 import com.dmmsoft.user.User;
 import com.dmmsoft.user.report.IUserActivityService;
 import com.dmmsoft.user.report.UserActivity;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -23,10 +27,19 @@ private IUserActivityService userActivityService;
     @GET
     @Path("/users/activity")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getLoginForm() {
+    public Response getLoginForm() throws JsonProcessingException {
 
        List<UserActivity> userActivityList= userActivityService.getAllUserActivity();
-       return Response.ok(userActivityList).build();
+
+       ObjectMapper mapper = new ObjectMapper();
+
+       ReportContainer reportContainer= new ReportContainer();
+       reportContainer.setUserActivities(userActivityList);
+
+
+       String result = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(reportContainer);
+
+       return Response.ok(result).build();
     }
 
 }

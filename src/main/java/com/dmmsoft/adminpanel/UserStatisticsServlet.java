@@ -1,6 +1,7 @@
 package com.dmmsoft.adminpanel;
 
 import com.dmmsoft.analyzer.IFavouriteService;
+import com.dmmsoft.api.client.ReportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
@@ -32,6 +33,17 @@ public class UserStatisticsServlet extends HttpServlet {
         req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ReportClient reportClient = new ReportClient();
+
+        LOGGER.info("report form API content: {}", reportClient.getAllUserActivity().size());
+
+
+        req.setAttribute(ALL_INV_REV_CRIT , favouriteService.getAllRevenueCriteria());
+        req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
+    }
 }
 
 

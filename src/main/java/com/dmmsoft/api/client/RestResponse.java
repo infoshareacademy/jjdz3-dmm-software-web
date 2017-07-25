@@ -10,14 +10,16 @@ import java.util.List;
  */
 public class RestResponse {
 
-@JsonProperty("result")
-private List<UserActivity> userActivityList;
 
-    public List<UserActivity> getUserActivityList() {
-        return userActivityList;
+    private List<UserActivityDetails> userActivityDetails;
+
+    public List<UserActivityDetails> getUserActivityDetails() {
+        return userActivityDetails;
     }
 
-    public void setUserActivityList(List<UserActivity> userActivityList) {
-        this.userActivityList = userActivityList;
+    public void setUserActivityDetails(List<UserActivityDetails> userActivityDetails) {
+        this.userActivityDetails = userActivityDetails;
     }
+
+
 }

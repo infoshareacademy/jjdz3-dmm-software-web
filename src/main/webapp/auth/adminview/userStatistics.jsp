@@ -20,6 +20,13 @@
 <p><b>User activity report csv</b></p>
 <a href="../adminview/userstatistics/csv">Download</a>
 <br>
+
+<form method="post" action="../adminview/userstatistics">
+    <p>
+        <button type="submit">Submit report from api!</button>
+    </p>
+</form>
+
 <br>
 <br>
 <jsp:include page="../../partials/footer.jsp"/>

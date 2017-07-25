@@ -1,7 +1,9 @@
 package com.dmmsoft.api.client;
 
 import com.dmmsoft.configuration.AppMode;
-import com.dmmsoft.user.report.UserActivity;
+import com.dmmsoft.user.report.UserActivityReportServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -15,18 +17,23 @@ import java.util.List;
  */
 public class ReportClient {
 
-    public List<UserActivity> getAllUserActivity() {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportClient.class);
+
+    public List<UserActivityDetails> getAllUserActivity() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(new AppMode()
+
+/*        WebTarget target = client.target(new AppMode()
                 .getWebConfiguration()
                 .getSlaveModeAPIServiceTargetURI()
-                + "/users/activity");
+                + "/users/activity");*/
+        WebTarget target = client.target("http://192.168.1.104:8080/financial-app/api/users/activity");
+
+
+        LOGGER.info("taret uri: {}",target.getUri());
 
         Response response = target.request().get();
-        Container container = response.readEntity(Container.class);
+        RestResponse restResponse = response.readEntity(RestResponse.class);
         response.close();
-        return container.getRestResponse().getUserActivityList();
+        return restResponse.getUserActivityDetails();
     }
-
-
 }
