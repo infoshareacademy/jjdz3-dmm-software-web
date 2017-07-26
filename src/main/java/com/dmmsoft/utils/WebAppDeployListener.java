@@ -1,6 +1,7 @@
 package com.dmmsoft.utils;
 
 
+import com.dmmsoft.user.IUserService;
 import com.dmmsoft.webconfiguration.AppMode;
 import com.dmmsoft.container.IModelContainerService;
 import com.dmmsoft.container.ModelContainer;
@@ -26,6 +27,8 @@ public final class WebAppDeployListener implements ServletContextListener {
 
     @Inject
     private IModelContainerService container;
+    @Inject
+    private IUserService userService;
 
     @Inject
     AppMode appMode;
@@ -36,10 +39,10 @@ public final class WebAppDeployListener implements ServletContextListener {
         this.setApplicationDefaultTimeZone(DEFAULT_TIMEZONE);
         servletContextEvent.getServletContext().setAttribute("appMode", appMode);
 
-        if (appMode.isSlave()==false) {
+        if (!appMode.isSlave()) {
             this.loadModelData();
         }
-
+        userService.addDefaultAdminUser();
     }
 
     @Override

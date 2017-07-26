@@ -1,6 +1,7 @@
 package com.dmmsoft.user;
 
 import com.dmmsoft.analyzer.analysis.investmentrevenue.InvestmentRevenueServlet;
+import com.dmmsoft.webconfiguration.WebConfigurationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,5 +59,26 @@ public class UserPersistence implements IUserService {
 
        userToUpdate.setComparisonContainers(user.getComparisonContainers());
        em.merge(userToUpdate);
+    }
+
+    @Override
+    @Transactional
+    public void addDefaultAdminUser(){
+
+        WebConfigurationProvider webConfigurationProvider = new WebConfigurationProvider().getConfiguration();
+        String defaultAdminLogin = webConfigurationProvider.getDefaultAdminAccountLogin();
+
+        if(!this.getUserByEmail(defaultAdminLogin).isEmpty()){
+          User user = this.getUserByEmail(defaultAdminLogin).stream()
+                  .findAny()
+                  .orElseThrow(NullPointerException::new);
+          user.setAdmin(true);
+          this.update(user);
+        } else {
+            User user = new User();
+            user.setLogin(defaultAdminLogin);
+            user.setAdmin(false);
+            this.add(user);
+        }
     }
 }

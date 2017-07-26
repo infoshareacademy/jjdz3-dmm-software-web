@@ -21,6 +21,8 @@ public interface IUserService {
 
   List<User> getAllUsers();
 
+  public void addDefaultAdminUser();
+
 
 
 }
