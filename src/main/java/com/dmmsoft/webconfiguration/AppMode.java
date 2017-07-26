@@ -18,39 +18,17 @@ import java.nio.file.Paths;
 @Singleton
 public class AppMode {
 
-
     private boolean isSlave;
+    private WebConfigurationProvider webConfigurationProvider = new WebConfigurationProvider();
+
     public boolean isSlave() {
         return isSlave;
     }
-    public void setSlave(boolean slave) {
-        isSlave = slave;
-    }
-
     public AppMode() {
     }
 
     @PostConstruct
     public void onPostConstruct() {
-        this.isSlave = false;
-
-        // TODO Get application mode from config file
-/*        String externalPath = new AppConfigurationProvider()
-                .getConfiguration()
-                .getExternalResourceFilePath();
-        Path appModePath = Paths.get(externalPath, "appmode.json");
-
-        String content = new ConfigFileReader(appModePath).getFileAsString();
-        this.isSlave = getProperties(content).isSlave;*/
+        this.isSlave = webConfigurationProvider.getConfiguration().isSlave();
     }
-
-    private AppMode getProperties(String jsonString) throws IOException {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(jsonString, AppMode.class);
-        } catch (IOException e) {
-            throw new IOException();
-        }
-    }
-
 }
