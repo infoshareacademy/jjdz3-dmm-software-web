@@ -54,9 +54,8 @@ public class UserPersistence implements IUserService {
     public void update(User user) {
        User userToUpdate =  em.find(User.class, user.getId());
        userToUpdate.setFavourites(user.getFavourites());
-       userToUpdate.setLastLoginDateTime(user.getLastLoginDateTime());
        userToUpdate.setFavouriteInvestmentIndicators(user.getFavouriteInvestmentIndicators());
-
+       userToUpdate.setAdmin(user.getAdmin());
        userToUpdate.setComparisonContainers(user.getComparisonContainers());
        em.merge(userToUpdate);
     }

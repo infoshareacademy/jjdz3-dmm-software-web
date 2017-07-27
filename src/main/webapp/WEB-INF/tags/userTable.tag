@@ -11,6 +11,7 @@
         <th>Account Creation Time</th>
         <th>Last Login Time</th>
         <th>Last Update Time</th>
+        <th>Action</th>
     </tr>
     <c:forEach var="user" items="${allUsers}">
         <tr>
@@ -20,6 +21,13 @@
             <th>${user.creationDateTime}</th>
             <th>${user.lastLoginDateTime}</th>
             <th>${user.lastUpdateDateTime}</th>
+            <th>
+                <form action="../adminview/userdetails" method="get">
+                    <input type="hidden" name="id" value="${user.id}"/></p>
+                    <button type="submit">edit</button>
+                </form>
+            </th>
+
         </tr>
     </c:forEach>
 </table>

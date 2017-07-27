@@ -58,7 +58,14 @@
     <p>6. Time Span:</p>
     <p><input type="text" required pattern="[0-9]*" name="timeSpan" value="${contentWrapper.timeSpan}"/></p>
     <p>7. Active:</p>
-    <p><input type="checkbox" clas name="isActive" value="${contentWrapper.active}"/></p>
+    <c:choose>
+        <c:when test="${contentWrapper.active}">
+            <p><input type="checkbox" name="isActive" value="${contentWrapper.active}" checked/></p>
+        </c:when>
+        <c:otherwise>
+            <p><input type="checkbox" name="isActive" value="${contentWrapper.active}"/></p>
+        </c:otherwise>
+    </c:choose>
     <p>
         <button type="submit">Submit!</button>
     </p>
