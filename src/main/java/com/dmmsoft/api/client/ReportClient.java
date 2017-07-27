@@ -26,6 +26,10 @@ public class ReportClient implements ITriggerable {
     private IUserActivityService userActivityService;
     private WebConfigurationProvider webConfigurationProvider = new WebConfigurationProvider();
 
+
+    public ReportClient() {
+    }
+
     public ReportClient(IUserActivityService userActivityService){
         this.userActivityService = userActivityService;
     }

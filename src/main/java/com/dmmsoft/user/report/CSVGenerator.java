@@ -19,7 +19,7 @@ public class CSVGenerator {
 
     public List<String> generateCSVLines(){
 
-        List<UserActivity> userActivities = userActivityService.getAllUserActivity();
+        List<UserActivity> userActivities = userActivityService.getAllUserActivityFromSlaveAPI();
         List<String> lines = new ArrayList<>();
 
         lines.add("Id, DateTime, Activity, Login, SessionId".concat(System.getProperty(LINE_SEPARATOR)));

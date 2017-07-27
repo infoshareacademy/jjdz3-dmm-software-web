@@ -1,5 +1,6 @@
 package com.dmmsoft.user.report;
 
+import com.dmmsoft.api.client.ReportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,22 +20,31 @@ public class PersistenceActivity implements IUserActivityService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceActivity.class);
 
+
+    private ReportClient reportClient = new ReportClient();
+
+
     @PersistenceContext
     private EntityManager em;
 
     @Override
     @Transactional
     public void saveActivity(UserActivity userActivity) {
-    em.persist(userActivity);
+        em.persist(userActivity);
     }
 
     @Override
     public List<UserActivity> getAllUserActivity() {
-
         List<UserActivity> activities = em.createQuery("select m from UserActivity m", UserActivity.class)
                 .getResultList();
         return activities;
     }
+
+    @Override
+    public List<UserActivity> getAllUserActivityFromSlaveAPI() {
+        return reportClient.getAllUserActivity();
+    }
+
 
     @Override
     @Transactional
@@ -42,7 +52,7 @@ public class PersistenceActivity implements IUserActivityService {
 
         em.createQuery("delete from UserActivity").executeUpdate();
 
-        for (UserActivity item : activities){
+        for (UserActivity item : activities) {
 
             UserActivity itemToPersist = new UserActivity();
             itemToPersist.setActivityDateTime(item.getActivityDateTime());
@@ -52,7 +62,7 @@ public class PersistenceActivity implements IUserActivityService {
 
             saveActivity(itemToPersist);
 
-            LOGGER.info("UPDATE FROM MASTER API: {} {} {} {} {}",item.getId(),
+            LOGGER.info("UPDATE FROM MASTER API: {} {} {} {} {}", item.getId(),
                     item.getActivityDateTime(),
                     item.getActivityName(),
                     item.getLogin(),

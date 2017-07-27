@@ -4,6 +4,8 @@ import com.dmmsoft.user.report.IUserActivityService;
 import com.dmmsoft.user.report.UserActivity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -20,6 +22,7 @@ public class ReportService {
 
 @Inject
 private IUserActivityService userActivityService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportService.class);
 
     @GET
     @Path("/users/activity")
@@ -35,6 +38,7 @@ private IUserActivityService userActivityService;
 
        String result = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(reportContainer);
 
+        LOGGER.info("Request:../api/users/activity succeeded!");
        return Response.ok(result).build();
     }
 
