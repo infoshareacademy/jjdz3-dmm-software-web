@@ -8,7 +8,7 @@
     <title>User Statistics</title>
 </head>
 <body>
-<tags:appMode  appMode="${applicationScope.appMode}"/>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 
@@ -16,17 +16,18 @@
 <tags:invRevCritTable allInvRevCrit="${allInvRevCrit}"/>
 <br>
 <br>
-
-<p><b>User activity report csv</b></p>
-<a href="../adminview/userstatistics/csv">Download</a>
+<c:if test="${!applicationScope.appMode.slave}">
+    <p><b>User activity report (csv):</b></p>
+    <p><a href="../adminview/userstatistics/csv">Download form slave API</a></p>
+</c:if>
 <br>
-
 <form method="post" action="../adminview/userstatistics">
-    <p>
-        <button type="submit">Get data from master API</button>
-    </p>
+    <c:if test="${applicationScope.appMode.slave}">
+        <p>
+            <button type="submit">Update db from master application</button>
+        </p>
+    </c:if>
 </form>
-
 <br>
 <br>
 <jsp:include page="../../partials/footer.jsp"/>
