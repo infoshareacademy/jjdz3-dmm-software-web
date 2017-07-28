@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id"
-          content="566890900377-4leqj16ttpbudslspdrcgp69hlsvvgjq.apps.googleusercontent.com">
+          content="150451143938-rmal4qgn03753krup0vc30jmf3n69fkk.apps.googleusercontent.com">
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" type="text/css" rel="stylesheet">
 </head>
