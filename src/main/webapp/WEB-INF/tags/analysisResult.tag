@@ -14,7 +14,7 @@
 
 <tags:systemMessage systemMessage="${revenueWrapper.message}"/>
 
-<p><b>User input moderation reportComponents:</b></p>
+<p><b>User input moderation report:</b></p>
 
 <p>buy date: <b>${revenueWrapper.result.finallyEvaluatedInput.buyDate}</b></p>
 <p>sell date: <b>${revenueWrapper.result.finallyEvaluatedInput.sellDate}</b></p>

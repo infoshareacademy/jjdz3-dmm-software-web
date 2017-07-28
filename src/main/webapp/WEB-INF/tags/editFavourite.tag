@@ -4,9 +4,9 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <div>
-<form method="post" action="../userview/favourite">
-    <input type="text" name="userCustomName" placeholder="user custom name"/>
+<form method="post" action="../userview/favouriterevenue">
     criteria id ${contentWrapper.criteria.id}
+    <input type="text" name="userCustomName" placeholder="user custom name"/>
     <input type="text" name="criteriaId" value="${contentWrapper.criteria.id}" hidden/>
     <button type="submit" name="updateAction" >ok</button>
     <button type="submit" name="deleteAction" >remove</button>

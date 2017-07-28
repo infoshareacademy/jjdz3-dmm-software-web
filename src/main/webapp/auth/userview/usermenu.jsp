@@ -17,7 +17,6 @@
 <a href="../userview/investmentrevenue">Investment revenue</a><br>
 <a href="../userview/comparator">Indicator comparator</a><br>
 <a href="../userview/chart.jsp">Charts comparator</a><br>
-<a href="../userview/investments">last 90 days Top10</a><br>
 <br>
 <jsp:include page="../../partials/footer.jsp" />
 </body>

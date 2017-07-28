@@ -27,8 +27,6 @@
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
 </br>
 <p><b>Investment Revenue:</b>
-    <button id="hideBtn">hide</button>
-    <button id="editBtn">edit</button>
 </p>
 <div class="Favourite" style="background-color: #e0e0e0">
     <c:forEach var="contentWrapper" items="${contentWrappers}">
