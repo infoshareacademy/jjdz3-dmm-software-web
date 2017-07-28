@@ -24,27 +24,48 @@
     </script>
 </head>
 <body>
-<p><b>Task Form</b></p>
+<tags:appMode  appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
 
-
+<p><b>Task Form</b></p>
 <form method="post" action="../adminview/task">
     <p><b>Task form:</b></p>
     <p>id:${contentWrapper.id}</p>
     <p><input name="id" value="${contentWrapper.id}" hidden/></p>
-    <p>1. name:</p>
+    <p>1. Name:</p>
     <p><input type="text" required name="taskName" value="${contentWrapper.taskName}"/></p>
-    <p>2. Start Date:</p>
+
+    <p>2. Type:</p>
+    <select name="taskTypeName">
+        <c:forEach items="${taskNames}" var="task">
+            <c:choose>
+                <c:when test="${task == selectedFrom}">
+                    <option value="<c:out value="${task}"/>" SELECTED><c:out value="${task}"/></option>
+                </c:when>
+                <c:otherwise>
+                    <option value="<c:out value="${task}"/>"><c:out value="${task}"/></option>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </select>
+    <p>3. Start Date:</p>
     <p><input type="text" required class="datePicker" name="startDate" value="${contentWrapper.startDate}"/></p>
-    <p>3. End Date:</p>
+    <p>4. End Date:</p>
     <p><input type="text" required class="datePicker" name="endDate" value="${contentWrapper.endDate}"/></p>
-    <p>4. Start Delay:</p>
+    <p>5. Start Delay:</p>
     <p><input type="text" required pattern="[0-9]*" name="startDelay" value="${contentWrapper.startDelay}"/></p>
-    <p>5. Time Span:</p>
+    <p>6. Time Span:</p>
     <p><input type="text" required pattern="[0-9]*" name="timeSpan" value="${contentWrapper.timeSpan}"/></p>
-    <p>6. Active:</p>
-    <p><input type="checkbox" clas name="isActive" value="${contentWrapper.active}"/></p>
+    <p>7. Active:</p>
+    <c:choose>
+        <c:when test="${contentWrapper.active}">
+            <p><input type="checkbox" name="isActive" value="${contentWrapper.active}" checked/></p>
+        </c:when>
+        <c:otherwise>
+            <p><input type="checkbox" name="isActive" value="${contentWrapper.active}"/></p>
+        </c:otherwise>
+    </c:choose>
     <p>
         <button type="submit">Submit!</button>
     </p>

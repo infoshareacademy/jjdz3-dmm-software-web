@@ -52,6 +52,7 @@ Default application directories:
 ------------------------------------------------------------------------------------
 Note! 
 Add smtpconfig.json file to location: "/home/<user_name>/dmmfinance/smtpconfig.json"
+Add webconfiguration.json file to location: "/home/<user_name>/dmmfinance/webconfiguration.json"
 
 ------------------------------------------------------------------------------------
 
@@ -72,3 +73,16 @@ Add smtpconfig.json file to location: "/home/<user_name>/dmmfinance/smtpconfig.j
 }
 
 ------------------------------------------------------------------------------------
+
+
+------webconfiguration.json file example content:-----------------------------------
+
+{
+  "slave":false,
+  "masterModeAPIServiceTargetURI":"http://localhost:8080/financial-app/api",
+  "slaveModeAPIServiceTargetURI":"http://192.168.1.104:8080/financial-app/api",
+  "defaultAdminAccountLogin":"defaultadmin@gmail.com"
+}
+
+------------------------------------------------------------------------------------
+

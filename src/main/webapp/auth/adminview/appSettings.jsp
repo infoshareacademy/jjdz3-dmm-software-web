@@ -8,10 +8,10 @@
     <title>Application settings</title>
 </head>
 <body>
-<p><b>Application settings</b></p>
+<tags:appMode  appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
-<p>Application settings:</p>
+<p><b>Application settings</b></p>
 <br>
 <p>Data from CSV files:</p>
 <p>Total Number of Funds: <b>${fundCount}</b></p>

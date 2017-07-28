@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dmmsoft.ConstantsProvider.LINE_SEPARATOR;
+import static com.dmmsoft.utils.ConstantsProvider.LINE_SEPARATOR;
 
 /**
  * Created by milo on 15.07.17.
@@ -19,7 +19,7 @@ public class CSVGenerator {
 
     public List<String> generateCSVLines(){
 
-        List<UserActivity> userActivities = userActivityService.getAllUserActivity();
+        List<UserActivity> userActivities = userActivityService.getAllUserActivityFromSlaveAPI();
         List<String> lines = new ArrayList<>();
 
         lines.add("Id, DateTime, Activity, Login, SessionId".concat(System.getProperty(LINE_SEPARATOR)));

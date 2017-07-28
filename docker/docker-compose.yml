@@ -1,0 +1,23 @@
+version: '2'
+services:
+  sql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dmm_finance_db
+    networks:
+      - infoshare_network
+  jboss:
+    build: ./jboss
+    ports:
+      - 8080:8080
+      - 9990:9990
+    networks:
+      - infoshare_network
+    volumes:
+      - ../financial-app.war:/opt/jboss/wildfly/standalone/deployments/financial-app.war
+
+networks:
+  infoshare_network:
+    driver: bridge
+

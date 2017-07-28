@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.dmmsoft.ConstantsProvider.FUND_COUNT;
-import static com.dmmsoft.ConstantsProvider.CURRENCY_COUNT;
+import static com.dmmsoft.utils.ConstantsProvider.FUND_COUNT;
+import static com.dmmsoft.utils.ConstantsProvider.CURRENCY_COUNT;
 
 
 /**
@@ -32,7 +32,7 @@ public class AppSettingsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute(CURRENCY_COUNT , container.getMainContainer().getCurrenciesCount());
+        req.setAttribute(CURRENCY_COUNT, container.getMainContainer().getCurrenciesCount());
         req.setAttribute(FUND_COUNT, container.getMainContainer().getFundsCount());
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
     }
@@ -55,7 +55,6 @@ public class AppSettingsServlet extends HttpServlet {
 
             LOGGER.error("FATAL ERROR: Failed to manually reload data model CSV files! {}", ex.getMessage());
         }
-
         req.getRequestDispatcher("../adminview/appSettings.jsp").forward(req, resp);
     }
 }

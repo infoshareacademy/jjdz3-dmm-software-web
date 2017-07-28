@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import static com.dmmsoft.ConstantsProvider.*;
+import static com.dmmsoft.utils.ConstantsProvider.*;
 
 @WebServlet(urlPatterns = "/auth/userview/comparator")
 public class IndicatorServlet extends HttpServlet {

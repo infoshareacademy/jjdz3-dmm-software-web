@@ -6,19 +6,26 @@
 <html>
 <head>
     <title>Administrator Mode</title>
-    <jsp:include page="../../partials/meta.jsp" />
+    <jsp:include page="../../partials/meta.jsp"/>
 </head>
 <body>
-<p><b>Administrator panel menu</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
-<p>Application:</p>
-<a href="../adminview/appsettings">Settings</a><br>
-<a href="../adminview/emailsender">Reporting Agent</a><br>
+<hr>
 <br>
-<p>User:</p>
-<a href="../adminview/usermanagement">Management</a><br>
+<p><b>Administrator panel menu</b></p>
+<c:choose>
+    <c:when test="${applicationScope.appMode.slave}">
+        Main Container Management - DISABLED<br>
+    </c:when>
+    <c:otherwise>
+        <a href="../adminview/appsettings">Main Container Management</a><br>
+    </c:otherwise>
+</c:choose>
+<a href="../adminview/emailsender">Task Agent Service</a><br>
+<a href="../adminview/usermanagement">User Management</a><br>
 <a href="../adminview/userstatistics">Statistics</a><br>
 <br>
-<jsp:include page="../../partials/footer.jsp" />
+<jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

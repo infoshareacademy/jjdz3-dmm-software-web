@@ -1,5 +1,6 @@
 package com.dmmsoft.security.loginwithgoogle;
 
+import com.dmmsoft.webconfiguration.AppMode;
 import com.dmmsoft.user.IUserService;
 import com.dmmsoft.user.User;
 import com.dmmsoft.user.report.IUserActivityService;
@@ -37,9 +38,12 @@ public class LoginServletGoogle extends HttpServlet {
     @Inject
     IUserActivityService userActivityService;
 
+    @Inject
+    AppMode appMode;
+
     @Override
     protected void doPost(HttpServletRequest req,
-                         HttpServletResponse resp)
+                          HttpServletResponse resp)
             throws ServletException, IOException {
 
         resp.setContentType("text/html");
@@ -56,7 +60,7 @@ public class LoginServletGoogle extends HttpServlet {
             HttpSession session = req.getSession(true);
             session.setAttribute(AUTH_USER, user);
 
-            userActivityService.saveActivity(new UserActivity(user.getLogin() , USER_ACTIVITY_LOGIN, req.getSession().getId()));
+            userActivityService.saveActivity(new UserActivity(user.getLogin(), USER_ACTIVITY_LOGIN, req.getSession().getId()));
 
             LOGGER.info("UserAuthenticated: Id:{} login:{} role isAdmin:{}", user.getId(), user.getLogin(), user.getAdmin());
 
@@ -72,14 +76,13 @@ public class LoginServletGoogle extends HttpServlet {
     private void userViewRedirection(User user, HttpServletRequest req, HttpServletResponse resp) {
 
         try {
-            if (!user.getAdmin()) {
+            if (!appMode.isSlave() && !user.getAdmin()) {
                 LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
                 req.getRequestDispatcher("auth/userview/usermenu").forward(req, resp);
-            } else if (user.getAdmin()){
+            } else if (user.getAdmin()) {
                 LOGGER.info("User view redirection: isAdmin:{}", user.getAdmin());
                 req.getRequestDispatcher("auth/adminview/adminmenu").forward(req, resp);
-            }
-            else {
+            } else {
                 LOGGER.warn("User redirection failure.");
                 req.getRequestDispatcher("auth/accessdenied.jsp").forward(req, resp);
             }

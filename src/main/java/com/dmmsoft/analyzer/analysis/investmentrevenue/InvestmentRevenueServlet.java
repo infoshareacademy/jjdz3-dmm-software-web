@@ -28,18 +28,18 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import static com.dmmsoft.ConstantsProvider.DATE_PATTERN;
-import static com.dmmsoft.ConstantsProvider.INVESTMENT_NAME;
-import static com.dmmsoft.ConstantsProvider.CAPITAL;
-import static com.dmmsoft.ConstantsProvider.BUY_DATE;
-import static com.dmmsoft.ConstantsProvider.SELL_DATE;
-import static com.dmmsoft.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
-import static com.dmmsoft.ConstantsProvider.IS_FAVOURITE;
-import static com.dmmsoft.ConstantsProvider.CONTENT_WRAPPER;
-import static com.dmmsoft.ConstantsProvider.APP_MESSAGE;
-import static com.dmmsoft.ConstantsProvider.NO_DATA_FOR_CRITERIA_MESSAGE;
-import static com.dmmsoft.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
-import static com.dmmsoft.ConstantsProvider.AUTH_USER;
+import static com.dmmsoft.utils.ConstantsProvider.DATE_PATTERN;
+import static com.dmmsoft.utils.ConstantsProvider.INVESTMENT_NAME;
+import static com.dmmsoft.utils.ConstantsProvider.CAPITAL;
+import static com.dmmsoft.utils.ConstantsProvider.BUY_DATE;
+import static com.dmmsoft.utils.ConstantsProvider.SELL_DATE;
+import static com.dmmsoft.utils.ConstantsProvider.USER_FAVOURITE_CUSTOM_NAME;
+import static com.dmmsoft.utils.ConstantsProvider.IS_FAVOURITE;
+import static com.dmmsoft.utils.ConstantsProvider.CONTENT_WRAPPER;
+import static com.dmmsoft.utils.ConstantsProvider.APP_MESSAGE;
+import static com.dmmsoft.utils.ConstantsProvider.NO_DATA_FOR_CRITERIA_MESSAGE;
+import static com.dmmsoft.utils.ConstantsProvider.CRITERIA_MODERATION_MESSAGE;
+import static com.dmmsoft.utils.ConstantsProvider.AUTH_USER;
 
 /**
  * Created by milo on 12.05.17.

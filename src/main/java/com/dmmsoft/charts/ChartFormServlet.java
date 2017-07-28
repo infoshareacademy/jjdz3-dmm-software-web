@@ -20,10 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.dmmsoft.ConstantsProvider.*;
+import static com.dmmsoft.utils.ConstantsProvider.*;
 
 /**
  * Created by milo on 10.07.17.

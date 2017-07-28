@@ -1,6 +1,8 @@
 package com.dmmsoft.adminpanel;
 
 import com.dmmsoft.analyzer.IFavouriteService;
+import com.dmmsoft.api.client.ReportClient;
+import com.dmmsoft.user.report.IUserActivityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
@@ -15,7 +17,7 @@ import java.io.IOException;
  * Created by milo on 08.06.17.
  */
 
-import static com.dmmsoft.ConstantsProvider.ALL_INV_REV_CRIT;
+import static com.dmmsoft.utils.ConstantsProvider.ALL_INV_REV_CRIT;
 
 @WebServlet(urlPatterns = "/auth/adminview/userstatistics")
 public class UserStatisticsServlet extends HttpServlet {
@@ -24,6 +26,9 @@ public class UserStatisticsServlet extends HttpServlet {
 
     @Inject
     IFavouriteService favouriteService;
+    @Inject
+    IUserActivityService userActivityService;
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,6 +37,17 @@ public class UserStatisticsServlet extends HttpServlet {
         req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ReportClient reportClient = new ReportClient(userActivityService);
+       // userActivityService.updateAllUserActivityFromMaserAPI(reportClient.getAllUserActivity());
+        reportClient.executeAction();
+
+        req.setAttribute(ALL_INV_REV_CRIT , favouriteService.getAllRevenueCriteria());
+        req.getRequestDispatcher("../adminview/userStatistics.jsp").forward(req, resp);
+        LOGGER.info("report form API content: {}", reportClient.getAllUserActivity().size());
+    }
 }
 
 

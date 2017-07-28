@@ -1,9 +1,8 @@
 package com.dmmsoft.adminpanel.email;
 
-import com.dmmsoft.adminpanel.email.confing.JsonSerializer;
-import com.dmmsoft.adminpanel.email.confing.ConfigFileReader;
-import com.dmmsoft.adminpanel.email.confing.SmtpProperties;
-import com.dmmsoft.adminpanel.report.ReportComponents;
+import com.dmmsoft.webconfiguration.utils.JsonSerializer;
+import com.dmmsoft.webconfiguration.utils.ConfigFileReader;
+import com.dmmsoft.webconfiguration.smtp.SmtpProperties;
 import com.dmmsoft.adminpanel.trigger.ITriggerable;
 import com.dmmsoft.app.appconfiguration.AppConfigurationProvider;
 
@@ -17,17 +16,19 @@ import java.util.Properties;
 
 import javax.mail.*;
 
-import static com.dmmsoft.ConstantsProvider.MAIL_SMTP_HOST;
-import static com.dmmsoft.ConstantsProvider.MAIL_SMTP_SOCKETFACTORY_PORT;
-import static com.dmmsoft.ConstantsProvider.MAIL_SMTP_PORT;
-import static com.dmmsoft.ConstantsProvider.EMAIL;
-import static com.dmmsoft.ConstantsProvider.PASSWORD;
-import static com.dmmsoft.ConstantsProvider.TARGET_EMAIL;
-import static com.dmmsoft.ConstantsProvider.SMTP_CONFIG_FILE_NAME;
+import static com.dmmsoft.utils.ConstantsProvider.MAIL_SMTP_HOST;
+import static com.dmmsoft.utils.ConstantsProvider.MAIL_SMTP_SOCKETFACTORY_PORT;
+import static com.dmmsoft.utils.ConstantsProvider.MAIL_SMTP_PORT;
+import static com.dmmsoft.utils.ConstantsProvider.EMAIL;
+import static com.dmmsoft.utils.ConstantsProvider.PASSWORD;
+import static com.dmmsoft.utils.ConstantsProvider.TARGET_EMAIL;
+import static com.dmmsoft.utils.ConstantsProvider.SMTP_CONFIG_FILE_NAME;
 
 /**
  * Created by milo on 07.07.17.
  */
+
+
 public class MailSender implements ITriggerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailSender.class);
@@ -88,7 +89,7 @@ public class MailSender implements ITriggerable {
     private SmtpProperties getSMTPProps() throws IOException {
         String smtpConfigFilePath = new AppConfigurationProvider()
                 .getConfiguration()
-                .getSmtpConfigFilePath();
+                .getExternalResourceFilePath();
 
         Path path = Paths.get(smtpConfigFilePath, SMTP_CONFIG_FILE_NAME);
         String content = new ConfigFileReader(path).getFileAsString();
