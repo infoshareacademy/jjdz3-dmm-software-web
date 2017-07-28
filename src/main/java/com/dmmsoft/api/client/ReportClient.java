@@ -23,6 +23,8 @@ import java.util.List;
 public class ReportClient implements ITriggerable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportClient.class);
+    private static final String HEADER_TOKEN = "token";
+    private static final String TOKEN = "abcde";
     private IUserActivityService userActivityService;
     private WebConfigurationProvider webConfigurationProvider = new WebConfigurationProvider();
 
@@ -44,7 +46,10 @@ public class ReportClient implements ITriggerable {
 
         LOGGER.info("Target uri: {}", target.getUri());
 
-        Response response = target.request().get();
+        Response response = target
+                .request()
+                .header(HEADER_TOKEN,TOKEN)
+                .get();
         ResponseContainer responseContainer = response.readEntity(ResponseContainer.class);
         response.close();
 

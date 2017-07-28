@@ -35,9 +35,6 @@ public class Agent implements ITriggerable {
     private List<Task> triggeredTasks = new ArrayList<>();
     private List<ITerminable> triggerProviders = new ArrayList<>();
 
-/*    @Inject
-    IModelContainerService container;*/
-
     public Agent(ITaskService taskService, IFavouriteService favouriteService, IUserActivityService userActivityService) {
         this.taskService = taskService;
         this.favouriteService = favouriteService;
