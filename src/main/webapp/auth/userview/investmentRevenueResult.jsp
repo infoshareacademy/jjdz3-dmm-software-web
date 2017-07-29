@@ -8,12 +8,12 @@
     <title><b>Investment Revenue Result</b></title>
 </head>
 <body>
-<p><b> Analysis: Investment Revenue Result</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
-
+<p><b> Analysis: Investment Revenue Result</b></p>
+<br>
 <tags:analysisResult revenueWrapper="${contentWrapper}"/>
-
 <jsp:include page="../../partials/footer.jsp"/>
 </body>
 </html>

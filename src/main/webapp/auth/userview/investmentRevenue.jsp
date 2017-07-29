@@ -24,10 +24,11 @@
     </script>
 </head>
 <body>
-<p><b> Analysis: Investment Revenue</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
-
+<p><b> Analysis: Investment Revenue</b></p>
+<br>
 <form method="post" action="../userview/investmentrevenue">
     <p><b>form:</b></p>
     <p>1. Investment name:</p>

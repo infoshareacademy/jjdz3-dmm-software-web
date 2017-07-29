@@ -22,9 +22,10 @@
     </script>
 </head>
 <body>
-<p><b>Favourite Indicator Comparators </b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p><b>Favourite Indicator Comparators </b></p>
 </br>
 <p><b>Investment Revenue:</b>
 </p>

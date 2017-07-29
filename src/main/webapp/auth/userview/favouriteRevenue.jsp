@@ -22,9 +22,10 @@
     </script>
 </head>
 <body>
-<p><b>Favourite Analysis</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p><b>Favourite Analysis</b></p>
 </br>
 <p><b>Investment Revenue:</b>
     <button id="editBtn">edit</button>

@@ -29,14 +29,17 @@
 <tags:appMode  appMode="${applicationScope.appMode}"/>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <a href="#" class="navbar-brand">DMM-finance Welcome page</a>
+        <a href="#" class="navbar-brand"><p align="middle">DMM-soft</p></a>
         <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
             <span class="glyphicon glyphicon-list"></span>
         </button>
     </div>
 </nav>
+<br>
+<P align="middle"><img src="resources/icons/banner_welcome.jpg"></P>
+<br>
 <div style="text-align: center">
-    <div style="width: 50%; font-size:18px; margin: 0 auto; text-align: left"><p>login in with Google+</p></div>
+    <div style="width: 50%; font-size:18px; margin: 0 auto; text-align: left"><p align="middle">login in with Google+</p></div>
 </div>
 <div class="container">
     <div class="col-sm-6 col-md-4 col-md-offset-4">

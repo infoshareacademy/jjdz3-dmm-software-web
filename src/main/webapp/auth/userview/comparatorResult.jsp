@@ -8,9 +8,11 @@
     <title>Investment comparator</title>
 </head>
 <body>
-<p><b>Investments indicator comparator result</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p><b>Investments indicator comparator result</b></p>
+<br>
 <p>Comparison result</p>
 <tags:indicatorResult contentWrapper="${contentWrapper}"/>
 <br>

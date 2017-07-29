@@ -5,11 +5,10 @@
 </head>
 <body>
 <br>
-<p><b>DMM-Software Finanncial-App</b></p>
+<p><b>DMM-Finance</b></p>
 <p style="color:green"><b>Goodbye! Now you are logout.</b></p>
 <br>
-<p>login page:</p>
-<p>http://localhost:8080/financial-app/login</p>
+<a href="http://dmmsoft:8080/financial-app/login">login page</a>
 </body>
 </html>
 
