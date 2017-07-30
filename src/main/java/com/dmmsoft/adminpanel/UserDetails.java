@@ -43,22 +43,16 @@ public class UserDetails extends HttpServlet {
 
         boolean isAdmin = req.getParameter("isAdmin") != null;
 
-        Optional<Long> id = Optional.ofNullable(req.getParameter("id"))
-                .map(String::trim)
-                .filter(idString -> !idString.isEmpty())
-                .map(Long::parseLong);
-
-        User user = id.map(User::new)
-                .orElseGet(User::new);
-
-        user.setAdmin(isAdmin);
-
-        if (id.isPresent()) {
+        User user = userService.get(Long.parseLong(req.getParameter("id")));
+        if(user!=null) {
+            user.setAdmin(isAdmin);
             userService.update(user);
-        } else {
-            LOGGER.error("Failed to update user. User doesn't exists. {}", user.getId());
-            throw new IllegalStateException();
         }
+        else {
+            LOGGER.error("Failed to update user. User doesn't exists.");
+            throw new NullPointerException();
+        }
+
         req.setAttribute(ALL_USERS, userService.getAllUsers());
         req.getRequestDispatcher("../adminview/userManagement.jsp").forward(req, resp);
     }

@@ -124,7 +124,7 @@ public class FavouriteRevenueServlet extends HttpServlet {
             LOGGER.info("Criteria upadted. User Id:{}, login:{}", dbUser.getId(), dbUser.getLogin());
         }
 
-        resp.sendRedirect("../userview/favourite");
+        resp.sendRedirect("../userview/favouriterevenue");
     }
 
     private int getCriteriaArrayListId(List<PersistedInvestmentRevenueCriteria> criteria, String criteriaId) {

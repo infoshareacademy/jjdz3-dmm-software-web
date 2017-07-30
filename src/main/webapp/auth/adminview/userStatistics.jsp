@@ -11,8 +11,8 @@
 <tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToAdminMenu.jsp"/>
-
 <p><b>User Statistics</b></p>
+<br>
 <tags:invRevCritTable allInvRevCrit="${allInvRevCrit}"/>
 <br>
 <br>

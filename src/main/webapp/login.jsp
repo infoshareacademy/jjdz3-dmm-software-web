@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id"
-          content="566890900377-4leqj16ttpbudslspdrcgp69hlsvvgjq.apps.googleusercontent.com">
+          content="150451143938-rmal4qgn03753krup0vc30jmf3n69fkk.apps.googleusercontent.com">
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/styles.css" type="text/css" rel="stylesheet">
 </head>
@@ -29,14 +29,17 @@
 <tags:appMode  appMode="${applicationScope.appMode}"/>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <a href="#" class="navbar-brand">DMM-finance Welcome page</a>
+        <a href="#" class="navbar-brand"><p align="middle">DMM-soft</p></a>
         <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
             <span class="glyphicon glyphicon-list"></span>
         </button>
     </div>
 </nav>
+<br>
+<P align="middle"><img src="resources/icons/banner_welcome.jpg"></P>
+<br>
 <div style="text-align: center">
-    <div style="width: 50%; font-size:18px; margin: 0 auto; text-align: left"><p>login in with Google+</p></div>
+    <div style="width: 50%; font-size:18px; margin: 0 auto; text-align: left"><p align="middle">login in with Google+</p></div>
 </div>
 <div class="container">
     <div class="col-sm-6 col-md-4 col-md-offset-4">

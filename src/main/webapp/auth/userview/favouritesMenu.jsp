@@ -7,9 +7,11 @@
     <jsp:include page="../../partials/meta.jsp" />
 </head>
 <body>
-<p><b>Your Favourites</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p><b>Your Favourites</b></p>
+<br>
 <p>Choose Your collection:</p>
 <a href="../userview/favouriterevenue">Investment Revenues</a><br>
 <a href="../userview/favouriteindicatorcomparator">Indicator Comparators</a><br>

@@ -7,9 +7,10 @@
     <jsp:include page="../../partials/meta.jsp" />
 </head>
 <body>
-<p><b>Menu</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <hr>
+<p><b>Menu</b></p>
 <a href="../userview/favouritesmenu">Favourites</a>
 <br>
 <p>Choose your investment analysis:</p>
@@ -17,7 +18,6 @@
 <a href="../userview/investmentrevenue">Investment revenue</a><br>
 <a href="../userview/comparator">Indicator comparator</a><br>
 <a href="../userview/chart.jsp">Charts comparator</a><br>
-<a href="../userview/investments">last 90 days Top10</a><br>
 <br>
 <jsp:include page="../../partials/footer.jsp" />
 </body>

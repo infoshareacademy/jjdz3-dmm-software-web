@@ -22,22 +22,22 @@
     </script>
 </head>
 <body>
-<p><b>Favourite Analysis</b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p><b>Favourite Analysis</b></p>
 </br>
 <p><b>Investment Revenue:</b>
-    <button id="hideBtn">hide</button>
     <button id="editBtn">edit</button>
 </p>
 <div class="Favourite" style="background-color: #e0e0e0">
     <c:forEach var="revenueWrapper" items="${contentWrappers}">
         <hr>
         <p><b>${revenueWrapper.criteria.userCustomName}</b></p>
-        <tags:analysisResult revenueWrapper="${revenueWrapper}"/>
         <div class="editFavourite" hidden>
             <tags:editFavourite contentWrapper="${revenueWrapper}"/>
         </div>
+        <tags:analysisResult revenueWrapper="${revenueWrapper}"/>
     </c:forEach>
 </div>
 

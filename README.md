@@ -22,12 +22,26 @@ To clean maven last build:
   
     $ sudo mvn install clean
 
-
+-------------------------------------------------------------------------------------
 welcome page:
  
-http://localhost:8080/financial-app/login.jsp   (Google+ auth)
+http://dmmsoft:8080/financial-app/login.jsp   (Google+ auth)
 
 ------------------------------------------------------------------------------------
+
+If application runs on explicit LAN IP, add this line to your /etc/hosts file:
+                               
+"<host_ip> dmmsoft"
+
+Note!
+host_ip - is application host IP, for example "192.168.1.104" 
+
+Note!
+"dmmsoft" is host domain instead of "localhost". It is set to:
+1. avoid Google+ authentication issues
+2. to run several instances of application in LAN, with explicitly different IP 
+(such setup allows application instances to communicate with each other) 
+
 Note! 
 Application default timezone is set to UTC.
 MySQL database timezone should also be set to UTC.

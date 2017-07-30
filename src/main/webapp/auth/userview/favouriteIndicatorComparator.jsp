@@ -22,13 +22,12 @@
     </script>
 </head>
 <body>
-<p><b>Favourite Indicator Comparators </b></p>
+<tags:appMode appMode="${applicationScope.appMode}"/>
 <tags:userLogin user="${sessionScope.authenticatedUser}"/>
 <jsp:include page="../../partials/backToUserMenu.jsp"/>
+<p><b>Favourite Indicator Comparators </b></p>
 </br>
 <p><b>Investment Revenue:</b>
-    <button id="hideBtn">hide</button>
-    <button id="editBtn">edit</button>
 </p>
 <div class="Favourite" style="background-color: #e0e0e0">
     <c:forEach var="contentWrapper" items="${contentWrappers}">
